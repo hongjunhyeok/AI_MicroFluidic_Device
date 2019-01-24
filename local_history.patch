@@ -1,0 +1,16 @@
+Index: app/src/main/java/org/opencv/samples/quix2/Tutorial2Activity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/org/opencv/samples/quix2/Tutorial2Activity.java	(revision )
++++ app/src/main/java/org/opencv/samples/quix2/Tutorial2Activity.java	(revision )
+@@ -407,7 +407,7 @@
+ 				if(fResult == bResult){
+ 					resultValue = new String(bResult + "\n");
+ 					if(!sendMsg.equals(resultValue)){
+-						sendMessage(resultValue);
++						//sendMessage(resultValue);
+ 						sendMsg = resultValue;
+ 						Log.i("sendMsg",resultValue);
+ 					}
