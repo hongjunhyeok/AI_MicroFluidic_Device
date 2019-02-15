@@ -49,7 +49,13 @@ public class Tutorial2Activity extends Activity implements
 	Zoomcameraview zoomcameraview;
 
 	private int RGB_data_array[]=new int[3];
-	private boolean should_motor_on =false;
+	public boolean should_motor_on =false;
+	public boolean FLAG_GREEN=false;
+	public boolean FLAG_RED=false;
+	public boolean FLAG_YELLOW=false;
+
+
+
 	private static final String TAG = "OCVSample::Activity";
 
 	private static final int VIEW_MODE_RGBA = 0;
@@ -57,6 +63,7 @@ public class Tutorial2Activity extends Activity implements
 	private static final int VIEW_MODE_RESULT = 2;
 	private static final int VIEW_MODE_STOP = 3;
 	private static final int VIEW_MODE_INIT = 4;
+	private static final int VIEW_MODE_CHECK =5;
 
 	private static final int COLOR_RED = 0;
 	private static final int COLOR_GREEN=1;
@@ -65,8 +72,8 @@ public class Tutorial2Activity extends Activity implements
 	public int seekBarProgress;
 	public int start_x=1360;
 	public int start_y=520;
-	public int x_width=30;
-	public int y_height=30;
+	public int x_width=15;
+	public int y_height=15;
 
 	private int mViewMode;
 	private Mat mRgba,mask;
@@ -119,7 +126,7 @@ public class Tutorial2Activity extends Activity implements
 	Button InitBtn;
 	Button StartBtn;
 	Button StopBtn;
-	Button CheckBtn;
+	Button ReturnBtn;
 	CheckBox flashCheckbox;
 	SeekBar seekBar;
 
@@ -164,7 +171,7 @@ public class Tutorial2Activity extends Activity implements
 		InitBtn = (Button) findViewById(R.id.button1);
 		StartBtn = (Button) findViewById(R.id.button2);
 		StopBtn = (Button) findViewById(R.id.button3);
-		CheckBtn = (Button) findViewById(R.id.button6);
+		ReturnBtn = (Button) findViewById(R.id.button6);
 		seekBar=(SeekBar)findViewById(R.id.CameraZoomControls);
 		seekBarProgress=seekBar.getProgress();
 
@@ -280,7 +287,7 @@ public class Tutorial2Activity extends Activity implements
 	public void onCameraViewStopped() {
 
 		if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
-			String con = new String("goback" + "\n");
+			String con = new String("RETURN" + "\n");
 			Log.i("con_message_bye",con);
 			try {
 				Thread.sleep(100);
@@ -378,6 +385,7 @@ public class Tutorial2Activity extends Activity implements
 		StartBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Log.i("con_message",Boolean.toString(FLAG_GREEN));
 				// TODO Auto-generated method stub
 				mViewMode = VIEW_MODE_START;
 
@@ -406,68 +414,45 @@ public class Tutorial2Activity extends Activity implements
 				mText.setTextSize(20);
 			}
 		});
-		CheckBtn.setOnClickListener(new OnClickListener() {
+		ReturnBtn.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
+				FLAG_GREEN=false;
+				FLAG_RED=false;
+				FLAG_YELLOW=false;
+
+
 				// TODO Auto-generated method stub
-				Log.i("con_message",
-						"R :"+Integer.toString(RGB_data_array[0])
-						+"G :"+Integer.toString(RGB_data_array[1])+
-						"B :"+Integer.toString(RGB_data_array[2]));
+				Log.i("con_message",Boolean.toString(FLAG_GREEN));
+				if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
+					String con = new String("RETURN" + "\n");
 
-				if(DetectColor(RGB_data_array)==COLOR_YELLOW){
-					if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
-						String con = new String("YELLOW" + "\n");
-						Log.i("con_message",con);
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					if (!sendMsg.equals(con)) {
 						try {
-							Thread.sleep(100);
+							Thread.sleep(30);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}if(!sendMsg.equals(con)){
-							sendMessage(con);
-							sendMsg = con;
 						}
 
+						sendMessage(con);
+						sendMsg = con;
+						Log.i("con_message", con);
+
+						onStop();
+						mViewMode = VIEW_MODE_INIT;
 					}
+					mText.setText("RETURN ");
 
-				} else if (DetectColor(RGB_data_array)==COLOR_RED) {
-
-					if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
-						String con = new String("RED" + "\n");
-						Log.i("con_message",con);
-						try {
-							Thread.sleep(100);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}if(!sendMsg.equals(con)){
-							sendMessage(con);
-							sendMsg = con;
-						}
-
-					}
-				}else if (DetectColor(RGB_data_array)==COLOR_GREEN) {
-
-					if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
-						String con = new String("GREEN" + "\n");
-						Log.i("con_message",con);
-						try {
-							Thread.sleep(100);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}if(!sendMsg.equals(con)){
-							sendMessage(con);
-							sendMsg = con;
-						}
-
-					}
-				}else{
-					Toast.makeText(getApplicationContext(),"Detect Failed. Try one more Time",Toast.LENGTH_SHORT).show();;
 				}
-
-				mText.setTextSize(20);
 			}
 		});
 
@@ -527,6 +512,7 @@ public class Tutorial2Activity extends Activity implements
 
 			//핸들러로 블루투스 통신 시작.
 			mhandler.postDelayed(mRunnable,100);
+
 			Log.i("handlerMessage",sendMsg);
 
 
@@ -545,9 +531,10 @@ public class Tutorial2Activity extends Activity implements
 				mRgba = inputFrame.rgba();
 				drawRect() ;
 				break;
-		case VIEW_MODE_RESULT:
+		case VIEW_MODE_CHECK:
 
 			// input frame has gray scale format
+
 			mRgba = inputFrame.rgba();
 			drawRect() ;
 			break;
@@ -736,9 +723,142 @@ public class Tutorial2Activity extends Activity implements
 		@Override
 		public void run() {
 
+			if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
+				String con = new String("GO" + "\n");
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}if(!sendMsg.equals(con)){
+					sendMessage(con);
+					Log.i("con_message",con);
+
+					sendMsg = con;
+
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+
+				mText.setText("MOTOR : ON ");
 			}
 
+
+
+			if(DetectColor(RGB_data_array)==COLOR_YELLOW&&!FLAG_YELLOW ){
+				if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
+					String con = new String("STOP" + "\n");
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}if(!sendMsg.equals(con)){
+						Log.i("con_message",con);
+
+						sendMessage(con);
+						try {
+							Thread.sleep(50);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						sendMsg = con;
+						FLAG_YELLOW=true;
+						FLAG_GREEN=false;
+						FLAG_RED=false;
+
+						onStop();
+
+						mViewMode = VIEW_MODE_INIT;
+
+						Toast.makeText(getApplicationContext(),
+								"Detection : Y.  [R, G, B] = ["+RGB_data_array[0]+", "+RGB_data_array[1]+", "+RGB_data_array[2]+"]",
+								Toast.LENGTH_SHORT).show();
+					}
+					mText.setText("Detection: Y ");
+
+				}
+
+			} else if (DetectColor(RGB_data_array)==COLOR_RED&&!FLAG_RED) {
+
+				if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
+					String con = new String("STOP" + "\n");
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}if(!sendMsg.equals(con)){
+						Log.i("con_message",con);
+
+						sendMessage(con);
+						try {
+							Thread.sleep(50);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						sendMsg = con;
+						FLAG_RED=true;
+						FLAG_GREEN=false;
+						FLAG_YELLOW=false;
+						onStop();
+						mViewMode = VIEW_MODE_INIT;
+
+						Toast.makeText(getApplicationContext(),
+								"Detection : R.  [R, G, B] = ["+RGB_data_array[0]+", "+RGB_data_array[1]+", "+RGB_data_array[2]+"]",
+								Toast.LENGTH_SHORT).show();
+					}
+					mText.setText("Detection: R ");
+
+				}
+			}else if (DetectColor(RGB_data_array)==COLOR_GREEN&&!FLAG_GREEN) {
+
+				if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
+					String con = new String("STOP" + "\n");
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}if(!sendMsg.equals(con)){
+						Log.i("con_message",con);
+
+						sendMessage(con);
+						try {
+							Thread.sleep(50);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						sendMsg = con;
+						FLAG_GREEN=true;
+						FLAG_YELLOW=false;
+						FLAG_RED=false;
+						onStop();
+						mViewMode = VIEW_MODE_INIT;
+						Toast.makeText(getApplicationContext(),
+								"Detection : G.  [R, G, B] = ["+RGB_data_array[0]+", "+RGB_data_array[1]+", "+RGB_data_array[2]+"]",
+								Toast.LENGTH_SHORT).show();
+
+					}
+					mText.setText("Detection: G ");
+
+				}
+			}
+		}
+
 	};
+
 	public void onClick0(View v){
 		switch (v.getId()){
 			case R.id.btn_up:
@@ -801,19 +921,42 @@ public class Tutorial2Activity extends Activity implements
 		int b=rgbData[2];
 
 
-		if(Math.max(r,Math.max(g,b))==r && b <70 && g< 70 && r>70 ){
+		//현재는 고정값이지만 후에는 상대값으로 바꿀것.
+//		if(Math.max(r,Math.max(g,b))==r && b <33 && g< 33 && r>33 ){
+//			return COLOR_RED;
+//		}
+//
+//		if(Math.max(r,Math.max(g,b))==g &&r<33 && b<33 && g>33 ){
+//			return COLOR_GREEN;
+//		}
+//		if(r>33 && g>33 && b<10 ){
+//			return COLOR_YELLOW;
+//		}
+		if(Math.max(r,Math.max(g,b))==r && b <33 && g< 33 && r>33 ){
 			return COLOR_RED;
 		}
 
-		if(Math.max(r,Math.max(g,b))==g &&r<70 && b<70 && g>70  ){
+		if(Math.max(r,Math.max(g,b))==g &&r<33 && b<33 && g>33 ){
 			return COLOR_GREEN;
 		}
-		if(r>50 && g>50 && b<20){
+		if(r>33 && g>33 && b<r*0.2 ){
 			return COLOR_YELLOW;
 		}
+
 		return -1;
 	}
 
+
+	protected void onStart(){
+		super.onStart();
+		mhandler= new Handler();
+		mhandler.postDelayed(mRunnable,10);
+	}
+
+	protected void onStop(){
+		super.onStop();
+		mhandler.removeCallbacks(mRunnable);
+	}
 
 
 	public native void FindFeatures(long matAddrGr, long matAddrRgba);
