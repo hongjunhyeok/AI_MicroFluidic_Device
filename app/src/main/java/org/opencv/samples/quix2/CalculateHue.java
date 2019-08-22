@@ -55,7 +55,7 @@ public class CalculateHue {
 
         dec = Math.sqrt(RG_sq  + (RB)*(GB));
 
-        tmp=Math.abs(num/dec);
+        tmp=num/dec;
 
         H=Math.acos(tmp);
  

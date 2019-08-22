@@ -35,6 +35,7 @@ public class CascadeClassifier {
     {
         
         nativeObj = CascadeClassifier_0(filename);
+
         
         return;
     }

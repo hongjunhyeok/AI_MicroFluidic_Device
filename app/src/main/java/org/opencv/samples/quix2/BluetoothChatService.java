@@ -252,6 +252,11 @@ public class BluetoothChatService {
 //                    // successful connection or an exception
 //                    socket = mmServerSocket.accept();
 //                } catch (IOException e) {
+
+
+
+
+
 //                    Log.e(TAG, "accept() failed", e);
 //                    break;
 //                }
