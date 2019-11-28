@@ -134,11 +134,13 @@
           android:layout_marginTop="30dp"
           android:background="#FCE6E6"
           android:backgroundTint="#FCD2D2"
-          android:text="Return" />
+          android:text="Measure" />
 
 
       <Button
           style="@style/Widget.AppCompat.Button"
+          android:id="@+id/button7"
+
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_below="@+id/button6"
@@ -147,7 +149,7 @@
           android:layout_marginTop="30dp"
           android:background="#FCE6E6"
           android:backgroundTint="#FCD2D2"
-          android:text="Measure" />
+          android:text="Return" />
 
 
       <TextView

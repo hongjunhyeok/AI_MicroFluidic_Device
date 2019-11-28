@@ -34,6 +34,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.util.TimeUtils;
 import android.view.Menu;
@@ -73,7 +74,7 @@ public class Tutorial2Activity extends Activity implements
 
 	public boolean should_motor_on =false;
 	public boolean FLAG_ENTER=true;
-	public boolean FLAG_FILLED=false    ;
+	public boolean FLAG_FILLED=false;
 	public boolean FLAG_LEAVE=false		;
 	public boolean FLAG_EMPTY=false;
 	public boolean FLAG_INSUFF=false;
@@ -85,7 +86,7 @@ public class Tutorial2Activity extends Activity implements
 
 	public int FLAG_INI_VALUE=0;
 	public double scaleFactor;
-	public int minNeighbors;
+	public int minNeighbors,minNeighborsfill;
 	public boolean ini_F = false;
 	public int ini_R=0, ini_G=0, ini_B=0, ini_GC=0;
 
@@ -218,7 +219,7 @@ public class Tutorial2Activity extends Activity implements
 	Button InitBtn;
 	Button StartBtn;
 	Button StopBtn;
-	Button ReturnBtn;
+	Button ReturnBtn,MeasureBtn;
 	Button thPlsBtn1,thPlsBtn2,thPlsBtn3,thPlsBtn4,thPlsBtn5,thPlsBtn6,thPlsBtn7;
 	Button thmnsBtn1,thmnsBtn2,thmnsBtn3,thmnsBtn4,thmnsBtn5,thmnsBtn6,thmnsBtn7;
 
@@ -257,12 +258,12 @@ public class Tutorial2Activity extends Activity implements
 						InputStream is_enter=getResources().openRawResource(R.raw.maniscus7); //cascade_filled_7
                         InputStream is_filled=getResources().openRawResource(R.raw.filled4020_n);
                         InputStream is_leave=getResources().openRawResource(R.raw.leave2020_); //cascade_empty_6
-                        InputStream is_empty=getResources().openRawResource(R.raw.empty2424); //cempty_4 ok
-						InputStream is_insuff=getResources().openRawResource(R.raw.insuff4040); //cascade_moved
+                        InputStream is_empty=getResources().openRawResource(R.raw.empty4); //cempty_4 ok
+						InputStream is_insuff=getResources().openRawResource(R.raw.insuff1010); //cascade_moved
 						InputStream is_bubble=getResources().openRawResource(R.raw.bubble400); //cascade_moved
 
 
-						scaleFactor=1.11;minNeighbors=5;
+						scaleFactor=1.11;minNeighbors=16;
 
 
 						File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
@@ -397,6 +398,7 @@ public class Tutorial2Activity extends Activity implements
 		StartBtn = (Button) findViewById(R.id.button2);
 		StopBtn = (Button) findViewById(R.id.button3);
 		ReturnBtn = (Button) findViewById(R.id.button6);
+		MeasureBtn=(Button)findViewById(R.id.button7);
 		seekBar=(SeekBar)findViewById(R.id.CameraZoomControls);
 
 
@@ -773,7 +775,7 @@ public class Tutorial2Activity extends Activity implements
 				mViewMode = VIEW_MODE_START;
 //				timerHandler.sendEmptyMessage(MESSAGE_TIMER_START);
 				mHandler.sendEmptyMessage(MESSAGE_TIMER_START);
-
+				Toast.makeText(getApplicationContext(),"Moving Forward",Toast.LENGTH_SHORT).show();
 			}
 		});
 		StopBtn.setOnClickListener(new OnClickListener() {
@@ -824,6 +826,12 @@ public class Tutorial2Activity extends Activity implements
 					Log.i(TAG,"not saved"+e.toString());
 
 				}
+			}
+		});
+		MeasureBtn.setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View v){
+				Toast.makeText(getApplicationContext(),"Moving Back",Toast.LENGTH_LONG).show();
 			}
 		});
 		ReturnBtn.setOnClickListener(new OnClickListener() {
@@ -913,14 +921,14 @@ public class Tutorial2Activity extends Activity implements
                 if(mJavaDetector!=null && mJavaDetector2!=null){
 
                     mN1=17; mN2=40; mN3=10; mN4=10; mN5=2; mN6=2; mN7=5;
-
+                    minNeighborsfill=15;
                     mJavaDetector.detectMultiScale(cropped_img,circle_rect,1.08,0,0,new Size(250,250),new Size());
-					mJavaDetector2.detectMultiScale(detection_zone,enter_rect,1.1,17,0,new Size(),new Size());
-					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,3,0,new Size(),new Size());
-					mJavaDetector4.detectMultiScale(detection_zone,leave_rect,1.1,8,0,new Size(),new Size());
-					mJavaDetector5.detectMultiScale(detection_zone,empty_rect,1.1,3,0,new Size(),new Size());
-					mJavaDetector6.detectMultiScale(detection_zone,insuff_rect,1.1,9,0,new Size(),new Size());
-					mJavaDetector7.detectMultiScale(detection_zone,bubble_rect,1.05,5,0,new Size(5,5),new Size(50,50));
+					mJavaDetector2.detectMultiScale(detection_zone,enter_rect,1.1,minNeighbors,0,new Size(),new Size());
+					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,minNeighborsfill,0,new Size(),new Size());
+					mJavaDetector4.detectMultiScale(detection_zone,leave_rect,1.1,12,0,new Size(),new Size());
+					mJavaDetector5.detectMultiScale(detection_zone,empty_rect,1.1,40,0,new Size(20,20),new Size());
+					mJavaDetector6.detectMultiScale(detection_zone,insuff_rect,1.05,1,0,new Size(14,14),new Size());
+					mJavaDetector7.detectMultiScale(detection_zone,bubble_rect,1.05,4,0,new Size(5,5),new Size(50,50));
 
 				}
 
@@ -973,14 +981,16 @@ public class Tutorial2Activity extends Activity implements
                 if(FLAG_ENTER) {
                     for (int k = 0; k < DetectEnter_array.length; k++) {
 
-                        tl_x = DetectEnter_array[k].tl().x + detectzone_x;
-                        tl_y = DetectEnter_array[k].tl().y + detectzone_y;
-                        br_x = DetectEnter_array[k].br().x + detectzone_x;
-                        br_y = DetectEnter_array[k].br().y + detectzone_y;
 						enter_count+=1;
                         empty_count=0;
-                        if(enter_count>2) {
+                        if(enter_count>1) {
+							tl_x = DetectEnter_array[k].tl().x + detectzone_x;
+							tl_y = DetectEnter_array[k].tl().y + detectzone_y;
+							br_x = DetectEnter_array[k].br().x + detectzone_x;
+							br_y = DetectEnter_array[k].br().y + detectzone_y;
 							detectMessage = "Fluid Entering";
+
+							minNeighborsfill=25;
 							FLAG_EMPTY = false;
 							FLAG_FILLED = true;
 							FLAG_INSUFF=true;
@@ -994,17 +1004,18 @@ public class Tutorial2Activity extends Activity implements
                 }
 
                 if(FLAG_FILLED) {
+
                     for (int k = 0; k < DetectFilled_array.length; k++) {
 //						frame_num=0;
-
-
-                        tl_x = DetectFilled_array[k].tl().x + detectzone_x;
-                        tl_y = DetectFilled_array[k].tl().y + detectzone_y;
-                        br_x = DetectFilled_array[k].br().x + detectzone_x;
-                        br_y = DetectFilled_array[k].br().y + detectzone_y;
+						minNeighbors=15;
                         filled_count+=1;
                         enter_count=0;
-						if(filled_count>2) {
+						if(filled_count>1) {
+
+                            tl_x = DetectFilled_array[k].tl().x + detectzone_x;
+                            tl_y = DetectFilled_array[k].tl().y + detectzone_y;
+                            br_x = DetectFilled_array[k].br().x + detectzone_x;
+                            br_y = DetectFilled_array[k].br().y + detectzone_y;
 
 							detectMessage = "Filled";
 							FLAG_ENTER = false;
@@ -1023,15 +1034,14 @@ public class Tutorial2Activity extends Activity implements
                 if(FLAG_LEAVE) {
                     for (int k = 0; k < DetectLeave_array.length; k++) {
 
-
-                        tl_x = DetectLeave_array[k].tl().x + detectzone_x;
-                        tl_y = DetectLeave_array[k].tl().y + detectzone_y;
-                        br_x = DetectLeave_array[k].br().x + detectzone_x;
-                        br_y = DetectLeave_array[k].br().y + detectzone_y;
 						leave_count+=1;
 						filled_count=0;
-						if(leave_count>2) {
+						if(leave_count>1) {
 
+							tl_x = DetectLeave_array[k].tl().x + detectzone_x;
+							tl_y = DetectLeave_array[k].tl().y + detectzone_y;
+							br_x = DetectLeave_array[k].br().x + detectzone_x;
+							br_y = DetectLeave_array[k].br().y + detectzone_y;
 							detectMessage = "Fluid Leaving";
 							FLAG_FILLED = false;
 							FLAG_EMPTY = true;
@@ -1049,13 +1059,15 @@ public class Tutorial2Activity extends Activity implements
                     for (int k = 0; k < DetectEmpty_array.length; k++) {
 
 
-                        tl_x = DetectEmpty_array[k].tl().x + detectzone_x;
-                        tl_y = DetectEmpty_array[k].tl().y + detectzone_y;
-                        br_x = DetectEmpty_array[k].br().x + detectzone_x;
-                        br_y = DetectEmpty_array[k].br().y + detectzone_y;
+
 						empty_count+=1;
                         leave_count=0;
-                        if(empty_count>2) {
+                        if(empty_count>1) {
+							tl_x = DetectEmpty_array[k].tl().x + detectzone_x;
+							tl_y = DetectEmpty_array[k].tl().y + detectzone_y;
+							br_x = DetectEmpty_array[k].br().x + detectzone_x;
+							br_y = DetectEmpty_array[k].br().y + detectzone_y;
+
 							detectMessage = "Empty";
 							FLAG_LEAVE = false;
 							FLAG_ENTER = true;
@@ -1067,9 +1079,8 @@ public class Tutorial2Activity extends Activity implements
 
                     }
                 }
-                if(FLAG_EMPTY||FLAG_ENTER){
+                if(FLAG_INSUFF){
 				for (int k = 0; k < DetectInsuff_array.length; k++) {
-
 
 					tl_x = DetectInsuff_array[k].tl().x + detectzone_x;
 					tl_y = DetectInsuff_array[k].tl().y + detectzone_y;
@@ -1077,7 +1088,9 @@ public class Tutorial2Activity extends Activity implements
 					br_y = DetectInsuff_array[k].br().y + detectzone_y;
 					Imgproc.rectangle(detection_zone, new Point(tl_x, tl_y), new Point(br_x, br_y), new Scalar(0, 0, 0), 1);
 					detectMessage = "Insufficient Filling ";
-//					FLAG_ENTER=false;
+
+					minNeighborsfill=15;
+					FLAG_ENTER=false;
 					FLAG_FILLED=true;
 					is_in = true;
 
@@ -1088,8 +1101,9 @@ public class Tutorial2Activity extends Activity implements
 					}
 				}
 
-                if(FLAG_FILLED||FLAG_LEAVE) {
+                if(FLAG_BUBBLE) {
 					for (int k = 0; k < DetectBubble_array.length; k++) {
+
 						tl_x = DetectBubble_array[k].tl().x + detectzone_x;
 						tl_y = DetectBubble_array[k].tl().y + detectzone_y;
 						br_x = DetectBubble_array[k].br().x + detectzone_x;
@@ -1200,7 +1214,7 @@ public class Tutorial2Activity extends Activity implements
 			Log.i(TAG,Integer.toString(count));
 			Log.i(TAG,Integer.toString(count));
 
-		if(count<3) {
+		if(count<10) {
 			Imgproc.rectangle(mRgba, new Point(tl_x, tl_y), new Point(br_x, br_y), new Scalar(255, 255, 255), 1);
 			Imgproc.putText(mRgba, detectMessage, new Point(cropped_x +50 , cropped_y + cropped_h+100), 2, 2, new Scalar(0, 0, 0), 3);
 //			Imgproc.rectangle(mRgba,new Point(detectzone_x,detectzone_y),new Point(detectzone_x+detectzone_w,detectzone_y+detectzone_h),new Scalar(255,255,255),1);
