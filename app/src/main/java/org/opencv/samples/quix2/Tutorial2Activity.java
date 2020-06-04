@@ -73,20 +73,20 @@ public class Tutorial2Activity extends Activity implements
 	private int frame_num=0;
 
 	public boolean should_motor_on =false;
-	public boolean FLAG_ENTER=true;
+	public boolean FLAG_ENTER=false;
 	public boolean FLAG_FILLED=false;
 	public boolean FLAG_LEAVE=false		;
-	public boolean FLAG_EMPTY=false;
+	public boolean FLAG_EMPTY=true;
 	public boolean FLAG_INSUFF=false;
 	public boolean FLAG_BUBBLE=false;
 	public boolean is_in=true;
 	public boolean is_empty=false;
 
 
-
+	public int updated_count=0;
 	public int FLAG_INI_VALUE=0;
 	public double scaleFactor;
-	public int minNeighbors,minNeighborsfill;
+	public int minNeighbors,minNeighborsfill,minNeighborsEmpty;
 	public boolean ini_F = false;
 	public int ini_R=0, ini_G=0, ini_B=0, ini_GC=0;
 
@@ -139,11 +139,11 @@ public class Tutorial2Activity extends Activity implements
 
 	public int start_x_2=1360;
 	public int start_y_2=520;
-	public int cropped_x =920;//1070
-	public int cropped_y = 350;
+	public int cropped_x =820;//1070
+	public int cropped_y = 250;
 
-	public int cropped_w = 400;
-	public int cropped_h =400;
+	public int cropped_w = 600;
+	public int cropped_h =600;
 
 
 	public int detectzone_x =0;//1070
@@ -152,7 +152,7 @@ public class Tutorial2Activity extends Activity implements
 	public int detectzone_w = 0;//160
 	public int detectzone_h =0;//100
 
-	public int thickness =2;
+	public int thickness =0;
 
 
 	public int x_width_2=15;
@@ -255,15 +255,15 @@ public class Tutorial2Activity extends Activity implements
 					try {
 						// load cascade file from application resources
 						InputStream is = getResources().openRawResource(R.raw.circle); //cascade_filled_6f
-						InputStream is_enter=getResources().openRawResource(R.raw.maniscus7); //cascade_filled_7
-                        InputStream is_filled=getResources().openRawResource(R.raw.filled4020_n);
-                        InputStream is_leave=getResources().openRawResource(R.raw.leave2020_); //cascade_empty_6
-                        InputStream is_empty=getResources().openRawResource(R.raw.empty4); //cempty_4 ok
-						InputStream is_insuff=getResources().openRawResource(R.raw.insuff1010); //cascade_moved
-						InputStream is_bubble=getResources().openRawResource(R.raw.bubble400); //cascade_moved
+						InputStream is_enter=getResources().openRawResource(R.raw.enter20191226); //maniscus 13
+                        InputStream is_filled=getResources().openRawResource(R.raw.filled20200110);
+                        InputStream is_leave=getResources().openRawResource(R.raw.leave20191226); //cascade_empty_6
+                        InputStream is_empty=getResources().openRawResource(R.raw.empty20191226); //cempty_4 ok
+						InputStream is_insuff=getResources().openRawResource(R.raw.insuff20191226); //cascade_moved
+						InputStream is_bubble=getResources().openRawResource(R.raw.bubble20200108); //cascade_moved
 
 
-						scaleFactor=1.11;minNeighbors=16;
+						scaleFactor=1.11;
 
 
 						File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
@@ -402,164 +402,16 @@ public class Tutorial2Activity extends Activity implements
 		seekBar=(SeekBar)findViewById(R.id.CameraZoomControls);
 
 
-
-//		thPlsBtn1.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				mN1+=1;
-//				Toast.makeText(getApplication(),Integer.toString(mN1),Toast.LENGTH_SHORT).show();
-//				Log.i(TAG,Integer.toString(mN1));
-//			}
-//		});
-//
-//		thPlsBtn2.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				mN2+=1;
-//				Toast.makeText(getApplicationContext(),Integer.toString(mN2),Toast.LENGTH_SHORT).show();
-//
-//			}
-//		});
-//		thPlsBtn3.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				mN3+=1;
-//				Toast.makeText(getApplicationContext(),Integer.toString(mN3),Toast.LENGTH_SHORT).show();
-//
-//			}
-//		});
-//		thPlsBtn4.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				if(sF<2.0)
-//					sF+=0.01;
-//
-//				else
-//					sF+=0.1;
-//
-//				Toast.makeText(getApplicationContext(),Double.toString(sF),Toast.LENGTH_SHORT).show();
-//
-//			}
-//
-//		});
-//		thPlsBtn5.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				mN4+=1;
-//				Toast.makeText(getApplicationContext(),Integer.toString(mN4),Toast.LENGTH_SHORT).show();
-//
-//			}
-//		});
-//		thPlsBtn6.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				mN5+=1;
-//				Toast.makeText(getApplicationContext(),Integer.toString(mN5),Toast.LENGTH_SHORT).show();
-//
-//			}
-//		});
-//		thPlsBtn7.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				mN6+=1;
-//				Toast.makeText(getApplicationContext(),Integer.toString(mN6),Toast.LENGTH_SHORT).show();
-//
-//			}
-//		});
-//
-//
-//		thmnsBtn1.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//
-//				if(mN1>=2)
-//					mN1-=1;
-//				Toast.makeText(getApplicationContext(),Integer.toString(mN1),Toast.LENGTH_SHORT).show();
-//
-//			}
-//		});
-//		thmnsBtn2.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				if(mN2>=2)
-//
-//					mN2-=1;
-//				Toast.makeText(getApplicationContext(),Integer.toString(mN2),Toast.LENGTH_SHORT).show();
-//
-//			}
-//		});
-//		thmnsBtn3.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				if(mN3>=2)
-//
-//					mN3-=1;
-//				Toast.makeText(getApplicationContext(),Integer.toString(mN3),Toast.LENGTH_SHORT).show();
-//
-//			}
-//		});
-//		thmnsBtn5.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				if(mN4>=2)
-//
-//					mN4-=1;
-//				Toast.makeText(getApplicationContext(),Integer.toString(mN4),Toast.LENGTH_SHORT).show();
-//
-//			}
-//		});
-//		thmnsBtn6.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				if(mN5>=2)
-//
-//					mN5-=1;
-//				Toast.makeText(getApplicationContext(),Integer.toString(mN5),Toast.LENGTH_SHORT).show();
-//
-//			}
-//		});
-//		thmnsBtn7.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				if(mN6>=2)
-//
-//					mN6-=1;
-//				Toast.makeText(getApplicationContext(),Integer.toString(mN6),Toast.LENGTH_SHORT).show();
-//
-//			}
-//		});
-//		thmnsBtn4.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//
-//				if(sF<2.0)
-//					sF-=0.01;
-//				else
-//					sF-=0.1;
-//
-//				Log.i("start_down",Integer.toString(start_y));
-//				Toast.makeText(getApplicationContext(),Double.toString(sF),Toast.LENGTH_SHORT).show();
-//
-//
-//			}
-//		});
 		seekBarProgress=seekBar.getProgress();
-
 		mOpenCvCameraView = (Tutorial3View) findViewById(R.id.tutorial2_activity_surface_view);
 		mOpenCvCameraView.setCvCameraViewListener(this);
 		mOpenCvCameraView.setEnabled(true);
 		mOpenCvCameraView.setVisibility(CameraBridgeViewBase.VISIBLE);
 		mOpenCvCameraView.setZoomControl((SeekBar) findViewById(R.id.CameraZoomControls));
-//		zoomcameraview.setZoomControl(seekBar);
-
-
 
 		mTitle = (TextView) findViewById(R.id.textView1);
 		mText = (TextView) findViewById(R.id.textView2);
 		textView_for_th = findViewById(R.id.textView4);
-
-
-
 
 		// Get local Bluetooth adapter
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -621,7 +473,6 @@ public class Tutorial2Activity extends Activity implements
 		super.onResume();
 //      OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0, this,
 //            mLoaderCallback);
-
 		if (!OpenCVLoader.initDebug()) {
 			Log.d(TAG, "Internal OpenCV library not found. Using OpenCV Manager for initialization");
 			OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_4_0, this, mLoaderCallback);
@@ -647,6 +498,8 @@ public class Tutorial2Activity extends Activity implements
 		seekBar.setProgress(35);
 
 	}
+
+
 	@Override
 	public void onCameraViewStopped() {
 
@@ -654,7 +507,7 @@ public class Tutorial2Activity extends Activity implements
 		mRgba.release();
 		mGray.release();
 		mIntermediateMat.release();
-		seekBar.setProgress(35);
+
 
 	}
 
@@ -698,14 +551,15 @@ public class Tutorial2Activity extends Activity implements
 	long curTime=System.currentTimeMillis();
 	long prevTime=0;
 	long secTime=0;
-	float fps=0;
+	float fps;
 	public Mat onCameraFrame(final CvCameraViewFrame inputFrame) {
 		frame_num++;
 		curTime= System.currentTimeMillis();
-		secTime=curTime-prevTime;
+		secTime=(int)curTime-(int)prevTime;
 		prevTime=curTime;
 
-		fps=1000/secTime;
+		if(frame_num%10==0)
+			fps=1000/secTime;
 
 
 
@@ -772,6 +626,7 @@ public class Tutorial2Activity extends Activity implements
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+                minNeighbors=50;
 				mViewMode = VIEW_MODE_START;
 //				timerHandler.sendEmptyMessage(MESSAGE_TIMER_START);
 				mHandler.sendEmptyMessage(MESSAGE_TIMER_START);
@@ -831,7 +686,14 @@ public class Tutorial2Activity extends Activity implements
 		MeasureBtn.setOnClickListener(new View.OnClickListener(){
 			@Override
 			public void onClick(View v){
-				Toast.makeText(getApplicationContext(),"Moving Back",Toast.LENGTH_LONG).show();
+				FLAG_BUBBLE=false;
+				FLAG_EMPTY=true;
+				FLAG_ENTER=false;
+				FLAG_FILLED=false;
+				FLAG_INSUFF=false;
+				FLAG_LEAVE=false;
+				minNeighbors=80;
+				Toast.makeText(getApplicationContext(),"Moving Backward",Toast.LENGTH_LONG).show();
 			}
 		});
 		ReturnBtn.setOnClickListener(new OnClickListener() {
@@ -892,43 +754,47 @@ public class Tutorial2Activity extends Activity implements
 		switch (viewMode) {
 			case VIEW_MODE_RGBA:
 				mRgba = inputFrame.rgba();
-				drawRect();
+//				drawRect();
 				break;
 			case VIEW_MODE_START:
-				thickness=2;
 				mRgba = inputFrame.rgba();
 				mGray =inputFrame.gray();
-				MatOfRect circle_rect =new MatOfRect();
-				MatOfRect enter_rect = new MatOfRect();
-				MatOfRect filled_rect =new MatOfRect();
-				MatOfRect leave_rect =new MatOfRect();
-				MatOfRect empty_rect =new MatOfRect();
-				MatOfRect insuff_rect =new MatOfRect();
-				MatOfRect bubble_rect =new MatOfRect();
+                MatOfRect circle_rect =new MatOfRect();
+                MatOfRect enter_rect = new MatOfRect();
+                MatOfRect filled_rect =new MatOfRect();
+                MatOfRect leave_rect =new MatOfRect();
+                MatOfRect empty_rect =new MatOfRect();
+                MatOfRect insuff_rect =new MatOfRect();
+                MatOfRect bubble_rect =new MatOfRect();
 
 				Point t1= new Point(cropped_x,cropped_y);
 				Point t2= new Point(cropped_x+cropped_w,cropped_y+cropped_h);
 
 				Point tt1=new Point(detectzone_x,detectzone_y);
 				Point tt2=new Point(detectzone_x+detectzone_w,detectzone_y+detectzone_h);
-//				Point tt1= new Point(cropped_x,cropped_y);
-//				Point tt2= new Point(cropped_x+cropped_w,cropped_y+cropped_h);
 
 				cropped_img =new Mat(mGray,new Rect(t1,t2));
 				detection_zone=new Mat(mGray,new Rect(tt1,tt2));
-                Imgproc.putText(mRgba,String.format(Locale.KOREA,"FPS: %.1f",fps),new Point(cropped_x-50,cropped_y-120),1,2,new Scalar(0,0,0),2);
 
                 if(mJavaDetector!=null && mJavaDetector2!=null){
 
                     mN1=17; mN2=40; mN3=10; mN4=10; mN5=2; mN6=2; mN7=5;
-                    minNeighborsfill=15;
-                    mJavaDetector.detectMultiScale(cropped_img,circle_rect,1.08,0,0,new Size(250,250),new Size());
+                    minNeighborsfill=17;minNeighborsEmpty=35;
+                    mJavaDetector.detectMultiScale(cropped_img,circle_rect,1.02,0,0,new Size(250,250),new Size());
 					mJavaDetector2.detectMultiScale(detection_zone,enter_rect,1.1,minNeighbors,0,new Size(),new Size());
-					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,minNeighborsfill,0,new Size(),new Size());
-					mJavaDetector4.detectMultiScale(detection_zone,leave_rect,1.1,12,0,new Size(),new Size());
+					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,220,0,new Size(),new Size());
+					mJavaDetector4.detectMultiScale(detection_zone,leave_rect,1.1,80,0,new Size(),new Size());
 					mJavaDetector5.detectMultiScale(detection_zone,empty_rect,1.1,40,0,new Size(20,20),new Size());
-					mJavaDetector6.detectMultiScale(detection_zone,insuff_rect,1.05,1,0,new Size(14,14),new Size());
-					mJavaDetector7.detectMultiScale(detection_zone,bubble_rect,1.05,4,0,new Size(5,5),new Size(50,50));
+					mJavaDetector6.detectMultiScale(detection_zone,insuff_rect,1.1,40,0,new Size(14,14),new Size());
+					mJavaDetector7.detectMultiScale(detection_zone,bubble_rect,1.1,40,0,new Size(5,5),new Size(50,50));
+
+//					mJavaDetector.detectMultiScale(cropped_img,circle_rect,1.02,0,0,new Size(250,250),new Size());
+//					mJavaDetector2.detectMultiScale(detection_zone,enter_rect,1.1,90,0,new Size(),new Size());
+//					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,275,0,new Size(),new Size());
+//					mJavaDetector4.detectMultiScale(detection_zone,leave_rect,1.1,80,0,new Size(),new Size());
+//					mJavaDetector5.detectMultiScale(detection_zone,empty_rect,1.1,55,0,new Size(20,20),new Size());
+//					mJavaDetector6.detectMultiScale(detection_zone,insuff_rect,1.1,70,0,new Size(14,14),new Size());
+//					mJavaDetector7.detectMultiScale(detection_zone,bubble_rect,1.1,40,0,new Size(5,5),new Size(50,50));
 
 				}
 
@@ -941,15 +807,13 @@ public class Tutorial2Activity extends Activity implements
 				DetectInsuff_array=insuff_rect.toArray();
 				DetectBubble_array=bubble_rect.toArray();
 
-				Mat b = new Mat();
-				Point bubble_array_t1,bubble_array_t2;
 
 
-				if(is_in){
+				if(true){
 					for (int k = 0; k < DetectCircle_array.length; k++) {
-						thickness = 3;
-						double tmp_tl_x=0.0,tmp_tl_y=0.0,tmp_br_x=0.0,tmp_br_y=0.0;
 
+						double tmp_tl_x=0.0,tmp_tl_y=0.0,tmp_br_x=0.0,tmp_br_y=0.0;
+						updated_count+=1;
 
 						tmp_tl_x = DetectCircle_array[k].tl().x + cropped_x;
 						tmp_tl_y = DetectCircle_array[k].tl().y + cropped_y;
@@ -958,20 +822,25 @@ public class Tutorial2Activity extends Activity implements
 
 
 
-						cropped_x=(int)tmp_tl_x-10;
-						cropped_y=(int)tmp_tl_y-10;
-						cropped_w=(int)(tmp_br_x-tmp_tl_x)+20;
-						cropped_h=(int)(tmp_br_y-tmp_tl_y)+20;
-
+						cropped_x=(int)tmp_tl_x-20;
+						cropped_y=(int)tmp_tl_y-20;
+//						cropped_w=(int)(tmp_br_x-tmp_tl_x)+40;
+//						cropped_h=(int)(tmp_br_y-tmp_tl_y)+40;
+						cropped_w=400;
+						cropped_h=400;
 
 //						detectMessage = "Chamber";
 
-						detectzone_x = (int) (tmp_tl_x+cropped_w/6);
-						detectzone_y = (int) (tmp_tl_y+cropped_h/4);
+//						detectzone_x = (int) (tmp_tl_x+cropped_w/6);
+//						detectzone_y = (int) (tmp_tl_y+cropped_h/4);
+//						detectzone_w = 165;
+//						detectzone_h = 141;
+						detectzone_x = (int)((tmp_br_x+tmp_tl_x)/2 - 82);
+						detectzone_y = (int)((tmp_br_y+tmp_tl_y)/2 - 70);
 						detectzone_w = 165;
 						detectzone_h = 141;
 
-						is_in = true;
+						is_in = false;
 						colorSelect=new Scalar(255,0,0);
 						break;
 					}
@@ -988,13 +857,15 @@ public class Tutorial2Activity extends Activity implements
 							tl_y = DetectEnter_array[k].tl().y + detectzone_y;
 							br_x = DetectEnter_array[k].br().x + detectzone_x;
 							br_y = DetectEnter_array[k].br().y + detectzone_y;
+
+							if(enter_count>40){ detectMessage = "Insufficient Filling"; }
 							detectMessage = "Fluid Entering";
 
 							minNeighborsfill=25;
 							FLAG_EMPTY = false;
 							FLAG_FILLED = true;
 							FLAG_INSUFF=true;
-							is_in = true;
+							is_in = false;
 						}
                         break;
                     }
@@ -1007,10 +878,10 @@ public class Tutorial2Activity extends Activity implements
 
                     for (int k = 0; k < DetectFilled_array.length; k++) {
 //						frame_num=0;
-						minNeighbors=15;
+						minNeighbors=120;
                         filled_count+=1;
                         enter_count=0;
-						if(filled_count>1) {
+						if(filled_count>0) {
 
                             tl_x = DetectFilled_array[k].tl().x + detectzone_x;
                             tl_y = DetectFilled_array[k].tl().y + detectzone_y;
@@ -1019,10 +890,10 @@ public class Tutorial2Activity extends Activity implements
 
 							detectMessage = "Filled";
 							FLAG_ENTER = false;
+
+
 							FLAG_LEAVE = true;
-							FLAG_INSUFF=false;
 							FLAG_BUBBLE=true;
-							is_in = true;
 						}
                         break;
 
@@ -1036,6 +907,7 @@ public class Tutorial2Activity extends Activity implements
 
 						leave_count+=1;
 						filled_count=0;
+						bubble_count=0;
 						if(leave_count>1) {
 
 							tl_x = DetectLeave_array[k].tl().x + detectzone_x;
@@ -1043,10 +915,11 @@ public class Tutorial2Activity extends Activity implements
 							br_x = DetectLeave_array[k].br().x + detectzone_x;
 							br_y = DetectLeave_array[k].br().y + detectzone_y;
 							detectMessage = "Fluid Leaving";
-							FLAG_FILLED = false;
+							is_in = false;
+                            minNeighbors=100;
 							FLAG_EMPTY = true;
-							FLAG_BUBBLE=false;
-							is_in = true;
+							FLAG_FILLED = false;
+
 						}
                         break;
 
@@ -1069,9 +942,12 @@ public class Tutorial2Activity extends Activity implements
 							br_y = DetectEmpty_array[k].br().y + detectzone_y;
 
 							detectMessage = "Empty";
+
+
 							FLAG_LEAVE = false;
+							FLAG_BUBBLE = false;
+
 							FLAG_ENTER = true;
-							is_in = true;
 						}
 
                         break;
@@ -1082,90 +958,56 @@ public class Tutorial2Activity extends Activity implements
                 if(FLAG_INSUFF){
 				for (int k = 0; k < DetectInsuff_array.length; k++) {
 
-					tl_x = DetectInsuff_array[k].tl().x + detectzone_x;
-					tl_y = DetectInsuff_array[k].tl().y + detectzone_y;
-					br_x = DetectInsuff_array[k].br().x + detectzone_x;
-					br_y = DetectInsuff_array[k].br().y + detectzone_y;
-					Imgproc.rectangle(detection_zone, new Point(tl_x, tl_y), new Point(br_x, br_y), new Scalar(0, 0, 0), 1);
-					detectMessage = "Insufficient Filling ";
-
-					minNeighborsfill=15;
-					FLAG_ENTER=false;
-					FLAG_FILLED=true;
-					is_in = true;
 
 
+					if(enter_count>3 ) {
+						tl_x = DetectInsuff_array[k].tl().x + detectzone_x;
+						tl_y = DetectInsuff_array[k].tl().y + detectzone_y;
+						br_x = DetectInsuff_array[k].br().x + detectzone_x;
+						br_y = DetectInsuff_array[k].br().y + detectzone_y;
+						detectMessage = "Insufficient Filling ";
+						minNeighborsfill = 15;
 
-					break;
 
+						FLAG_ENTER = false;
+						FLAG_FILLED = true;
+
+
+						break;
+						}
 					}
 				}
 
                 if(FLAG_BUBBLE) {
-					for (int k = 0; k < DetectBubble_array.length; k++) {
 
-						tl_x = DetectBubble_array[k].tl().x + detectzone_x;
-						tl_y = DetectBubble_array[k].tl().y + detectzone_y;
-						br_x = DetectBubble_array[k].br().x + detectzone_x;
-						br_y = DetectBubble_array[k].br().y + detectzone_y;
 
-						Imgproc.rectangle(detection_zone, new Point(tl_x, tl_y), new Point(br_x, br_y), new Scalar(0, 0, 0), 1);
-						detectMessage = "Bubble";
-						FLAG_FILLED=false;
-						FLAG_LEAVE=true;
-						is_in = true;
-						break;
+
+						for (int k = 0; k < DetectBubble_array.length; k++) {
+
+						    bubble_count+=1;
+							if(bubble_count>3) {
+								tl_x = DetectBubble_array[k].tl().x + detectzone_x;
+								tl_y = DetectBubble_array[k].tl().y + detectzone_y;
+								br_x = DetectBubble_array[k].br().x + detectzone_x;
+								br_y = DetectBubble_array[k].br().y + detectzone_y;
+
+								Imgproc.rectangle(detection_zone, new Point(tl_x, tl_y), new Point(br_x, br_y), new Scalar(0, 0, 0), 1);
+
+								detectMessage = "Bubble";
+
+								FLAG_FILLED = false;
+								FLAG_INSUFF=false;
+								FLAG_EMPTY = true;
+
+
+								break;
+							}
 					}
 				}
 
 
-				// input frame has gray scale format
-				//+3 , -3 : because of Roi Thickness
-				for (int i = Roi_chamber.x+3; i < Roi_chamber.x + Roi_chamber.width-3; i++)
-					for (int j = Roi_chamber.y+3; j < Roi_chamber.y + Roi_chamber.height-3; j++) {
-						double[] rgbV = mRgba.get(j, i);
-						avgR += rgbV[0];
-						avgG += rgbV[1];
-						avgB += rgbV[2];
-					}
-				avgR = avgR / (Roi_chamber.width * Roi_chamber.height);
-				avgG = avgG / (Roi_chamber.width * Roi_chamber.height);
-				avgB = avgB / (Roi_chamber.width * Roi_chamber.height);
-
-				RGB_data_array[0]=avgR;
-				RGB_data_array[1]=avgG;
-				RGB_data_array[2]=avgB;
-
-
-
-				Text_RGB=("R : "+RGB_data_array[0]+" G : "+RGB_data_array[1]+" B : "+RGB_data_array[2]);
-
-				Text_RGB_2=("R : "+RGB_data_array[0]+" G : "+RGB_data_array[1]+" B : "+RGB_data_array[2]);
-
-				hue_value = calculateHue.getH(RGB_data_array);
-				hue_value_2f=Double.parseDouble(String.format("%.2f",hue_value));
-				point_hue  = new Point (cropped_x-50,cropped_y-40);
-
-				Text_hue= ("H :  "+hue_value_2f);
-				Text_for_R+=Integer.toString(RGB_data_array[0])+" ";
-				Text_for_G+=Integer.toString(RGB_data_array[1])+" ";
-				Text_for_B+=Integer.toString(RGB_data_array[2])+" ";
-
-
-
-				point_rgb = new Point (cropped_x-50,cropped_y-80);
-//         Point point_rgb_2 = new Point (start_x-150,start_y+90);
-
-				fontColor = new Scalar(0, 0, 0);
-				Imgproc.putText(mRgba,Text_hue,point_hue,1,2,fontColor,2);
-
-				Imgproc.putText(mRgba,Text_RGB,point_rgb,1,2,fontColor,2);
-
-
 				drawRect();
 
-				movingGo();
-				Log.i("handlerMessage",sendMsg);
 
 				break;
 
@@ -1214,16 +1056,20 @@ public class Tutorial2Activity extends Activity implements
 			Log.i(TAG,Integer.toString(count));
 			Log.i(TAG,Integer.toString(count));
 
-		if(count<10) {
+		if(count<3) {
 			Imgproc.rectangle(mRgba, new Point(tl_x, tl_y), new Point(br_x, br_y), new Scalar(255, 255, 255), 1);
 			Imgproc.putText(mRgba, detectMessage, new Point(cropped_x +50 , cropped_y + cropped_h+100), 2, 2, new Scalar(0, 0, 0), 3);
-//			Imgproc.rectangle(mRgba,new Point(detectzone_x,detectzone_y),new Point(detectzone_x+detectzone_w,detectzone_y+detectzone_h),new Scalar(255,255,255),1);
 			Imgproc.rectangle(mRgba,p,p_to,new Scalar(255,255,255),2);
 
 		}
 
-		Imgproc.rectangle(mRgba,new Point(cropped_x,cropped_y),new Point(cropped_x+cropped_w,cropped_y+cropped_h),colorSelect,thickness);
-		Imgproc.rectangle(mRgba,new Point(detectzone_x,detectzone_y),new Point(detectzone_x+detectzone_w,detectzone_y+detectzone_h),new Scalar(255,255,255),1);
+
+
+		
+            Imgproc.rectangle(mRgba, new Point(cropped_x, cropped_y), new Point(cropped_x + cropped_w, cropped_y + cropped_h), colorSelect, thickness);
+            Imgproc.putText(mRgba, String.format(Locale.KOREA, "FPS: %.1f", fps), new Point(cropped_x, cropped_y - 20), 1, 2, new Scalar(0, 0, 0), 2);
+
+            Imgproc.rectangle(mRgba,new Point(detectzone_x,detectzone_y),new Point(detectzone_x+detectzone_w,detectzone_y+detectzone_h),new Scalar(255,255,255),1);
 }
 
 	private final  Handler mHandler = new Handler() {
@@ -1351,8 +1197,7 @@ public class Tutorial2Activity extends Activity implements
 
 			//To calculate hue value
 //			Double test = new Double();
-//			CalculateHue calculateHue = new CalculateHue();
-
+			CalculateHue calculateHue = new CalculateHue();
 			if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
 				String con = new String("GO" + "\n");
 				try {
