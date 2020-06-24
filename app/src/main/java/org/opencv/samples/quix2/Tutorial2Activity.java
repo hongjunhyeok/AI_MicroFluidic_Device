@@ -57,6 +57,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class Tutorial2Activity extends Activity implements
@@ -65,6 +66,7 @@ public class Tutorial2Activity extends Activity implements
 	Zoomcameraview zoomcameraview;
 
 	Thread threadDelay;
+	TimerHandler timerHandler = new TimerHandler();
 
 
 	private int RGB_data_array[]=new int[3];
@@ -74,11 +76,14 @@ public class Tutorial2Activity extends Activity implements
 
 	public boolean should_motor_on =false;
 	public boolean FLAG_ENTER=false;
-	public boolean FLAG_FILLED=false;
+	public boolean FLAG_FILLED=true;
 	public boolean FLAG_LEAVE=false		;
 	public boolean FLAG_EMPTY=true;
 	public boolean FLAG_INSUFF=false;
 	public boolean FLAG_BUBBLE=false;
+
+
+
 	public boolean is_in=true;
 	public boolean is_empty=false;
 
@@ -106,7 +111,7 @@ public class Tutorial2Activity extends Activity implements
 	private static final int MESSAGE_TIMER_START=100;
 	private static final int MESSAGE_TIMER_REPEAT=101;
 	private static final int MESSAGE_TIMER_STOP=102;
-
+	int timer_counter;
 
 
 	private static final int COLOR_RED = 0;
@@ -128,6 +133,7 @@ public class Tutorial2Activity extends Activity implements
 	public double br_y=0.0;
 
 	public String detectMessage="";
+	public String BTMessage="";
 
 	public int seekBarProgress;
 	public int thresholdProgress;
@@ -628,8 +634,12 @@ public class Tutorial2Activity extends Activity implements
 				// TODO Auto-generated method stub
                 minNeighbors=50;
 				mViewMode = VIEW_MODE_START;
-//				timerHandler.sendEmptyMessage(MESSAGE_TIMER_START);
-				mHandler.sendEmptyMessage(MESSAGE_TIMER_START);
+
+
+
+
+				timerHandler.sendEmptyMessage(MESSAGE_TIMER_START);
+
 				Toast.makeText(getApplicationContext(),"Moving Forward",Toast.LENGTH_SHORT).show();
 			}
 		});
@@ -639,48 +649,10 @@ public class Tutorial2Activity extends Activity implements
 				// TODO Auto-generated method stub
 				mViewMode = VIEW_MODE_STOP;
 
-				if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
-					String con = new String("STOP" + "\n");
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					if(!sendMsg.equals(con)){
-						sendMessage(con);
-						sendMsg = con;}
-				}
 
 				mText.setTextSize(20);
 
-				path = Environment.getExternalStorageDirectory()
-						+ "/android/data/org.opencv.samples.quix2/test";
-				file = new File(path);
-				Log.i(TAG,path);
-				if (!file.exists())
-					file.mkdirs();
-				try {
-					Date currentTime = Calendar.getInstance().getTime();
-					FileOutputStream fos = new FileOutputStream(path+"/"+currentTime+".txt", true);
-					BufferedWriter buf = new BufferedWriter(new OutputStreamWriter(fos));
-
-					buf.newLine(); // 개행
-					buf.write(Text_for_R);
-					buf.newLine(); // 개행
-					buf.write(Text_for_G);
-					buf.newLine();
-					buf.write(Text_for_B);
-					buf.newLine();
 //
-					Log.i(TAG,"saved");
-					buf.close();
-					fos.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-					Log.i(TAG,"not saved"+e.toString());
-
-				}
 			}
 		});
 		MeasureBtn.setOnClickListener(new View.OnClickListener(){
@@ -782,7 +754,7 @@ public class Tutorial2Activity extends Activity implements
                     minNeighborsfill=17;minNeighborsEmpty=35;
                     mJavaDetector.detectMultiScale(cropped_img,circle_rect,1.02,0,0,new Size(250,250),new Size());
 					mJavaDetector2.detectMultiScale(detection_zone,enter_rect,1.1,minNeighbors,0,new Size(),new Size());
-					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,220,0,new Size(),new Size());
+					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,0,0,new Size(),new Size());
 					mJavaDetector4.detectMultiScale(detection_zone,leave_rect,1.1,80,0,new Size(),new Size());
 					mJavaDetector5.detectMultiScale(detection_zone,empty_rect,1.1,40,0,new Size(20,20),new Size());
 					mJavaDetector6.detectMultiScale(detection_zone,insuff_rect,1.1,40,0,new Size(14,14),new Size());
@@ -857,9 +829,9 @@ public class Tutorial2Activity extends Activity implements
 							tl_y = DetectEnter_array[k].tl().y + detectzone_y;
 							br_x = DetectEnter_array[k].br().x + detectzone_x;
 							br_y = DetectEnter_array[k].br().y + detectzone_y;
-
-							if(enter_count>40){ detectMessage = "Insufficient Filling"; }
 							detectMessage = "Fluid Entering";
+							if(enter_count>40){ detectMessage = "Insufficient Filling"; }
+
 
 							minNeighborsfill=25;
 							FLAG_EMPTY = false;
@@ -892,8 +864,41 @@ public class Tutorial2Activity extends Activity implements
 							FLAG_ENTER = false;
 
 
+
+							//FILLED가 한번 나온경우, STOP MESSAGE 보내고 타이머동작
+							if(!FLAG_LEAVE) {
+								movingStop(10);
+								final TimerTask tt=new TimerTask() {
+									@Override
+									public void run() {
+										timer_counter++;
+
+										Log.i(TAG,String.format("TIMERTASK %d",timer_counter));
+										mTitle.setText(String.format("Time Left to start : %d s",timer_counter));
+										if(timer_counter>40)
+										{
+											movingGo(10);
+											timer_counter=0;
+
+										}
+									}
+								};
+
+								Timer timer=new Timer();
+								timer.schedule(tt,0,1000);
+
+							}
+
+
 							FLAG_LEAVE = true;
 							FLAG_BUBBLE=true;
+
+
+
+
+
+
+
 						}
                         break;
 
@@ -1043,7 +1048,7 @@ public class Tutorial2Activity extends Activity implements
 		p_to.y=cropped_y + cropped_h+100;
 
 
-		Log.i(TAG,String.format("%d %d",(int)writingx,(int)tl_x));
+//		Log.i(TAG,String.format("%d %d",(int)writingx,(int)tl_x));
 
 		if((int)writingx==(int)tl_x){
 			writingx=tl_x;
@@ -1053,8 +1058,7 @@ public class Tutorial2Activity extends Activity implements
 			count=0;
 		}
 
-			Log.i(TAG,Integer.toString(count));
-			Log.i(TAG,Integer.toString(count));
+
 
 		if(count<3) {
 			Imgproc.rectangle(mRgba, new Point(tl_x, tl_y), new Point(br_x, br_y), new Scalar(255, 255, 255), 1);
@@ -1289,94 +1293,112 @@ public class Tutorial2Activity extends Activity implements
 		mhandler.removeCallbacks(mRunnable);
 	}
 
-	Runnable delayStart = new Runnable() {
+
+
+
+
+	public void movingStop(int milliseconds){
+
+		if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
+			BTMessage="STOP";
+			Log.i(TAG,BTMessage);
+			String con = new String(BTMessage + "\n");
+			try {
+				Thread.sleep(milliseconds);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			if(!sendMsg.equals(con)){
+				Log.i("con_message",con);
+
+				sendMessage(con);
+
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				sendMsg = con;
+			}
+
+
+
+		}
+	}
+
+
+	public void movingGo(int milliseconds){
+		if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
+			BTMessage="GO";
+			Log.i(TAG,BTMessage);
+
+			String con = new String(BTMessage + "\n");
+			try {
+				Thread.sleep(milliseconds);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			if(!sendMsg.equals(con)){
+				Log.i("con_message",con);
+
+				sendMessage(con);
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				sendMsg = con;
+
+
+			}
+
+
+		}
+	}
+
+
+
+
+	private  class TimerHandler extends Handler{
 		@Override
-		public void run() {
-			StartBtn.performClick();
-			frame_num=0;
+		public void handleMessage(Message msg) {
 
-			Toast.makeText(getApplicationContext(),
-					"Fluid Flowing",
-					Toast.LENGTH_SHORT).show();
-
-		}
-	};
+			switch (msg.what){
+				case MESSAGE_TIMER_START:
+					timer_counter=0;
+					this.removeMessages(MESSAGE_TIMER_REPEAT);
+					this.sendEmptyMessage(MESSAGE_TIMER_REPEAT);
+					break;
 
 
 
-	public void delayState(){
-		mhandler.postDelayed(delayStart,10000);
-	}
-	public void movingStop(){
 
-		if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
-			String con = new String("STOP" + "\n");
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+					//180초동안 대기
+				case MESSAGE_TIMER_REPEAT:
+					if(timer_counter>50) {
+						movingGo(10);
+						this.sendEmptyMessageDelayed(MESSAGE_TIMER_STOP, 1000);
+					}
+
+					timer_counter+=1;
+
+					Log.i(TAG,String.format("TImer counter %d",timer_counter));
+					this.sendEmptyMessageDelayed(MESSAGE_TIMER_REPEAT,1000);
+
+					//GO 명령내리고 타이머 소멸
+				case MESSAGE_TIMER_STOP:
+
+					this.removeMessages(MESSAGE_TIMER_REPEAT);
+					break;
 			}
-
-			if(!sendMsg.equals(con)){
-				Log.i("con_message",con);
-
-				sendMessage(con);
-				mViewMode=VIEW_MODE_STOP;
-
-				try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				sendMsg = con;
-				onStop();
-
-
-
-			}
-
-			delayState();
-
 		}
 	}
-
-
-	public void movingGo(){
-
-		if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
-			String con = new String("GO" + "\n");
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			if(!sendMsg.equals(con)){
-				Log.i("con_message",con);
-
-				sendMessage(con);
-				try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				sendMsg = con;
-
-				mViewMode=VIEW_MODE_START;
-
-
-			}
-
-
-		}
-	}
-
-
 
 }
