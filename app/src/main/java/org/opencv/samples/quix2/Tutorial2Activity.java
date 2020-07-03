@@ -632,6 +632,7 @@ public class Tutorial2Activity extends Activity implements
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				movingGo(10);
                 minNeighbors=50;
 				mViewMode = VIEW_MODE_START;
 
@@ -675,7 +676,7 @@ public class Tutorial2Activity extends Activity implements
 
 				FLAG_INI_VALUE=0;
 				ini_F = false;
-
+				movingBack(10);
 
 				// TODO Auto-generated method stub
 				if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
@@ -754,7 +755,7 @@ public class Tutorial2Activity extends Activity implements
                     minNeighborsfill=17;minNeighborsEmpty=35;
                     mJavaDetector.detectMultiScale(cropped_img,circle_rect,1.02,0,0,new Size(250,250),new Size());
 					mJavaDetector2.detectMultiScale(detection_zone,enter_rect,1.1,minNeighbors,0,new Size(),new Size());
-					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,0,0,new Size(),new Size());
+					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,220,0,new Size(),new Size());
 					mJavaDetector4.detectMultiScale(detection_zone,leave_rect,1.1,80,0,new Size(),new Size());
 					mJavaDetector5.detectMultiScale(detection_zone,empty_rect,1.1,40,0,new Size(20,20),new Size());
 					mJavaDetector6.detectMultiScale(detection_zone,insuff_rect,1.1,40,0,new Size(14,14),new Size());
@@ -874,12 +875,25 @@ public class Tutorial2Activity extends Activity implements
 										timer_counter++;
 
 										Log.i(TAG,String.format("TIMERTASK %d",timer_counter));
-										mTitle.setText(String.format("Time Left to start : %d s",timer_counter));
-										if(timer_counter>40)
+
+										runOnUiThread(new Runnable() {
+											@Override
+											public void run() {
+												mTitle.setText(String.format("Time left to start\n %d s",9-timer_counter));
+											}
+										});
+										if(timer_counter>=9)
 										{
 											movingGo(10);
 											timer_counter=0;
+											this.cancel();
 
+											runOnUiThread(new Runnable() {
+												@Override
+												public void run() {
+													mTitle.setText(String.format("GO"));
+												}
+											});
 										}
 									}
 								};
@@ -909,6 +923,9 @@ public class Tutorial2Activity extends Activity implements
 
                 if(FLAG_LEAVE) {
                     for (int k = 0; k < DetectLeave_array.length; k++) {
+
+
+
 
 						leave_count+=1;
 						filled_count=0;
@@ -1362,7 +1379,38 @@ public class Tutorial2Activity extends Activity implements
 
 		}
 	}
+	public void movingBack(int milliseconds){
+		if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
+			BTMessage="RETURN";
+			Log.i(TAG,BTMessage);
 
+			String con = new String(BTMessage + "\n");
+			try {
+				Thread.sleep(milliseconds);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			if(!sendMsg.equals(con)){
+				Log.i("con_message",con);
+
+				sendMessage(con);
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				sendMsg = con;
+
+
+			}
+
+
+		}
+	}
 
 
 
