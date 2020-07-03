@@ -28,6 +28,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
@@ -35,6 +36,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.TimeUtils;
 import android.view.Menu;
@@ -421,6 +423,16 @@ public class Tutorial2Activity extends Activity implements
 
 		// Get local Bluetooth adapter
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+
+		if (!hasPermissions(PERMISSIONS)) {
+
+			//퍼미션 허가 안되어있다면 사용자에게 요청
+			requestPermissions(PERMISSIONS, PERMISSIONS_REQUEST_CODE);
+		}
+
+
+
 
 		// If the adapter is null, then Bluetooth is not supported
 		if (mBluetoothAdapter == null) {
@@ -1411,6 +1423,29 @@ public class Tutorial2Activity extends Activity implements
 
 		}
 	}
+
+
+	//////////////////////////////// 퍼미션 관련 메소드///////////////////////////////////////
+	static final int PERMISSIONS_REQUEST_CODE = 1000;
+	String[] PERMISSIONS = {"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"};
+	private boolean hasPermissions(String[] permissions) {
+		int result;
+
+		//스트링 배열에 있는 퍼미션들의 허가 상태 여부 확인
+		for (String perms : permissions) {
+
+			result = ContextCompat.checkSelfPermission(this, perms);
+
+			if (result == PackageManager.PERMISSION_DENIED) {
+				//허가 안된 퍼미션 발견
+				return false;
+			}
+		}
+
+		//모든 퍼미션이 허가되었음
+		return true;
+	}
+	/////////////////////////////////퍼미션 관련 메소드///////////////////////////////////////
 
 
 
