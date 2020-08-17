@@ -1,231 +1,231 @@
 -- Merging decision tree log ---
 manifest
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:2:1-64:12
-INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml:2:1-64:12
-INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml:2:1-64:12
-INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml:2:1-64:12
-MERGED from [:opencv] F:\Quix22\opencv\build\intermediates\manifests\full\debug\AndroidManifest.xml:2:1-11:12
-MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\ff841aef4c038ae6c88617e74aed1774\AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.3.aar\f48c519ed6b0a241ec9c3e7fc68a3391\AndroidManifest.xml:2:1-11:12
-MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.1.0.aar\246d77e03cf1d29df9e3f7f6daa7b47d\AndroidManifest.xml:17:1-28:12
-MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.1.0.aar\e2c51d59ce4084a3e6ac925d3732bb64\AndroidManifest.xml:17:1-28:12
-MERGED from [com.android.support:support-v4:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-v4-26.1.0.aar\32758482eebbd2647406d6efa95fb49a\AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.1.0.aar\14e1db373161c021f2953891bbda5de2\AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-fragment-26.1.0.aar\fa8784fd4c7f0eb0da870f84765cf1ed\AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.1.0.aar\04e6ac5e75167862ee23463d17f51a44\AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.1.0.aar\7b069057e2b038eeb8fb7f600c5a7a86\AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-compat:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-compat-26.1.0.aar\350c1f61c7b1cbb3fc57a8ed3643095f\AndroidManifest.xml:17:1-31:12
-MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\eb9f473c8de19e74b306fa9c424c2661\AndroidManifest.xml:17:1-30:12
-INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml:2:1-64:12
-INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml:2:1-64:12
-INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml:2:1-64:12
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:2:1-62:12
+INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:2:1-62:12
+INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:2:1-62:12
+INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:2:1-62:12
+MERGED from [:opencv] C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\opencv\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\5c958de0876c3d629dad806867f488f2\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\f74253933970067e71d8ea3a8ebcff85\AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\6116ca2c04f925526345aff8c2d19950\AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\c5ba4a3e5980d76b990f2d9480eaa2be\AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:support-v4:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\2dffe4e340d859bc6786281f051cd097\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\a77e8b9ba37d8c7c82c7ae01472718b7\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\c6222611343ae510bff47fa273154670\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\d2221ae48e8f289ce77c4fd6817fdec5\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\0722190da9b37af7146321f1e17f3f19\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-compat:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\5b4dd1e18dd417fb2a59f6ef3c588fd3\AndroidManifest.xml:17:1-31:12
+MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\04893e59877ba70b23b6a9161ef292b1\AndroidManifest.xml:17:1-30:12
+INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:2:1-62:12
+INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:2:1-62:12
+INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:2:1-62:12
 	package
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:3:5-39
-		INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml
-		INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:3:5-39
+		INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml
 	android:versionName
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:5:5-30
-		INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml
-		INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:5:5-30
+		INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:2:11-69
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:2:11-69
 	android:versionCode
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:4:5-29
-		INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml
-		INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml
-uses-sdk
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:7:5-44
-INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml:7:5-44
-INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml:7:5-44
-MERGED from [:opencv] F:\Quix22\opencv\build\intermediates\manifests\full\debug\AndroidManifest.xml:7:5-9:41
-MERGED from [:opencv] F:\Quix22\opencv\build\intermediates\manifests\full\debug\AndroidManifest.xml:7:5-9:41
-MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\ff841aef4c038ae6c88617e74aed1774\AndroidManifest.xml:21:5-23:78
-MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\ff841aef4c038ae6c88617e74aed1774\AndroidManifest.xml:21:5-23:78
-MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.3.aar\f48c519ed6b0a241ec9c3e7fc68a3391\AndroidManifest.xml:5:5-7:41
-MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.3.aar\f48c519ed6b0a241ec9c3e7fc68a3391\AndroidManifest.xml:5:5-7:41
-MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.1.0.aar\246d77e03cf1d29df9e3f7f6daa7b47d\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.1.0.aar\246d77e03cf1d29df9e3f7f6daa7b47d\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.1.0.aar\e2c51d59ce4084a3e6ac925d3732bb64\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.1.0.aar\e2c51d59ce4084a3e6ac925d3732bb64\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-v4:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-v4-26.1.0.aar\32758482eebbd2647406d6efa95fb49a\AndroidManifest.xml:21:5-23:54
-MERGED from [com.android.support:support-v4:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-v4-26.1.0.aar\32758482eebbd2647406d6efa95fb49a\AndroidManifest.xml:21:5-23:54
-MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.1.0.aar\14e1db373161c021f2953891bbda5de2\AndroidManifest.xml:21:5-23:63
-MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.1.0.aar\14e1db373161c021f2953891bbda5de2\AndroidManifest.xml:21:5-23:63
-MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-fragment-26.1.0.aar\fa8784fd4c7f0eb0da870f84765cf1ed\AndroidManifest.xml:21:5-23:60
-MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-fragment-26.1.0.aar\fa8784fd4c7f0eb0da870f84765cf1ed\AndroidManifest.xml:21:5-23:60
-MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.1.0.aar\04e6ac5e75167862ee23463d17f51a44\AndroidManifest.xml:21:5-23:61
-MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.1.0.aar\04e6ac5e75167862ee23463d17f51a44\AndroidManifest.xml:21:5-23:61
-MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.1.0.aar\7b069057e2b038eeb8fb7f600c5a7a86\AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.1.0.aar\7b069057e2b038eeb8fb7f600c5a7a86\AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-compat:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-compat-26.1.0.aar\350c1f61c7b1cbb3fc57a8ed3643095f\AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-compat:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-compat-26.1.0.aar\350c1f61c7b1cbb3fc57a8ed3643095f\AndroidManifest.xml:21:5-23:58
-MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\eb9f473c8de19e74b306fa9c424c2661\AndroidManifest.xml:20:5-22:41
-MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\eb9f473c8de19e74b306fa9c424c2661\AndroidManifest.xml:20:5-22:41
-INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml:7:5-44
-INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml:7:5-44
-	tools:overrideLibrary
-		ADDED from [com.android.support:appcompat-v7:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\ff841aef4c038ae6c88617e74aed1774\AndroidManifest.xml:23:9-75
-	android:targetSdkVersion
-		INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:7:5-44
-		INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml
-	android:minSdkVersion
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:7:15-41
-		INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml
-		INJECTED from F:\Quix22\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:4:5-29
+		INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml
 uses-permission#android.permission.WAKE_LOCK
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:10:5-68
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:8:5-68
 	android:name
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:10:22-65
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:8:22-65
 uses-permission#com.google.android.wearable.permission.RECEIVE_COMPLICATION_DATA
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:13:5-104
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:11:5-104
 	android:name
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:13:22-101
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:11:22-101
 supports-screens
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:15:5-20:39
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:13:5-18:39
 	android:largeScreens
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:17:9-36
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:15:9-36
 	android:smallScreens
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:20:9-36
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:18:9-36
 	android:normalScreens
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:18:9-37
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:16:9-37
 	android:resizeable
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:19:9-34
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:17:9-34
 	android:anyDensity
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:16:9-34
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:14:9-34
 uses-permission#android.permission.CAMERA
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:22:5-65
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:20:5-65
 	android:name
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:22:22-62
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:20:22-62
 uses-permission#android.permission.BLUETOOTH_ADMIN
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:23:5-74
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:21:5-74
 	android:name
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:23:22-71
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:21:22-71
 uses-permission#android.permission.BLUETOOTH
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:24:5-68
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:22:5-68
 	android:name
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:24:22-65
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:22:22-65
 uses-permission#android.permission.FLASHLIGHT
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:25:5-69
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:23:5-69
 	android:name
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:25:22-66
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:23:22-66
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:26:5-81
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:24:5-81
 	android:name
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:26:22-78
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:24:22-78
 uses-feature#android.hardware.camera.flash
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:28:5-30:36
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:26:5-28:36
 	android:required
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:30:9-33
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:28:9-33
 	android:name
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:29:9-53
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:27:9-53
 uses-feature#android.hardware.camera
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:31:5-60
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:29:5-60
 	android:name
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:31:19-57
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:29:19-57
 uses-feature#android.hardware.camera.autofocus
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:32:5-34:36
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:30:5-32:36
 	android:required
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:34:9-33
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:32:9-33
 	android:name
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:33:9-57
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:31:9-57
 uses-feature#android.hardware.camera.front
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:35:5-37:36
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:33:5-35:36
 	android:required
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:37:9-33
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:35:9-33
 	android:name
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:36:9-53
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:34:9-53
 uses-feature#android.hardware.camera.front.autofocus
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:38:5-40:36
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:36:5-38:36
 	android:required
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:40:9-33
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:38:9-33
 	android:name
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:39:9-63
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:37:9-63
 application
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:42:5-62:19
-MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\ff841aef4c038ae6c88617e74aed1774\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\ff841aef4c038ae6c88617e74aed1774\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.3.aar\f48c519ed6b0a241ec9c3e7fc68a3391\AndroidManifest.xml:9:5-20
-MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.3.aar\f48c519ed6b0a241ec9c3e7fc68a3391\AndroidManifest.xml:9:5-20
-MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.1.0.aar\246d77e03cf1d29df9e3f7f6daa7b47d\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.1.0.aar\246d77e03cf1d29df9e3f7f6daa7b47d\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.1.0.aar\e2c51d59ce4084a3e6ac925d3732bb64\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.1.0.aar\e2c51d59ce4084a3e6ac925d3732bb64\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:support-v4:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-v4-26.1.0.aar\32758482eebbd2647406d6efa95fb49a\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-v4:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-v4-26.1.0.aar\32758482eebbd2647406d6efa95fb49a\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.1.0.aar\14e1db373161c021f2953891bbda5de2\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.1.0.aar\14e1db373161c021f2953891bbda5de2\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-fragment-26.1.0.aar\fa8784fd4c7f0eb0da870f84765cf1ed\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-fragment-26.1.0.aar\fa8784fd4c7f0eb0da870f84765cf1ed\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.1.0.aar\04e6ac5e75167862ee23463d17f51a44\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.1.0.aar\04e6ac5e75167862ee23463d17f51a44\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.1.0.aar\7b069057e2b038eeb8fb7f600c5a7a86\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.1.0.aar\7b069057e2b038eeb8fb7f600c5a7a86\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-compat:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-compat-26.1.0.aar\350c1f61c7b1cbb3fc57a8ed3643095f\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-compat:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-compat-26.1.0.aar\350c1f61c7b1cbb3fc57a8ed3643095f\AndroidManifest.xml:25:5-29:19
-MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\eb9f473c8de19e74b306fa9c424c2661\AndroidManifest.xml:24:5-28:19
-MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\eb9f473c8de19e74b306fa9c424c2661\AndroidManifest.xml:24:5-28:19
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:40:5-60:19
+MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\5c958de0876c3d629dad806867f488f2\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\5c958de0876c3d629dad806867f488f2\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\f74253933970067e71d8ea3a8ebcff85\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\f74253933970067e71d8ea3a8ebcff85\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\6116ca2c04f925526345aff8c2d19950\AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\6116ca2c04f925526345aff8c2d19950\AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\c5ba4a3e5980d76b990f2d9480eaa2be\AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\c5ba4a3e5980d76b990f2d9480eaa2be\AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:support-v4:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\2dffe4e340d859bc6786281f051cd097\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-v4:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\2dffe4e340d859bc6786281f051cd097\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\a77e8b9ba37d8c7c82c7ae01472718b7\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\a77e8b9ba37d8c7c82c7ae01472718b7\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\c6222611343ae510bff47fa273154670\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\c6222611343ae510bff47fa273154670\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\d2221ae48e8f289ce77c4fd6817fdec5\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\d2221ae48e8f289ce77c4fd6817fdec5\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\0722190da9b37af7146321f1e17f3f19\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\0722190da9b37af7146321f1e17f3f19\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-compat:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\5b4dd1e18dd417fb2a59f6ef3c588fd3\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-compat:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\5b4dd1e18dd417fb2a59f6ef3c588fd3\AndroidManifest.xml:25:5-29:19
+MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\04893e59877ba70b23b6a9161ef292b1\AndroidManifest.xml:24:5-28:19
+MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\04893e59877ba70b23b6a9161ef292b1\AndroidManifest.xml:24:5-28:19
 	android:label
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:44:9-41
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:42:9-41
 	android:icon
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:43:9-38
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:41:9-38
 	android:theme
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:45:9-67
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:43:9-67
 activity#org.opencv.samples.quix2.Tutorial2Activity
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:46:9-56:20
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:44:9-54:20
 	android:screenOrientation
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:50:13-50
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:48:13-50
 	android:label
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:49:13-45
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:47:13-45
 	android:configChanges
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:48:13-63
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:46:13-63
 	android:name
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:47:13-46
-intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:51:13-55:29
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:45:13-46
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:49:13-53:29
 action#android.intent.action.MAIN
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:52:17-69
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:50:17-69
 	android:name
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:52:25-66
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:50:25-66
 category#android.intent.category.LAUNCHER
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:54:17-77
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:52:17-77
 	android:name
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:54:27-74
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:52:27-74
 activity#org.opencv.samples.quix2.DeviceListActivity
-ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:57:9-61:59
+ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:55:9-59:59
 	android:label
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:60:13-50
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:58:13-50
 	android:configChanges
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:59:13-63
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:57:13-63
 	android:theme
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:61:13-56
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:59:13-56
 	android:name
-		ADDED from F:\Quix22\app\src\main\AndroidManifest.xml:58:13-47
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml:56:13-47
+uses-sdk
+INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml
+MERGED from [:opencv] C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\opencv\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
+MERGED from [:opencv] C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\opencv\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\5c958de0876c3d629dad806867f488f2\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\5c958de0876c3d629dad806867f488f2\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\f74253933970067e71d8ea3a8ebcff85\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\f74253933970067e71d8ea3a8ebcff85\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\6116ca2c04f925526345aff8c2d19950\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\6116ca2c04f925526345aff8c2d19950\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\c5ba4a3e5980d76b990f2d9480eaa2be\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\c5ba4a3e5980d76b990f2d9480eaa2be\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\2dffe4e340d859bc6786281f051cd097\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-v4:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\2dffe4e340d859bc6786281f051cd097\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\a77e8b9ba37d8c7c82c7ae01472718b7\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\a77e8b9ba37d8c7c82c7ae01472718b7\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\c6222611343ae510bff47fa273154670\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\c6222611343ae510bff47fa273154670\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\d2221ae48e8f289ce77c4fd6817fdec5\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\d2221ae48e8f289ce77c4fd6817fdec5\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\0722190da9b37af7146321f1e17f3f19\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\0722190da9b37af7146321f1e17f3f19\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\5b4dd1e18dd417fb2a59f6ef3c588fd3\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\5b4dd1e18dd417fb2a59f6ef3c588fd3\AndroidManifest.xml:21:5-23:58
+MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\04893e59877ba70b23b6a9161ef292b1\AndroidManifest.xml:20:5-22:41
+MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\04893e59877ba70b23b6a9161ef292b1\AndroidManifest.xml:20:5-22:41
+INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\5c958de0876c3d629dad806867f488f2\AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\src\main\AndroidManifest.xml
 meta-data#android.support.VERSION
-ADDED from [com.android.support:appcompat-v7:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\ff841aef4c038ae6c88617e74aed1774\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.1.0.aar\246d77e03cf1d29df9e3f7f6daa7b47d\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.1.0.aar\246d77e03cf1d29df9e3f7f6daa7b47d\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.1.0.aar\e2c51d59ce4084a3e6ac925d3732bb64\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.1.0.aar\e2c51d59ce4084a3e6ac925d3732bb64\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:support-v4:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-v4-26.1.0.aar\32758482eebbd2647406d6efa95fb49a\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-v4:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-v4-26.1.0.aar\32758482eebbd2647406d6efa95fb49a\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.1.0.aar\14e1db373161c021f2953891bbda5de2\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.1.0.aar\14e1db373161c021f2953891bbda5de2\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-fragment-26.1.0.aar\fa8784fd4c7f0eb0da870f84765cf1ed\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-fragment-26.1.0.aar\fa8784fd4c7f0eb0da870f84765cf1ed\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.1.0.aar\04e6ac5e75167862ee23463d17f51a44\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.1.0.aar\04e6ac5e75167862ee23463d17f51a44\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.1.0.aar\7b069057e2b038eeb8fb7f600c5a7a86\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.1.0.aar\7b069057e2b038eeb8fb7f600c5a7a86\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-compat:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-compat-26.1.0.aar\350c1f61c7b1cbb3fc57a8ed3643095f\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-compat:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\support-compat-26.1.0.aar\350c1f61c7b1cbb3fc57a8ed3643095f\AndroidManifest.xml:26:9-28:38
+ADDED from [com.android.support:appcompat-v7:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\5c958de0876c3d629dad806867f488f2\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\6116ca2c04f925526345aff8c2d19950\AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\6116ca2c04f925526345aff8c2d19950\AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\c5ba4a3e5980d76b990f2d9480eaa2be\AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:support-vector-drawable:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\c5ba4a3e5980d76b990f2d9480eaa2be\AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:support-v4:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\2dffe4e340d859bc6786281f051cd097\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-v4:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\2dffe4e340d859bc6786281f051cd097\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\a77e8b9ba37d8c7c82c7ae01472718b7\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\a77e8b9ba37d8c7c82c7ae01472718b7\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\c6222611343ae510bff47fa273154670\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-fragment:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\c6222611343ae510bff47fa273154670\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\d2221ae48e8f289ce77c4fd6817fdec5\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\d2221ae48e8f289ce77c4fd6817fdec5\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\0722190da9b37af7146321f1e17f3f19\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\0722190da9b37af7146321f1e17f3f19\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-compat:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\5b4dd1e18dd417fb2a59f6ef3c588fd3\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-compat:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\5b4dd1e18dd417fb2a59f6ef3c588fd3\AndroidManifest.xml:26:9-28:38
 	android:value
-		ADDED from [com.android.support:appcompat-v7:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\ff841aef4c038ae6c88617e74aed1774\AndroidManifest.xml:28:13-35
+		ADDED from [com.android.support:appcompat-v7:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\5c958de0876c3d629dad806867f488f2\AndroidManifest.xml:28:13-35
 	android:name
-		ADDED from [com.android.support:appcompat-v7:26.1.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\ff841aef4c038ae6c88617e74aed1774\AndroidManifest.xml:27:13-51
+		ADDED from [com.android.support:appcompat-v7:26.1.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\5c958de0876c3d629dad806867f488f2\AndroidManifest.xml:27:13-51
 meta-data#android.arch.lifecycle.VERSION
-ADDED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\eb9f473c8de19e74b306fa9c424c2661\AndroidManifest.xml:25:9-27:47
+ADDED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\04893e59877ba70b23b6a9161ef292b1\AndroidManifest.xml:25:9-27:47
 	android:value
-		ADDED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\eb9f473c8de19e74b306fa9c424c2661\AndroidManifest.xml:27:13-44
+		ADDED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\04893e59877ba70b23b6a9161ef292b1\AndroidManifest.xml:27:13-44
 	android:name
-		ADDED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\ygyg331\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\eb9f473c8de19e74b306fa9c424c2661\AndroidManifest.xml:26:13-58
+		ADDED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\smart\.gradle\caches\transforms-2\files-2.1\04893e59877ba70b23b6a9161ef292b1\AndroidManifest.xml:26:13-58

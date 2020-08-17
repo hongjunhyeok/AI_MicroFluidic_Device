@@ -43,7 +43,7 @@
       <TextView
           android:layout_width="match_parent"
           android:layout_height="fill_parent"
-          android:layout_weight="2.2"
+          android:layout_weight="1.8"
           android:background="#FFFFFF"
           android:gravity="center_horizontal"
           android:visibility="visible" />
@@ -63,6 +63,34 @@
           android:visibility="invisible"
           android:layout_weight="2" />
 
+      <Button
+          android:id="@+id/btn_up"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:background="#00ff0000"
+
+          android:text="" />
+      <Button
+          android:id="@+id/btn_down"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:background="#00ff0000"
+
+          android:text="" />
+      <Button
+          android:id="@+id/btn_left"
+          android:background="#00ff0000"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+
+          android:text="" />
+      <Button
+          android:id="@+id/btn_right"
+          android:background="#00ff0000"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+
+          android:text="" />
     </LinearLayout>
 
     <RelativeLayout
@@ -76,13 +104,13 @@
 
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_below="@+id/button6"
+          android:layout_below="@+id/textView1"
           android:layout_alignLeft="@+id/button3"
           android:layout_alignEnd="@+id/button3"
           android:layout_marginLeft="-4dp"
           android:layout_marginTop="8dp"
           android:layout_marginEnd="4dp"
-          android:visibility="invisible" />
+          android:visibility="visible" />
 
       <Button
           android:id="@+id/button2"
@@ -138,27 +166,59 @@
 
 
       <Button
+          android:id="@+id/btn_motorStop"
           style="@style/Widget.AppCompat.Button"
-          android:id="@+id/button7"
 
-          android:layout_width="wrap_content"
+          android:layout_width="46dp"
           android:layout_height="wrap_content"
           android:layout_below="@+id/button6"
           android:layout_alignLeft="@+id/button3"
           android:layout_alignRight="@+id/button3"
-          android:layout_marginTop="20dp"
+
+
+          android:layout_marginLeft="21dp"
+
+          android:layout_marginTop="19dp"
+          android:layout_marginRight="13dp"
           android:background="#FCE6E6"
           android:backgroundTint="#FCD2D2"
-          android:text="Measure" />
+          android:text="❚❚" />
 
+      <Button
+          android:id="@+id/btn_motorGo"
+          style="@style/Widget.AppCompat.Button"
+
+          android:layout_width="53dp"
+          android:layout_height="wrap_content"
+          android:layout_alignTop="@+id/btn_motorStop"
+          android:layout_marginStart="-7dp"
+          android:layout_marginTop="2dp"
+          android:layout_toEndOf="@+id/btn_motorStop"
+          android:background="#FCE6E6"
+          android:backgroundTint="#FCD2D2"
+          android:text="go" />
+
+      <Button
+          android:id="@+id/btn_motorBack"
+          style="@style/Widget.AppCompat.Button"
+
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignTop="@+id/btn_motorStop"
+          android:layout_marginTop="0dp"
+          android:layout_marginEnd="-12dp"
+          android:layout_toStartOf="@+id/btn_motorStop"
+          android:background="#FCE6E6"
+          android:backgroundTint="#FCD2D2"
+          android:text="back" />
 
       <TextView
           android:id="@+id/textView1"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_below="@+id/button7"
+          android:layout_below="@+id/btn_motorStop"
           android:layout_marginTop="20dp"
-          android:layout_alignLeft="@+id/button7"
+          android:layout_alignLeft="@+id/btn_motorStop"
           android:text="Message"
           android:textSize="20dp" />
 
@@ -212,9 +272,11 @@
           android:id="@+id/checkBox1"
           android:layout_width="20dp"
           android:layout_height="20dp"
-          android:layout_below="@+id/CameraZoomControls"
+          android:layout_below="@+id/textView1"
           android:visibility="visible"
           android:layout_alignParentRight="true" />
+
+
 
 
     </RelativeLayout>
