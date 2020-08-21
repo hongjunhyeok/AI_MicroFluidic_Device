@@ -848,6 +848,7 @@ layout support_simple_spinner_dropdown_item
 layout tooltip
 layout tutorial2_surface_view
 menu option_menu
+raw alarm
 raw bubble20200107
 raw bubble20200108
 raw bubble20200218

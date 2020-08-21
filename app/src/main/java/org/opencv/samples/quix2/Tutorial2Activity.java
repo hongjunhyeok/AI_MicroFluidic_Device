@@ -27,6 +27,9 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Camera;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -38,7 +41,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -55,7 +57,6 @@ public class Tutorial2Activity extends Activity implements
 
 
 
-	TimerHandler timerHandler = new TimerHandler();
 
 	private int frame_num=0;
 
@@ -69,7 +70,7 @@ public class Tutorial2Activity extends Activity implements
 
 
 	public boolean is_in=true;
-
+	public boolean is_started=true;
 
 
 	public int updated_count=0;
@@ -95,7 +96,7 @@ public class Tutorial2Activity extends Activity implements
 	private static final int MESSAGE_TIMER_REPEAT=101;
 	private static final int MESSAGE_TIMER_STOP=102;
 	int timer_counter;
-
+	int stop_counter=0;
 
 
 	Rect[] DetectCircle_array =new Rect[50];
@@ -360,8 +361,9 @@ public class Tutorial2Activity extends Activity implements
 
 
 	TimerTask tt=null;
-
-
+	public int START_TIME_SET =900;
+	public int ANTIGEN_TIME_SET =900;
+	public int TMB_TIME_SET=600;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -371,6 +373,8 @@ public class Tutorial2Activity extends Activity implements
 
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setContentView(R.layout.tutorial2_surface_view);
+
+
 
 		fpsStratTime=System.currentTimeMillis();
 
@@ -616,19 +620,64 @@ public class Tutorial2Activity extends Activity implements
 		});
 
 		StartBtn.setOnClickListener(new OnClickListener() {
+
+			int elisaTimer=0;
 			@Override
 			public void onClick(View v) {
-				movingGo(10);
-				minNeighbors=50;
-				mViewMode = VIEW_MODE_START;
+
+
+				if (is_started) {
+					//ELISA 타이머 작동
+					is_started=false;
+
+					tt = new TimerTask() {
+						@Override
+						public void run() {
+							elisaTimer += 1;
+
+
+							runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									mTitle.setText(String.format(Locale.KOREA,"Time left to start\n %d s", START_TIME_SET -elisaTimer));
+								}
+							});
+
+
+							if (elisaTimer >= START_TIME_SET) {
+
+								Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+								Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
+								ringtone.play();
+								tt.cancel();
+								movingGo(10);
+								mViewMode = VIEW_MODE_START;
 
 
 
+								elisaTimer=0;
 
-				timerHandler.sendEmptyMessage(MESSAGE_TIMER_START);
 
-				Toast.makeText(getApplicationContext(),"Moving Forward",Toast.LENGTH_SHORT).show();
+							}
+
+						}
+					};
+					Timer timer = new Timer();
+					timer.schedule(tt, 0, 1000);
+
+				}
+				else{
+					is_started=true;
+					Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+					Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
+					ringtone.play();
+					tt.cancel();
+					movingGo(10);
+					mViewMode = VIEW_MODE_START;
+				}
+
 			}
+
 		});
 		StopBtn.setOnClickListener(new OnClickListener() {
 			@Override
@@ -745,7 +794,7 @@ public class Tutorial2Activity extends Activity implements
 					minNeighborsfill=17;minNeighborsEmpty=35;
 					mJavaDetector.detectMultiScale(cropped_img,circle_rect,1.02,0,0,new Size(250,250),new Size());
 					mJavaDetector2.detectMultiScale(detection_zone,enter_rect,1.1,0,0,new Size(),new Size());
-					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,9,0,new Size(),new Size());
+					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,5,0,new Size(),new Size());
 					mJavaDetector4.detectMultiScale(detection_zone,leave_rect,1.1,10,0,new Size(),new Size());
 					mJavaDetector5.detectMultiScale(detection_zone,empty_rect,1.1,1,0,new Size(),new Size());
 //					mJavaDetector6.detectMultiScale(detection_zone,insuff_rect,1.1,40,0,new Size(14,14),new Size());
@@ -856,43 +905,107 @@ public class Tutorial2Activity extends Activity implements
 
 
 
-							//FILLED가 한번 나온경우, STOP MESSAGE 보내고 타이머동작
+							//FILLED가 한번 나온경우,stop 카운터에 따라 STOP MESSAGE 보내고 타이머동작
 							if(!FLAG_LEAVE) {
-								movingStop(10);
-								tt=new TimerTask() {
-									@Override
-									public void run() {
-										timer_counter++;
-
-										Log.i(TAG,String.format("TIMERTASK %d",timer_counter));
-
-										runOnUiThread(new Runnable() {
-											@Override
-											public void run() {
-												mTitle.setText(String.format(Locale.KOREA,"Time left to start\n %d s",15-timer_counter));
-											}
-										});
-										if(timer_counter>=15)
-										{
-
-											movingGo(10);
-											timer_counter=0;
-											this.cancel();
 
 
+
+								//if stop카운터%3==0 항체반응시간동안 stop. 그후 모터동작 및 stop_counter+1
+								//else if stop카운터%3==1 washing 할때 stop하지 않고 stop_counter+1
+								//else stop카운터%3==2 tmb반응시간동안 stop. 그후 모터동작 및 stop_counter+1
+								if(stop_counter%3==0) {
+									movingStop(10);
+									tt = new TimerTask() {
+										@Override
+										public void run() {
+											timer_counter++;
+
+											Log.i(TAG, String.format("TIMERTASK %d", timer_counter));
 
 											runOnUiThread(new Runnable() {
 												@Override
 												public void run() {
-													mTitle.setText(String.format(Locale.KOREA,"GO"));
+													mTitle.setText(String.format(Locale.KOREA, "Time left to start\n %d s", ANTIGEN_TIME_SET - timer_counter));
 												}
 											});
-										}
-									}
-								};
 
-								Timer timer=new Timer();
-								timer.schedule(tt,0,1000);
+											if(timer_counter==ANTIGEN_TIME_SET-60){
+												Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+												Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
+												ringtone.play();
+											}
+											if (timer_counter >= ANTIGEN_TIME_SET) {
+
+												movingGo(10);
+												timer_counter = 0;
+												stop_counter += 1; // stop카운터가 짝수면 멈추고, 홀수면 지나감.
+												this.cancel();
+
+
+												runOnUiThread(new Runnable() {
+													@Override
+													public void run() {
+														mTitle.setText(String.format(Locale.KOREA, "GO"));
+													}
+												});
+											}
+										}
+									};
+
+									Timer timer = new Timer();
+									timer.schedule(tt, 0, 1000);
+								}
+								else if(stop_counter%3==1){
+									stop_counter+=1;
+
+
+
+								}else{
+									movingStop(10);
+									tt = new TimerTask() {
+										@Override
+										public void run() {
+											timer_counter++;
+
+											Log.i(TAG, String.format("TIMERTASK %d", timer_counter));
+
+											runOnUiThread(new Runnable() {
+												@Override
+												public void run() {
+													mTitle.setText(String.format(Locale.KOREA, "Time left to start\n %d s", TMB_TIME_SET - timer_counter));
+												}
+											});
+
+
+											if(timer_counter == TMB_TIME_SET-60){
+
+												Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+												Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
+												ringtone.play();
+											}
+											if (timer_counter >= TMB_TIME_SET) {
+
+												movingGo(10);
+												timer_counter = 0;
+												stop_counter += 1; //
+												this.cancel();
+
+
+												runOnUiThread(new Runnable() {
+													@Override
+													public void run() {
+														mTitle.setText(String.format(Locale.KOREA, "GO"));
+													}
+												});
+											}
+										}
+									};
+
+									Timer timer = new Timer();
+									timer.schedule(tt, 0, 1000);
+								}
+
+
 
 							}
 
@@ -1341,9 +1454,13 @@ public class Tutorial2Activity extends Activity implements
 
 			sendMsg = con;
 
-
-
-
+		}else{
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					mTitle.setText("블루투스 연결불량");
+				}
+			});
 
 		}
 	}
@@ -1418,40 +1535,7 @@ public class Tutorial2Activity extends Activity implements
 		}
 	}
 
-	private  class TimerHandler extends Handler{
-		@Override
-		public void handleMessage(Message msg) {
 
-			switch (msg.what){
-				case MESSAGE_TIMER_START:
-					timer_counter=0;
-					this.removeMessages(MESSAGE_TIMER_REPEAT);
-					this.sendEmptyMessage(MESSAGE_TIMER_REPEAT);
-					break;
-
-
-
-
-				//180초동안 대기
-				case MESSAGE_TIMER_REPEAT:
-					if(timer_counter>50) {
-						movingGo(10);
-						this.sendEmptyMessageDelayed(MESSAGE_TIMER_STOP, 1000);
-					}
-
-					timer_counter+=1;
-
-					Log.i(TAG,String.format("TImer counter %d",timer_counter));
-					this.sendEmptyMessageDelayed(MESSAGE_TIMER_REPEAT,1000);
-
-					//GO 명령내리고 타이머 소멸
-				case MESSAGE_TIMER_STOP:
-
-					this.removeMessages(MESSAGE_TIMER_REPEAT);
-					break;
-			}
-		}
-	}
 
 
 }

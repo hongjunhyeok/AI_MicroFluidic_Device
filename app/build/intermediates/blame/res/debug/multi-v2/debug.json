@@ -16,16 +16,16 @@
             ]
         },
         {
-            "outputFile": "C:\\Users\\smart\\AndroidStudioProjects\\Quix22_fix_2\\app\\build\\intermediates\\res\\merged\\debug\\values-is_values-is.arsc.flat",
+            "outputFile": "C:\\Users\\smart\\AndroidStudioProjects\\Quix22_fix_2\\app\\build\\intermediates\\res\\merged\\debug\\values-mk_values-mk.arsc.flat",
             "map": [
                 {
-                    "source": "C:\\Users\\smart\\.gradle\\caches\\transforms-2\\files-2.1\\5c958de0876c3d629dad806867f488f2\\res\\values-is\\values-is.xml",
+                    "source": "C:\\Users\\smart\\.gradle\\caches\\transforms-2\\files-2.1\\5c958de0876c3d629dad806867f488f2\\res\\values-mk\\values-mk.xml",
                     "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,155,263,386,483,595,680,781,895,975,1055,1136,1246,1354,1452,1561,1660,1763,1881,1979,2060",
-                        "endColumns": "99,107,122,96,111,84,100,113,79,79,80,109,107,97,108,98,102,117,97,80,100",
-                        "endOffsets": "150,258,381,478,590,675,776,890,970,1050,1131,1241,1349,1447,1556,1655,1758,1876,1974,2055,2156"
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,163,286,390,498,584,689,808,891,973,1060,1166,1273,1374,1481,1592,1696,1794,1878",
+                        "endColumns": "107,122,103,107,85,104,118,82,81,86,105,106,100,106,110,103,97,83,100",
+                        "endOffsets": "158,281,385,493,579,684,803,886,968,1055,1161,1268,1369,1476,1587,1691,1789,1873,1974"
                     }
                 }
             ]
@@ -46,16 +46,16 @@
             ]
         },
         {
-            "outputFile": "C:\\Users\\smart\\AndroidStudioProjects\\Quix22_fix_2\\app\\build\\intermediates\\res\\merged\\debug\\values-mk_values-mk.arsc.flat",
+            "outputFile": "C:\\Users\\smart\\AndroidStudioProjects\\Quix22_fix_2\\app\\build\\intermediates\\res\\merged\\debug\\values-is_values-is.arsc.flat",
             "map": [
                 {
-                    "source": "C:\\Users\\smart\\.gradle\\caches\\transforms-2\\files-2.1\\5c958de0876c3d629dad806867f488f2\\res\\values-mk\\values-mk.xml",
+                    "source": "C:\\Users\\smart\\.gradle\\caches\\transforms-2\\files-2.1\\5c958de0876c3d629dad806867f488f2\\res\\values-is\\values-is.xml",
                     "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,163,286,390,498,584,689,808,891,973,1060,1166,1273,1374,1481,1592,1696,1794,1878",
-                        "endColumns": "107,122,103,107,85,104,118,82,81,86,105,106,100,106,110,103,97,83,100",
-                        "endOffsets": "158,281,385,493,579,684,803,886,968,1055,1161,1268,1369,1476,1587,1691,1789,1873,1974"
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,155,263,386,483,595,680,781,895,975,1055,1136,1246,1354,1452,1561,1660,1763,1881,1979,2060",
+                        "endColumns": "99,107,122,96,111,84,100,113,79,79,80,109,107,97,108,98,102,117,97,80,100",
+                        "endOffsets": "150,258,381,478,590,675,776,890,970,1050,1131,1241,1349,1447,1556,1655,1758,1876,1974,2055,2156"
                     }
                 }
             ]
@@ -769,21 +769,6 @@
             ]
         },
         {
-            "outputFile": "C:\\Users\\smart\\AndroidStudioProjects\\Quix22_fix_2\\app\\build\\intermediates\\res\\merged\\debug\\values-el_values-el.arsc.flat",
-            "map": [
-                {
-                    "source": "C:\\Users\\smart\\.gradle\\caches\\transforms-2\\files-2.1\\5c958de0876c3d629dad806867f488f2\\res\\values-el\\values-el.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,173,281,404,515,632,717,822,948,1036,1122,1207,1318,1428,1530,1641,1750,1858,1981,2081,2166",
-                        "endColumns": "117,107,122,110,116,84,104,125,87,85,84,110,109,101,110,108,107,122,99,84,100",
-                        "endOffsets": "168,276,399,510,627,712,817,943,1031,1117,1202,1313,1423,1525,1636,1745,1853,1976,2076,2161,2262"
-                    }
-                }
-            ]
-        },
-        {
             "outputFile": "C:\\Users\\smart\\AndroidStudioProjects\\Quix22_fix_2\\app\\build\\intermediates\\res\\merged\\debug\\values-zh-rTW_values-zh-rTW.arsc.flat",
             "map": [
                 {
@@ -794,6 +779,21 @@
                         "startOffsets": "55,150,257,380,473,573,655,752,860,936,1012,1090,1186,1282,1377,1474,1569,1669,1782,1876,1954",
                         "endColumns": "94,106,122,92,99,81,96,107,75,75,77,95,95,94,96,94,99,112,93,77,100",
                         "endOffsets": "145,252,375,468,568,650,747,855,931,1007,1085,1181,1277,1372,1469,1564,1664,1777,1871,1949,2050"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\Users\\smart\\AndroidStudioProjects\\Quix22_fix_2\\app\\build\\intermediates\\res\\merged\\debug\\values-el_values-el.arsc.flat",
+            "map": [
+                {
+                    "source": "C:\\Users\\smart\\.gradle\\caches\\transforms-2\\files-2.1\\5c958de0876c3d629dad806867f488f2\\res\\values-el\\values-el.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,173,281,404,515,632,717,822,948,1036,1122,1207,1318,1428,1530,1641,1750,1858,1981,2081,2166",
+                        "endColumns": "117,107,122,110,116,84,104,125,87,85,84,110,109,101,110,108,107,122,99,84,100",
+                        "endOffsets": "168,276,399,510,627,712,817,943,1031,1117,1202,1313,1423,1525,1636,1745,1853,1976,2076,2161,2262"
                     }
                 }
             ]

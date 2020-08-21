@@ -6,26 +6,23 @@
     density="420dpi"
     format="10"
     plugin-version="3.4.2"
-    timestamp="1597654858667"
+    timestamp="1597915407092"
     token="8304866770626506861"
     verifier="FULL_BUILD_REQUESTED" >
 
     <task
         name="javac"
-        duration="314" />
+        duration="0" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="23" />
+        duration="0" />
     <task
         name="verifier"
-        duration="10" />
+        duration="0" />
 
-    <artifact
-        location="C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\build\intermediates\split-apk\debug\slices\slice_1.apk"
-        type="SPLIT" />
     <artifact
         location="C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\build\intermediates\split-apk\debug\slices\slice_2.apk"
         type="SPLIT" />
@@ -57,6 +54,9 @@
         location="C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\build\intermediates\split-apk\debug\dep\dependencies.apk"
         type="SPLIT" />
     <artifact
+        location="C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\build\intermediates\split-apk\debug\slices\slice_1.apk"
+        type="SPLIT" />
+    <artifact
         location="C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\build\intermediates\split-apk\debug\slices\slice_0.apk"
         type="SPLIT" />
     <artifact
@@ -65,11 +65,8 @@
 
     <build
         build-mode="FULL"
-        timestamp="1597654858667"
+        timestamp="1597915407092"
         verifier="FULL_BUILD_REQUESTED" >
-        <artifact
-            location="C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\build\intermediates\split-apk\debug\slices\slice_1.apk"
-            type="SPLIT" />
         <artifact
             location="C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\build\intermediates\split-apk\debug\slices\slice_2.apk"
             type="SPLIT" />
@@ -99,6 +96,9 @@
             type="SPLIT" />
         <artifact
             location="C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\build\intermediates\split-apk\debug\dep\dependencies.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\build\intermediates\split-apk\debug\slices\slice_1.apk"
             type="SPLIT" />
         <artifact
             location="C:\Users\smart\AndroidStudioProjects\Quix22_fix_2\app\build\intermediates\split-apk\debug\slices\slice_0.apk"
