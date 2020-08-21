@@ -128,11 +128,11 @@ public class Tutorial2Activity extends Activity implements
 	public int cropped_h =600;
 
 
-	public int detectzone_x =0;//1070
-	public int detectzone_y = 0;//710
+	public int detectzone_x =1000;//1070
+	public int detectzone_y = 600;//710
 
-	public int detectzone_w = 0;//160
-	public int detectzone_h =0;//100
+	public int detectzone_w = 300;//160
+	public int detectzone_h =200;//100
 
 	public int thickness =0;
 
@@ -361,8 +361,8 @@ public class Tutorial2Activity extends Activity implements
 
 
 	TimerTask tt=null;
-	public int START_TIME_SET =900;
-	public int ANTIGEN_TIME_SET =900;
+	public int START_TIME_SET =600;
+	public int ANTIGEN_TIME_SET =600;
 	public int TMB_TIME_SET=600;
 
 	/** Called when the activity is first created. */
@@ -913,7 +913,7 @@ public class Tutorial2Activity extends Activity implements
 								//if stop카운터%3==0 항체반응시간동안 stop. 그후 모터동작 및 stop_counter+1
 								//else if stop카운터%3==1 washing 할때 stop하지 않고 stop_counter+1
 								//else stop카운터%3==2 tmb반응시간동안 stop. 그후 모터동작 및 stop_counter+1
-								if(stop_counter%3==0) {
+								if(stop_counter%4==0) {
 									movingStop(10);
 									tt = new TimerTask() {
 										@Override
@@ -955,7 +955,12 @@ public class Tutorial2Activity extends Activity implements
 									Timer timer = new Timer();
 									timer.schedule(tt, 0, 1000);
 								}
-								else if(stop_counter%3==1){
+								else if(stop_counter%4==1){
+									stop_counter+=1;
+
+
+
+								}	else if(stop_counter%4==2){
 									stop_counter+=1;
 
 
