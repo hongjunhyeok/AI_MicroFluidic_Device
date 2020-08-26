@@ -1,6 +1,7 @@
 package org.opencv.samples.quix2;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +12,8 @@ import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
+import org.opencv.core.CvException;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
@@ -26,11 +29,13 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -47,6 +52,9 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -60,10 +68,11 @@ public class Tutorial2Activity extends Activity implements
 
 	private int frame_num=0;
 
-	public boolean FLAG_ENTER=false;
-	public boolean FLAG_FILLED=false;
+	public boolean FLAG_ENTER=true;
+	public boolean FLAG_FILLED=true;
 	public boolean FLAG_LEAVE=true;
 	public boolean FLAG_EMPTY=true;
+	public boolean FLAG_ISONCE=false;
 //	public boolean FLAG_INSUFF=false;
 	public boolean FLAG_BUBBLE=false;
 
@@ -122,7 +131,7 @@ public class Tutorial2Activity extends Activity implements
 	public int y_height=30;
 
 	public int cropped_x =700;//1070
-	public int cropped_y = 300;
+	public int cropped_y = 200;
 
 	public int cropped_w = 1200;
 	public int cropped_h =600;
@@ -227,7 +236,7 @@ public class Tutorial2Activity extends Activity implements
 						// load cascade file from application resources
 						InputStream is = getResources().openRawResource(R.raw.pillar3); //cascade_filled_6f
 						InputStream is_enter=getResources().openRawResource(R.raw.enter20200807_2); //maniscus 13
-						InputStream is_filled=getResources().openRawResource(R.raw.filled_20200807);
+						InputStream is_filled=getResources().openRawResource(R.raw.filled_20200826);
 						InputStream is_leave=getResources().openRawResource(R.raw.leave_20200807); //cascade_empty_6
 						InputStream is_empty=getResources().openRawResource(R.raw.empty_20200807); //cempty_4 ok
 						InputStream is_insuff=getResources().openRawResource(R.raw.insuff20191226); //cascade_moved
@@ -361,8 +370,9 @@ public class Tutorial2Activity extends Activity implements
 
 
 	TimerTask tt=null;
-	public int START_TIME_SET =900;
-	public int ANTIGEN_TIME_SET =900;
+	TimerTask filledtt=null;
+	public int ANTIBODY_TIMER_SET =900;
+	public int ANTIBODY2_TIMER_SET =900;
 	public int TMB_TIME_SET=600;
 
 	/** Called when the activity is first created. */
@@ -602,6 +612,7 @@ public class Tutorial2Activity extends Activity implements
 			public void onClick(View v) {
 				movingGo(10);
 				if(tt!=null) tt.cancel();
+				if(filledtt!=null) filledtt.cancel();
 			}
 		});
 		Btn_motorBack.setOnClickListener(new OnClickListener() {
@@ -609,6 +620,8 @@ public class Tutorial2Activity extends Activity implements
 			public void onClick(View v) {
 				movingBack(10);
 				if(tt!=null) tt.cancel();
+				if(filledtt!=null) filledtt.cancel();
+
 			}
 		});
 		Btn_motorStop.setOnClickListener(new OnClickListener() {
@@ -616,6 +629,8 @@ public class Tutorial2Activity extends Activity implements
 			public void onClick(View v) {
 				movingStop(10);
 				if(tt!=null) tt.cancel();
+				if(filledtt!=null) filledtt.cancel();
+
 			}
 		});
 
@@ -624,57 +639,8 @@ public class Tutorial2Activity extends Activity implements
 			int elisaTimer=0;
 			@Override
 			public void onClick(View v) {
+				mViewMode = VIEW_MODE_START;
 
-
-				if (is_started) {
-					//ELISA 타이머 작동
-					is_started=false;
-
-					tt = new TimerTask() {
-						@Override
-						public void run() {
-							elisaTimer += 1;
-
-
-							runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									mTitle.setText(String.format(Locale.KOREA,"Time left to start\n %d s", START_TIME_SET -elisaTimer));
-								}
-							});
-
-
-							if (elisaTimer >= START_TIME_SET) {
-
-								Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-								Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
-								ringtone.play();
-								tt.cancel();
-								movingGo(10);
-								mViewMode = VIEW_MODE_START;
-
-
-
-								elisaTimer=0;
-
-
-							}
-
-						}
-					};
-					Timer timer = new Timer();
-					timer.schedule(tt, 0, 1000);
-
-				}
-				else{
-					is_started=true;
-					Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-					Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
-					ringtone.play();
-					tt.cancel();
-					movingGo(10);
-					mViewMode = VIEW_MODE_START;
-				}
 
 			}
 
@@ -793,10 +759,10 @@ public class Tutorial2Activity extends Activity implements
 					mN1=17; mN2=40; mN3=10; mN4=10; mN5=2; mN6=2; mN7=5;
 					minNeighborsfill=17;minNeighborsEmpty=35;
 					mJavaDetector.detectMultiScale(cropped_img,circle_rect,1.02,0,0,new Size(250,250),new Size());
-					mJavaDetector2.detectMultiScale(detection_zone,enter_rect,1.1,0,0,new Size(),new Size());
-					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,5,0,new Size(),new Size());
-					mJavaDetector4.detectMultiScale(detection_zone,leave_rect,1.1,10,0,new Size(),new Size());
-					mJavaDetector5.detectMultiScale(detection_zone,empty_rect,1.1,1,0,new Size(),new Size());
+					mJavaDetector2.detectMultiScale(detection_zone,enter_rect,1.1,9,0,new Size(),new Size());
+					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,100,0,new Size(),new Size());
+					mJavaDetector4.detectMultiScale(detection_zone,leave_rect,1.1,9999,0,new Size(),new Size());
+					mJavaDetector5.detectMultiScale(detection_zone,empty_rect,1.1,2,0,new Size(),new Size());
 //					mJavaDetector6.detectMultiScale(detection_zone,insuff_rect,1.1,40,0,new Size(14,14),new Size());
 //					mJavaDetector7.detectMultiScale(detection_zone,bubble_rect,1.1,40,0,new Size(5,5),new Size(50,50));
 
@@ -849,7 +815,7 @@ public class Tutorial2Activity extends Activity implements
 						detectzone_x = (int)((tmp_tl_x) +50);
 						detectzone_y = (int)((tmp_tl_y)+50);
 						detectzone_w = 300;
-						detectzone_h = 300;
+						detectzone_h = 200;
 						start_x=detectzone_x+(detectzone_w)/2;
 						start_y=detectzone_y+(detectzone_h)/2;
 						is_in = false;
@@ -864,7 +830,7 @@ public class Tutorial2Activity extends Activity implements
 
 						enter_count+=1;
 						empty_count=0;
-						if(enter_count>1) {
+						if(enter_count>0) {
 							tl_x = DetectEnter_array[0].tl().x + detectzone_x;
 							tl_y = DetectEnter_array[0].tl().y + detectzone_y;
 							br_x = DetectEnter_array[0].br().x + detectzone_x;
@@ -873,10 +839,39 @@ public class Tutorial2Activity extends Activity implements
 
 
 
-							minNeighborsfill=25;
-//							FLAG_EMPTY = false;
-//							FLAG_FILLED = true;
-//							FLAG_INSUFF=true;
+							//after 2 seconds later, stop the moter
+							tt = new TimerTask() {
+								@Override
+								public void run() {
+									timer_counter++;
+
+
+
+									runOnUiThread(new Runnable() {
+										@Override
+										public void run() {
+											mTitle.setText(String.format(Locale.KOREA, "Time left to Stop\n %d s", 3 - timer_counter));
+										}
+									});
+
+									if (timer_counter >= 3) {
+
+										movingStop(10);
+										timer_counter = 0;
+
+										this.cancel();
+
+									}
+								}
+							};
+
+							Timer timer = new Timer();
+							timer.schedule(tt, 0, 1000);
+
+
+							FLAG_EMPTY=false;
+							FLAG_FILLED=true;
+							FLAG_ISONCE=false;
 							is_in = false;
 						}
 						break;
@@ -906,16 +901,16 @@ public class Tutorial2Activity extends Activity implements
 
 
 							//FILLED가 한번 나온경우,stop 카운터에 따라 STOP MESSAGE 보내고 타이머동작
-							if(!FLAG_LEAVE) {
+							if(!FLAG_ISONCE) {
 
 
 
 								//if stop카운터%3==0 항체반응시간동안 stop. 그후 모터동작 및 stop_counter+1
 								//else if stop카운터%3==1 washing 할때 stop하지 않고 stop_counter+1
 								//else stop카운터%3==2 tmb반응시간동안 stop. 그후 모터동작 및 stop_counter+1
-								if(stop_counter%3==0) {
+								if(stop_counter%4==0) {
 									movingStop(10);
-									tt = new TimerTask() {
+									filledtt = new TimerTask() {
 										@Override
 										public void run() {
 											timer_counter++;
@@ -925,42 +920,76 @@ public class Tutorial2Activity extends Activity implements
 											runOnUiThread(new Runnable() {
 												@Override
 												public void run() {
-													mTitle.setText(String.format(Locale.KOREA, "Time left to start\n %d s", ANTIGEN_TIME_SET - timer_counter));
+													mTitle.setText(String.format(Locale.KOREA, "Time left to start\n %d s", ANTIBODY_TIMER_SET - timer_counter));
 												}
 											});
 
-											if(timer_counter==ANTIGEN_TIME_SET-60){
+											if(timer_counter== ANTIBODY_TIMER_SET -60){
 												Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 												Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
 												ringtone.play();
 											}
-											if (timer_counter >= ANTIGEN_TIME_SET) {
+											if (timer_counter >= ANTIBODY_TIMER_SET) {
 
 												movingGo(10);
 												timer_counter = 0;
-												stop_counter += 1; // stop카운터가 짝수면 멈추고, 홀수면 지나감.
+												stop_counter += 1;
 												this.cancel();
 
 
-												runOnUiThread(new Runnable() {
-													@Override
-													public void run() {
-														mTitle.setText(String.format(Locale.KOREA, "GO"));
-													}
-												});
 											}
 										}
 									};
 
 									Timer timer = new Timer();
-									timer.schedule(tt, 0, 1000);
+									timer.schedule(filledtt, 0, 1000);
 								}
-								else if(stop_counter%3==1){
+								else if(stop_counter%4==1){
+									movingStop(10);
+									filledtt = new TimerTask() {
+										@Override
+										public void run() {
+											timer_counter++;
+
+											Log.i(TAG, String.format("TIMERTASK %d", timer_counter));
+
+											runOnUiThread(new Runnable() {
+												@Override
+												public void run() {
+													mTitle.setText(String.format(Locale.KOREA, "Time left to start\n %d s", ANTIBODY2_TIMER_SET - timer_counter));
+												}
+											});
+
+											if(timer_counter== ANTIBODY2_TIMER_SET -60){
+												Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+												Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
+												ringtone.play();
+											}
+											if (timer_counter >= ANTIBODY2_TIMER_SET) {
+
+												movingGo(10);
+												timer_counter = 0;
+												stop_counter += 1;
+												this.cancel();
+
+
+
+											}
+										}
+									};
+
+									Timer timer = new Timer();
+									timer.schedule(filledtt, 0, 1000);
+
+
+
+								}else if(stop_counter%4==2){
 									stop_counter+=1;
 
 
+								}
 
-								}else{
+								else{
 									movingStop(10);
 									tt = new TimerTask() {
 										@Override
@@ -989,14 +1018,8 @@ public class Tutorial2Activity extends Activity implements
 												timer_counter = 0;
 												stop_counter += 1; //
 												this.cancel();
+												saveImages();
 
-
-												runOnUiThread(new Runnable() {
-													@Override
-													public void run() {
-														mTitle.setText(String.format(Locale.KOREA, "GO"));
-													}
-												});
 											}
 										}
 									};
@@ -1011,8 +1034,9 @@ public class Tutorial2Activity extends Activity implements
 
 //
 							FLAG_LEAVE = true;
+							FLAG_ISONCE=true;
 							FLAG_EMPTY=true;
-//							FLAG_BUBBLE=true;
+							FLAG_ENTER=false;
 
 
 
@@ -1046,8 +1070,11 @@ public class Tutorial2Activity extends Activity implements
 							detectMessage = "Fluid Leaving";
 							is_in = false;
 //                            minNeighbors=100;
-							FLAG_EMPTY = true;
-							FLAG_FILLED = false;
+
+							FLAG_FILLED=false;
+							FLAG_EMPTY=true;
+
+
 
 						}
 						break;
@@ -1058,9 +1085,10 @@ public class Tutorial2Activity extends Activity implements
 				}
 
 				if(FLAG_EMPTY) {
-					if (FLAG_EMPTY) {
+
 						for (int k = 0; k < DetectEmpty_array.length; k++) {
 
+							empty_count+=1;
 
 							tl_x = DetectEmpty_array[k].tl().x + detectzone_x;
 							tl_y = DetectEmpty_array[k].tl().y + detectzone_y;
@@ -1071,16 +1099,19 @@ public class Tutorial2Activity extends Activity implements
 
 
 							FLAG_LEAVE = false;
-//							FLAG_BUBBLE = false;
-//
-//							FLAG_ENTER = true;
+							FLAG_ENTER=true;
+							FLAG_FILLED=true;
+							FLAG_ISONCE=false;
 
-
+							if(empty_count==1) {
+								movingGo(10);
+							}
+							timer_counter=0;
 							break;
 
 
 						}
-					}
+
 				}
 //                if(FLAG_INSUFF){
 //				for (int k = 0; k < DetectInsuff_array.length; k++) {
@@ -1370,7 +1401,63 @@ public class Tutorial2Activity extends Activity implements
 	}
 
 
+	protected void saveImages(){
+		Bitmap bmp = null;
+		Mat subimg = mRgba;
+		try {
+			bmp = Bitmap.createBitmap(subimg.cols(), subimg.rows(), Bitmap.Config.ARGB_8888);
+			Utils.matToBitmap(subimg, bmp);
+		} catch (CvException e) {
+			Log.d(TAG, e.getMessage());
+		}
 
+
+		subimg.release();
+//                mRgba.release();
+		FileOutputStream out = null;
+
+		long now = System.currentTimeMillis();
+		Date date = new Date(now);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.-HH:mm:ss", Locale.KOREA);
+		String filename = "Screenshot_" + sdf.format(date) + ".jpg";
+
+
+
+		File sd = new File(Environment.getExternalStorageDirectory().getPath() + "/KWIX2/");
+
+
+
+		boolean success = true;
+		if (!sd.exists()) {
+			success = sd.mkdir();
+		}
+		if (success) {
+			File dest = new File(sd, filename);
+			try {
+				out = new FileOutputStream(dest);
+				bmp.compress(Bitmap.CompressFormat.JPEG, 100, out);
+				// sendBroadCast :: 시스템db에 이미지가 있다는 것을 전달. (나중에 검색하기위해서)
+				getApplicationContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(dest)));
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+				Log.d(TAG, e.getMessage());
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+				Log.d(TAG, e.getMessage());
+
+			} finally {
+				try {
+					if (out != null) {
+						out.close();
+						Log.d(TAG, "OK!!");
+					}
+				} catch (IOException e) {
+					Log.d(TAG, e.getMessage() + "Error");
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 
 	protected void onStart(){
