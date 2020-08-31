@@ -227,7 +227,7 @@ public class Tutorial2Activity extends Activity implements
 						// load cascade file from application resources
 						InputStream is = getResources().openRawResource(R.raw.pillar3); //cascade_filled_6f
 						InputStream is_enter=getResources().openRawResource(R.raw.enter20200807_2); //maniscus 13
-						InputStream is_filled=getResources().openRawResource(R.raw.filled_20200807);
+						InputStream is_filled=getResources().openRawResource(R.raw.filled_20200831);
 						InputStream is_leave=getResources().openRawResource(R.raw.leave_20200807); //cascade_empty_6
 						InputStream is_empty=getResources().openRawResource(R.raw.empty_20200807); //cempty_4 ok
 						InputStream is_insuff=getResources().openRawResource(R.raw.insuff20191226); //cascade_moved
@@ -794,7 +794,7 @@ public class Tutorial2Activity extends Activity implements
 					minNeighborsfill=17;minNeighborsEmpty=35;
 					mJavaDetector.detectMultiScale(cropped_img,circle_rect,1.02,0,0,new Size(250,250),new Size());
 					mJavaDetector2.detectMultiScale(detection_zone,enter_rect,1.1,0,0,new Size(),new Size());
-					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,5,0,new Size(),new Size());
+					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,20,0,new Size(),new Size());
 					mJavaDetector4.detectMultiScale(detection_zone,leave_rect,1.1,10,0,new Size(),new Size());
 					mJavaDetector5.detectMultiScale(detection_zone,empty_rect,1.1,1,0,new Size(),new Size());
 //					mJavaDetector6.detectMultiScale(detection_zone,insuff_rect,1.1,40,0,new Size(14,14),new Size());
