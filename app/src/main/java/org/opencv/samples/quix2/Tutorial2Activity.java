@@ -68,12 +68,12 @@ public class Tutorial2Activity extends Activity implements
 
 	private int frame_num=0;
 
-	public boolean FLAG_ENTER=true;
+	public boolean FLAG_ENTER=false;
 	public boolean FLAG_FILLED=true;
-	public boolean FLAG_LEAVE=true;
-	public boolean FLAG_EMPTY=true;
+	public boolean FLAG_LEAVE=false;
+	public boolean FLAG_EMPTY=false;
 	public boolean FLAG_ISONCE=false;
-//	public boolean FLAG_INSUFF=false;
+	//	public boolean FLAG_INSUFF=false;
 	public boolean FLAG_BUBBLE=false;
 
 
@@ -137,11 +137,11 @@ public class Tutorial2Activity extends Activity implements
 	public int cropped_h =600;
 
 
-	public int detectzone_x =0;//1070
-	public int detectzone_y = 0;//710
+	public int detectzone_x =800;//1070
+	public int detectzone_y = 500;//710
 
-	public int detectzone_w = 0;//160
-	public int detectzone_h =0;//100
+	public int detectzone_w = 300;//160
+	public int detectzone_h =200;//100
 
 	public int thickness =0;
 
@@ -251,7 +251,7 @@ public class Tutorial2Activity extends Activity implements
 
 						scaleFactor=1.11;
 
-						 File mCascadeFile, mModelFile2, mModelFile3, mModelFile4,mModelFile5,mModelFile6,mModelFile7;
+						File mCascadeFile, mModelFile2, mModelFile3, mModelFile4,mModelFile5,mModelFile6,mModelFile7;
 
 						File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
 						File manisDir=getDir("cascade",Context.MODE_PRIVATE);
@@ -456,7 +456,7 @@ public class Tutorial2Activity extends Activity implements
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(isChecked){
 					mOpenCvCameraView.setEffect(Camera.Parameters.FLASH_MODE_TORCH);
-					seekBar.setProgress(50);
+					seekBar.setProgress(30);
 //					mOpenCvCameraView.setAWB(true);
 //					mViewMode=VIEW_MODE_THRESH;
 //					flashCheckbox.setVisibility(View.INVISIBLE);
@@ -760,7 +760,7 @@ public class Tutorial2Activity extends Activity implements
 					minNeighborsfill=17;minNeighborsEmpty=35;
 					mJavaDetector.detectMultiScale(cropped_img,circle_rect,1.02,0,0,new Size(250,250),new Size());
 					mJavaDetector2.detectMultiScale(detection_zone,enter_rect,1.1,9,0,new Size(),new Size());
-					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,100,0,new Size(),new Size());
+					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,400,0,new Size(),new Size());
 					mJavaDetector4.detectMultiScale(detection_zone,leave_rect,1.1,9999,0,new Size(),new Size());
 					mJavaDetector5.detectMultiScale(detection_zone,empty_rect,1.1,2,0,new Size(),new Size());
 //					mJavaDetector6.detectMultiScale(detection_zone,insuff_rect,1.1,40,0,new Size(14,14),new Size());
@@ -883,17 +883,17 @@ public class Tutorial2Activity extends Activity implements
 
 				if(FLAG_FILLED) {
 
-					if(DetectFilled_array.length==1) {
+					for(int k=0;k<DetectFilled_array.length;k++) {
 //						frame_num=0;
 						minNeighbors=120;
 						filled_count+=1;
 						enter_count=0;
-						if(filled_count>0) {
 
-							tl_x = DetectFilled_array[0].tl().x + detectzone_x;
-							tl_y = DetectFilled_array[0].tl().y + detectzone_y;
-							br_x = DetectFilled_array[0].br().x + detectzone_x;
-							br_y = DetectFilled_array[0].br().y + detectzone_y;
+
+							tl_x = DetectFilled_array[k].tl().x + detectzone_x;
+							tl_y = DetectFilled_array[k].tl().y + detectzone_y;
+							br_x = DetectFilled_array[k].br().x + detectzone_x;
+							br_y = DetectFilled_array[k].br().y + detectzone_y;
 
 							detectMessage = "Filled";
 
@@ -1044,7 +1044,7 @@ public class Tutorial2Activity extends Activity implements
 
 
 
-						}
+
 						break;
 
 					}
@@ -1086,31 +1086,31 @@ public class Tutorial2Activity extends Activity implements
 
 				if(FLAG_EMPTY) {
 
-						for (int k = 0; k < DetectEmpty_array.length; k++) {
+					for (int k = 0; k < DetectEmpty_array.length; k++) {
 
-							empty_count+=1;
+						empty_count+=1;
 
-							tl_x = DetectEmpty_array[k].tl().x + detectzone_x;
-							tl_y = DetectEmpty_array[k].tl().y + detectzone_y;
-							br_x = DetectEmpty_array[k].br().x + detectzone_x;
-							br_y = DetectEmpty_array[k].br().y + detectzone_y;
+						tl_x = DetectEmpty_array[k].tl().x + detectzone_x;
+						tl_y = DetectEmpty_array[k].tl().y + detectzone_y;
+						br_x = DetectEmpty_array[k].br().x + detectzone_x;
+						br_y = DetectEmpty_array[k].br().y + detectzone_y;
 
-							detectMessage = "Empty";
-
-
-							FLAG_LEAVE = false;
-							FLAG_ENTER=true;
-							FLAG_FILLED=true;
-							FLAG_ISONCE=false;
-
-							if(empty_count==1) {
-								movingGo(10);
-							}
-							timer_counter=0;
-							break;
+						detectMessage = "Empty";
 
 
+						FLAG_LEAVE = false;
+						FLAG_ENTER=true;
+						FLAG_FILLED=true;
+						FLAG_ISONCE=false;
+
+						if(empty_count==1) {
+							movingGo(10);
 						}
+						timer_counter=0;
+						break;
+
+
+					}
 
 				}
 //                if(FLAG_INSUFF){
@@ -1221,7 +1221,7 @@ public class Tutorial2Activity extends Activity implements
 
 
 
-		Imgproc.rectangle(mRgba, new Point(cropped_x, cropped_y), new Point(cropped_x + cropped_w, cropped_y + cropped_h), colorSelect, thickness);
+//		Imgproc.rectangle(mRgba, new Point(cropped_x, cropped_y), new Point(cropped_x + cropped_w, cropped_y + cropped_h), colorSelect, thickness);
 		Imgproc.putText(mRgba, String.format(Locale.KOREA, "FPS: %.1f", fps), new Point(cropped_x, cropped_y - 20), 1, 2, new Scalar(0, 0, 0), 2);
 
 		Imgproc.rectangle(mRgba,new Point(detectzone_x,detectzone_y),new Point(detectzone_x+detectzone_w,detectzone_y+detectzone_h),new Scalar(255,255,255),1);
