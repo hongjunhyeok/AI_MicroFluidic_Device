@@ -236,7 +236,7 @@ public class Tutorial2Activity extends Activity implements
 						// load cascade file from application resources
 						InputStream is = getResources().openRawResource(R.raw.pillar3); //cascade_filled_6f
 						InputStream is_enter=getResources().openRawResource(R.raw.enter20200807_2); //maniscus 13
-						InputStream is_filled=getResources().openRawResource(R.raw.filled_20200826);
+						InputStream is_filled=getResources().openRawResource(R.raw.filled_20200831);
 						InputStream is_leave=getResources().openRawResource(R.raw.leave_20200807); //cascade_empty_6
 						InputStream is_empty=getResources().openRawResource(R.raw.empty_20200807); //cempty_4 ok
 						InputStream is_insuff=getResources().openRawResource(R.raw.insuff20191226); //cascade_moved
@@ -456,7 +456,7 @@ public class Tutorial2Activity extends Activity implements
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(isChecked){
 					mOpenCvCameraView.setEffect(Camera.Parameters.FLASH_MODE_TORCH);
-					seekBar.setProgress(30);
+					seekBar.setProgress(50);
 //					mOpenCvCameraView.setAWB(true);
 //					mViewMode=VIEW_MODE_THRESH;
 //					flashCheckbox.setVisibility(View.INVISIBLE);
