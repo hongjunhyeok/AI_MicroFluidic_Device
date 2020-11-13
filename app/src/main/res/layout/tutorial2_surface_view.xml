@@ -43,7 +43,7 @@
       <TextView
           android:layout_width="match_parent"
           android:layout_height="fill_parent"
-          android:layout_weight="1.8"
+          android:layout_weight="1.5"
           android:background="#FFFFFF"
           android:gravity="center_horizontal"
           android:visibility="visible" />
@@ -62,6 +62,37 @@
           android:layout_height="fill_parent"
           android:visibility="invisible"
           android:layout_weight="2" />
+
+      <Button
+
+          android:id="@+id/btn_up_roi"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:background="#00ff0000"
+
+          android:text="" />
+      <Button
+          android:id="@+id/btn_down_roi"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:background="#00ff0000"
+
+          android:text="" />
+      <Button
+          android:id="@+id/btn_left_roi"
+          android:background="#00ff0000"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+
+          android:text="" />
+      <Button
+          android:id="@+id/btn_right_roi"
+          android:background="#00ff0000"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+
+          android:text="" />
+
 
       <Button
           android:id="@+id/btn_up"
@@ -272,7 +303,7 @@
           android:id="@+id/checkBox1"
           android:layout_width="20dp"
           android:layout_height="20dp"
-          android:layout_below="@+id/textView1"
+          android:layout_below="@+id/btn_motorGo"
           android:visibility="visible"
           android:layout_alignParentRight="true" />
 

@@ -61,8 +61,8 @@ public class Tutorial2Activity extends Activity implements
 	private int frame_num=0;
 
 	public boolean FLAG_ENTER=false;
-	public boolean FLAG_FILLED=false;
-	public boolean FLAG_LEAVE=true;
+	public boolean FLAG_FILLED=true;
+	public boolean FLAG_LEAVE=false;
 	public boolean FLAG_EMPTY=true;
 //	public boolean FLAG_INSUFF=false;
 	public boolean FLAG_BUBBLE=false;
@@ -116,23 +116,23 @@ public class Tutorial2Activity extends Activity implements
 	public String BTMessage="";
 
 	public int seekBarProgress;
-	public int start_x=1340;
-	public int start_y=720;
+	public int start_x=1200;
+	public int start_y=620;
 	public int x_width=25;
 	public int y_height=30;
 
-	public int cropped_x =700;//1070
+	public int cropped_x =400;//1070
 	public int cropped_y = 300;
 
-	public int cropped_w = 1200;
+	public int cropped_w = 1000;
 	public int cropped_h =600;
 
 
-	public int detectzone_x =1000;//1070
-	public int detectzone_y = 600;//710
+	public int detectzone_x =800;//1070
+	public int detectzone_y = 300;//710
 
-	public int detectzone_w = 300;//160
-	public int detectzone_h =200;//100
+	public int detectzone_w = 700;//160
+	public int detectzone_h =500;//100
 
 	public int thickness =0;
 
@@ -196,7 +196,7 @@ public class Tutorial2Activity extends Activity implements
 	Button ReturnBtn;
 	Button Btn_motorGo,Btn_motorStop,Btn_motorBack;
 	Button Btn_up,Btn_down,Btn_left,Btn_right;
-
+	Button Btn_up_roi,Btn_down_roi,Btn_left_roi,Btn_right_roi;
 
 	int count=0;
 	int enter_count=0,filled_count=0,leave_count=0,empty_count=0,bubble_count=0;
@@ -227,9 +227,9 @@ public class Tutorial2Activity extends Activity implements
 						// load cascade file from application resources
 						InputStream is = getResources().openRawResource(R.raw.pillar3); //cascade_filled_6f
 						InputStream is_enter=getResources().openRawResource(R.raw.enter20200807_2); //maniscus 13
-						InputStream is_filled=getResources().openRawResource(R.raw.filled_20200831);
+						InputStream is_filled=getResources().openRawResource(R.raw.filled1080);//filled_20200915
 						InputStream is_leave=getResources().openRawResource(R.raw.leave_20200807); //cascade_empty_6
-						InputStream is_empty=getResources().openRawResource(R.raw.empty_20200807); //cempty_4 ok
+						InputStream is_empty=getResources().openRawResource(R.raw.empty1080); //cempty_4 ok
 						InputStream is_insuff=getResources().openRawResource(R.raw.insuff20191226); //cascade_moved
 						InputStream is_bubble=getResources().openRawResource(R.raw.bubble20200108); //cascade_moved
 
@@ -390,7 +390,10 @@ public class Tutorial2Activity extends Activity implements
 		Btn_down=findViewById(R.id.btn_down);
 		Btn_left=findViewById(R.id.btn_left);
 		Btn_right=findViewById(R.id.btn_right);
-
+		Btn_up_roi=findViewById(R.id.btn_up_roi);
+		Btn_down_roi=findViewById(R.id.btn_down_roi);
+		Btn_left_roi=findViewById(R.id.btn_left_roi);
+		Btn_right_roi=findViewById(R.id.btn_right_roi);
 
 		seekBarProgress=seekBar.getProgress();
 		mOpenCvCameraView =  findViewById(R.id.tutorial2_activity_surface_view);
@@ -626,6 +629,7 @@ public class Tutorial2Activity extends Activity implements
 			public void onClick(View v) {
 
 
+
 				if (is_started) {
 					//ELISA 타이머 작동
 					is_started=false;
@@ -754,6 +758,31 @@ public class Tutorial2Activity extends Activity implements
 			}
 		});
 
+		Btn_up_roi.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				detectzone_y-=10;
+			}
+		});
+		Btn_down_roi.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				detectzone_y+=10;
+			}
+		});
+		Btn_left_roi.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				detectzone_x-=10;
+			}
+		});
+		Btn_right_roi.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				detectzone_x+=10;
+			}
+		});
+
 		final int viewMode = mViewMode;
 
 
@@ -792,11 +821,11 @@ public class Tutorial2Activity extends Activity implements
 
 					mN1=17; mN2=40; mN3=10; mN4=10; mN5=2; mN6=2; mN7=5;
 					minNeighborsfill=17;minNeighborsEmpty=35;
-					mJavaDetector.detectMultiScale(cropped_img,circle_rect,1.02,0,0,new Size(250,250),new Size());
-					mJavaDetector2.detectMultiScale(detection_zone,enter_rect,1.1,0,0,new Size(),new Size());
-					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,20,0,new Size(),new Size());
-					mJavaDetector4.detectMultiScale(detection_zone,leave_rect,1.1,10,0,new Size(),new Size());
-					mJavaDetector5.detectMultiScale(detection_zone,empty_rect,1.1,1,0,new Size(),new Size());
+//					mJavaDetector.detectMultiScale(cropped_img,circle_rect,1.2,0,0,new Size(250,250),new Size());
+//					mJavaDetector2.detectMultiScale(detection_zone,enter_rect,1.1,0,0,new Size(),new Size());
+					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,80,0,new Size(),new Size());
+//					mJavaDetector4.detectMultiScale(detection_zone,leave_rect,1.1,9999,0,new Size(),new Size());
+					mJavaDetector5.detectMultiScale(detection_zone,empty_rect,1.15,20,0,new Size(),new Size());
 //					mJavaDetector6.detectMultiScale(detection_zone,insuff_rect,1.1,40,0,new Size(14,14),new Size());
 //					mJavaDetector7.detectMultiScale(detection_zone,bubble_rect,1.1,40,0,new Size(5,5),new Size(50,50));
 
@@ -811,17 +840,17 @@ public class Tutorial2Activity extends Activity implements
 				}
 
 
-				DetectCircle_array =circle_rect.toArray();
-				DetectEnter_array =enter_rect.toArray();
+//				DetectCircle_array =circle_rect.toArray();
+//				DetectEnter_array =enter_rect.toArray();
 				DetectFilled_array =filled_rect.toArray();
-				DetectLeave_array =leave_rect.toArray();
+//				DetectLeave_array =leave_rect.toArray();
 				DetectEmpty_array =empty_rect.toArray();
-				DetectInsuff_array=insuff_rect.toArray();
-				DetectBubble_array=bubble_rect.toArray();
+//				DetectInsuff_array=insuff_rect.toArray();
+//				DetectBubble_array=bubble_rect.toArray();
 
 
 
-				if(is_in){
+				if(false){
 					if(DetectCircle_array.length==1){
 
 						double tmp_tl_x,tmp_tl_y;
@@ -849,7 +878,7 @@ public class Tutorial2Activity extends Activity implements
 						detectzone_x = (int)((tmp_tl_x) +50);
 						detectzone_y = (int)((tmp_tl_y)+50);
 						detectzone_w = 300;
-						detectzone_h = 300;
+						detectzone_h = 200;
 						start_x=detectzone_x+(detectzone_w)/2;
 						start_y=detectzone_y+(detectzone_h)/2;
 						is_in = false;
@@ -859,46 +888,46 @@ public class Tutorial2Activity extends Activity implements
 				}
 //
 
-				if(FLAG_ENTER) {
-					if ( DetectEnter_array.length==1) {
-
-						enter_count+=1;
-						empty_count=0;
-						if(enter_count>1) {
-							tl_x = DetectEnter_array[0].tl().x + detectzone_x;
-							tl_y = DetectEnter_array[0].tl().y + detectzone_y;
-							br_x = DetectEnter_array[0].br().x + detectzone_x;
-							br_y = DetectEnter_array[0].br().y + detectzone_y;
-							detectMessage = "Fluid Entering";
-
-
-
-							minNeighborsfill=25;
-//							FLAG_EMPTY = false;
-//							FLAG_FILLED = true;
-//							FLAG_INSUFF=true;
-							is_in = false;
-						}
-						break;
-					}
-
-
-
-				}
+//				if(FLAG_ENTER) {
+//					if ( DetectEnter_array.length==1) {
+//
+//						enter_count+=1;
+//						empty_count=0;
+//						if(enter_count>1) {
+//							tl_x = DetectEnter_array[0].tl().x + detectzone_x;
+//							tl_y = DetectEnter_array[0].tl().y + detectzone_y;
+//							br_x = DetectEnter_array[0].br().x + detectzone_x;
+//							br_y = DetectEnter_array[0].br().y + detectzone_y;
+//							detectMessage = "Fluid Entering";
+//
+//
+//
+//							minNeighborsfill=25;
+////							FLAG_EMPTY = false;
+////							FLAG_FILLED = true;
+////							FLAG_INSUFF=true;
+//							is_in = false;
+//						}
+//						break;
+//					}
+//
+//
+//
+//				}
 
 				if(FLAG_FILLED) {
 
-					if(DetectFilled_array.length==1) {
+					for (int i=0;i<DetectFilled_array.length;i++) {
 //						frame_num=0;
 						minNeighbors=120;
 						filled_count+=1;
 						enter_count=0;
-						if(filled_count>0) {
 
-							tl_x = DetectFilled_array[0].tl().x + detectzone_x;
-							tl_y = DetectFilled_array[0].tl().y + detectzone_y;
-							br_x = DetectFilled_array[0].br().x + detectzone_x;
-							br_y = DetectFilled_array[0].br().y + detectzone_y;
+
+							tl_x = DetectFilled_array[i].tl().x + detectzone_x;
+							tl_y = DetectFilled_array[i].tl().y + detectzone_y;
+							br_x = DetectFilled_array[i].br().x + detectzone_x;
+							br_y = DetectFilled_array[i].br().y + detectzone_y;
 
 							detectMessage = "Filled";
 
@@ -918,7 +947,7 @@ public class Tutorial2Activity extends Activity implements
 									tt = new TimerTask() {
 										@Override
 										public void run() {
-											timer_counter++;
+											
 
 											Log.i(TAG, String.format("TIMERTASK %d", timer_counter));
 
@@ -1024,45 +1053,45 @@ public class Tutorial2Activity extends Activity implements
 
 
 
-
-						}
 						break;
+						}
 
-					}
+
+
 
 				}
 
 
-				if(FLAG_LEAVE) {
-					for (int k = 0; k < DetectLeave_array.length; k++) {
+//				if(FLAG_LEAVE) {
+//					for (int k = 0; k < DetectLeave_array.length; k++) {
+//
+//
+//
+//
+//						leave_count+=1;
+//						filled_count=0;
+//						bubble_count=0;
+//						if(leave_count>1) {
+//
+//							tl_x = DetectLeave_array[k].tl().x + detectzone_x;
+//							tl_y = DetectLeave_array[k].tl().y + detectzone_y;
+//							br_x = DetectLeave_array[k].br().x + detectzone_x;
+//							br_y = DetectLeave_array[k].br().y + detectzone_y;
+//							detectMessage = "Fluid Leaving";
+//							is_in = false;
+////                            minNeighbors=100;
+//							FLAG_EMPTY = true;
+//							FLAG_FILLED = false;
+//
+//						}
+//						break;
+//
+//
+//					}
+//
+//				}
+//
 
-
-
-
-						leave_count+=1;
-						filled_count=0;
-						bubble_count=0;
-						if(leave_count>1) {
-
-							tl_x = DetectLeave_array[k].tl().x + detectzone_x;
-							tl_y = DetectLeave_array[k].tl().y + detectzone_y;
-							br_x = DetectLeave_array[k].br().x + detectzone_x;
-							br_y = DetectLeave_array[k].br().y + detectzone_y;
-							detectMessage = "Fluid Leaving";
-							is_in = false;
-//                            minNeighbors=100;
-							FLAG_EMPTY = true;
-							FLAG_FILLED = false;
-
-						}
-						break;
-
-
-					}
-
-				}
-
-				if(FLAG_EMPTY) {
 					if (FLAG_EMPTY) {
 						for (int k = 0; k < DetectEmpty_array.length; k++) {
 
@@ -1073,70 +1102,23 @@ public class Tutorial2Activity extends Activity implements
 							br_y = DetectEmpty_array[k].br().y + detectzone_y;
 
 							detectMessage = "Empty";
-
-
 							FLAG_LEAVE = false;
+
+
 //							FLAG_BUBBLE = false;
 //
 //							FLAG_ENTER = true;
 
+							if(tt!=null){
 
+								timer_counter=0;
+								tt.cancel();
+							}
 							break;
 
-
 						}
-					}
-				}
-//                if(FLAG_INSUFF){
-//				for (int k = 0; k < DetectInsuff_array.length; k++) {
-//
-//
-//
-//					if(enter_count>3 ) {
-//						tl_x = DetectInsuff_array[k].tl().x + detectzone_x;
-//						tl_y = DetectInsuff_array[k].tl().y + detectzone_y;
-//						br_x = DetectInsuff_array[k].br().x + detectzone_x;
-//						br_y = DetectInsuff_array[k].br().y + detectzone_y;
-//						detectMessage = "Insufficient Filling ";
-//						minNeighborsfill = 15;
-//
-//
-//						FLAG_ENTER = false;
-//						FLAG_FILLED = true;
-//
-//
-//						break;
-//						}
-//					}
-//				}
-//
-//                if(FLAG_BUBBLE) {
-//
-//
-//
-//						for (int k = 0; k < DetectBubble_array.length; k++) {
-//
-//						    bubble_count+=1;
-//							if(bubble_count>3) {
-//								tl_x = DetectBubble_array[k].tl().x + detectzone_x;
-//								tl_y = DetectBubble_array[k].tl().y + detectzone_y;
-//								br_x = DetectBubble_array[k].br().x + detectzone_x;
-//								br_y = DetectBubble_array[k].br().y + detectzone_y;
-//
-//								Imgproc.rectangle(detection_zone, new Point(tl_x, tl_y), new Point(br_x, br_y), new Scalar(0, 0, 0), 1);
-//
-//								detectMessage = "Bubble";
-//
-//								FLAG_FILLED = false;
-//								FLAG_INSUFF=false;
-//								FLAG_EMPTY = true;
-//
-//
-//								break;
-//							}
-//					}
-//				}
 
+					}
 
 				drawRect();
 
@@ -1162,6 +1144,8 @@ public class Tutorial2Activity extends Activity implements
 
 		return mRgba;
 	}
+
+
 	double writingx=0;
 
 	private void drawRect() {
@@ -1195,7 +1179,7 @@ public class Tutorial2Activity extends Activity implements
 
 
 
-		Imgproc.rectangle(mRgba, new Point(cropped_x, cropped_y), new Point(cropped_x + cropped_w, cropped_y + cropped_h), colorSelect, thickness);
+		//Imgproc.rectangle(mRgba, new Point(cropped_x, cropped_y), new Point(cropped_x + cropped_w, cropped_y + cropped_h), colorSelect, thickness);
 		Imgproc.putText(mRgba, String.format(Locale.KOREA, "FPS: %.1f", fps), new Point(cropped_x, cropped_y - 20), 1, 2, new Scalar(0, 0, 0), 2);
 
 		Imgproc.rectangle(mRgba,new Point(detectzone_x,detectzone_y),new Point(detectzone_x+detectzone_w,detectzone_y+detectzone_h),new Scalar(255,255,255),1);
