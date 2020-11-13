@@ -362,7 +362,7 @@ public class Tutorial2Activity extends Activity implements
 
 	TimerTask tt=null;
 	public int START_TIME_SET =600;
-	public int ANTIGEN_TIME_SET =600;
+	public int ANTIGEN_TIME_SET =5;
 	public int TMB_TIME_SET=600;
 
 	/** Called when the activity is first created. */
@@ -936,18 +936,12 @@ public class Tutorial2Activity extends Activity implements
 
 							//FILLED가 한번 나온경우,stop 카운터에 따라 STOP MESSAGE 보내고 타이머동작
 							if(!FLAG_LEAVE) {
-
-
-
-								//if stop카운터%3==0 항체반응시간동안 stop. 그후 모터동작 및 stop_counter+1
-								//else if stop카운터%3==1 washing 할때 stop하지 않고 stop_counter+1
-								//else stop카운터%3==2 tmb반응시간동안 stop. 그후 모터동작 및 stop_counter+1
-								if(stop_counter%4==0) {
+								
 									movingStop(10);
 									tt = new TimerTask() {
 										@Override
 										public void run() {
-											
+											timer_counter++;
 
 											Log.i(TAG, String.format("TIMERTASK %d", timer_counter));
 
@@ -958,11 +952,7 @@ public class Tutorial2Activity extends Activity implements
 												}
 											});
 
-											if(timer_counter==ANTIGEN_TIME_SET-60){
-												Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-												Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
-												ringtone.play();
-											}
+
 											if (timer_counter >= ANTIGEN_TIME_SET) {
 
 												movingGo(10);
@@ -983,65 +973,10 @@ public class Tutorial2Activity extends Activity implements
 
 									Timer timer = new Timer();
 									timer.schedule(tt, 0, 1000);
+
+
+
 								}
-								else if(stop_counter%4==1){
-									stop_counter+=1;
-
-
-
-								}	else if(stop_counter%4==2){
-									stop_counter+=1;
-
-
-
-								}else{
-									movingStop(10);
-									tt = new TimerTask() {
-										@Override
-										public void run() {
-											timer_counter++;
-
-											Log.i(TAG, String.format("TIMERTASK %d", timer_counter));
-
-											runOnUiThread(new Runnable() {
-												@Override
-												public void run() {
-													mTitle.setText(String.format(Locale.KOREA, "Time left to start\n %d s", TMB_TIME_SET - timer_counter));
-												}
-											});
-
-
-											if(timer_counter == TMB_TIME_SET-60){
-
-												Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-												Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
-												ringtone.play();
-											}
-											if (timer_counter >= TMB_TIME_SET) {
-
-												movingGo(10);
-												timer_counter = 0;
-												stop_counter += 1; //
-												this.cancel();
-
-
-												runOnUiThread(new Runnable() {
-													@Override
-													public void run() {
-														mTitle.setText(String.format(Locale.KOREA, "GO"));
-													}
-												});
-											}
-										}
-									};
-
-									Timer timer = new Timer();
-									timer.schedule(tt, 0, 1000);
-								}
-
-
-
-							}
 
 //
 							FLAG_LEAVE = true;
