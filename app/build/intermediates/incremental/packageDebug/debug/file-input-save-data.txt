@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Tue Aug 20 18:54:51 KST 2019
+#Thu Jun 18 18:10:19 KST 2020
 4.path=classes.dex
 13.baseType=DIRECTORY
 8.set=DEX
@@ -10,12 +10,12 @@
 1.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\stripDebugSymbol\\debug\\0
 8.path=classes.dex
 12.path=classes.dex
-3.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\391
+3.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\15
 14.path=lib/armeabi/libopencv_java3.so
 4.set=DEX
 5.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\stripDebugSymbol\\debug\\0
 7.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\stripDebugSymbol\\debug\\0
-11.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\396
+11.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\14
 9.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\stripDebugSymbol\\debug\\0
 13.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\stripDebugSymbol\\debug\\0
 1.baseType=DIRECTORY
@@ -38,18 +38,18 @@
 11.path=classes.dex
 9.path=lib/arm64-v8a/libnative-lib.so
 6.set=NATIVE_RESOURCE
-2.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\394
+2.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\13
 13.path=lib/armeabi-v7a/libnative-lib.so
 11.baseType=DIRECTORY
-4.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\392
+4.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\12
 3.baseType=DIRECTORY
 6.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\stripDebugSymbol\\debug\\0
 10.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\stripDebugSymbol\\debug\\0
 13.set=NATIVE_RESOURCE
-8.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\395
+8.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\16
 2.set=DEX
 8.baseType=DIRECTORY
-12.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\393
+12.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\17
 14.base=F\:\\Quix22\\app\\build\\intermediates\\transforms\\stripDebugSymbol\\debug\\0
 9.set=NATIVE_RESOURCE
 count=15

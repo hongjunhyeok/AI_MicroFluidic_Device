@@ -1,4 +1,4 @@
-#Wed Aug 21 12:09:35 KST 2019
-base.0=F\:\\Quix22\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\383
+#Thu Jun 25 17:52:27 KST 2020
+base.0=F\:\\Quix22\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\4
 path.0=classes.dex
 renamed.0=classes.dex

@@ -5,7 +5,7 @@ android {
 
     defaultConfig {
         applicationId "org.opencv.samples.quix2"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 26
 
 

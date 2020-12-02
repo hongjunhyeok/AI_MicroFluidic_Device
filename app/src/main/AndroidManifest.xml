@@ -4,8 +4,6 @@
     android:versionCode="21"
     android:versionName="2.1">
 
-    <uses-sdk android:minSdkVersion="23" />
-
     <!-- Required to act as a custom watch face. -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 

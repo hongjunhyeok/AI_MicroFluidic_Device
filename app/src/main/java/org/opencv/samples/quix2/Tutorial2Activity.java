@@ -1,11 +1,9 @@
 package org.opencv.samples.quix2;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStreamWriter;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -29,58 +27,50 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Camera;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
-import android.provider.MediaStore;
 import android.util.Log;
-import android.util.TimeUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.sql.Time;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class Tutorial2Activity extends Activity implements
-		CvCameraViewListener2,View.OnTouchListener {
-
-	Zoomcameraview zoomcameraview;
-
-	Thread threadDelay;
+		CvCameraViewListener2 {
 
 
-	private int RGB_data_array[]=new int[3];
-	private int RGB_data_array_2[]=new int[3];
-	private int RGB_avg_per_time[]=new int[10];
+
+
 	private int frame_num=0;
 
-	public boolean should_motor_on =false;
 	public boolean FLAG_ENTER=false;
-	public boolean FLAG_FILLED=false;
-	public boolean FLAG_LEAVE=false		;
+	public boolean FLAG_FILLED=true;
+	public boolean FLAG_LEAVE=false;
 	public boolean FLAG_EMPTY=true;
-	public boolean FLAG_INSUFF=false;
+//	public boolean FLAG_INSUFF=false;
 	public boolean FLAG_BUBBLE=false;
+
+
+
 	public boolean is_in=true;
-	public boolean is_empty=false;
+	public boolean is_started=true;
 
 
 	public int updated_count=0;
@@ -88,17 +78,16 @@ public class Tutorial2Activity extends Activity implements
 	public double scaleFactor;
 	public int minNeighbors,minNeighborsfill,minNeighborsEmpty;
 	public boolean ini_F = false;
-	public int ini_R=0, ini_G=0, ini_B=0, ini_GC=0;
+
 
 	private static final String TAG = "Tutorial2Activity.java";
 
 	private static final int VIEW_MODE_RGBA = 0;
 	private static final int VIEW_MODE_START = 1;
-	private static final int VIEW_MODE_RESULT = 2;
 	private static final int VIEW_MODE_STOP = 3;
 	private static final int VIEW_MODE_INIT = 4;
 	private static final int VIEW_MODE_CHECK =5;
-	private static final int VIEW_MODE_THRESH =6;
+
 
 
 
@@ -106,12 +95,8 @@ public class Tutorial2Activity extends Activity implements
 	private static final int MESSAGE_TIMER_START=100;
 	private static final int MESSAGE_TIMER_REPEAT=101;
 	private static final int MESSAGE_TIMER_STOP=102;
-
-
-
-	private static final int COLOR_RED = 0;
-	private static final int COLOR_GREEN=1;
-	private  static  final  int COLOR_YELLOW=2;
+	int timer_counter;
+	int stop_counter=0;
 
 
 	Rect[] DetectCircle_array =new Rect[50];
@@ -128,59 +113,46 @@ public class Tutorial2Activity extends Activity implements
 	public double br_y=0.0;
 
 	public String detectMessage="";
+	public String BTMessage="";
 
 	public int seekBarProgress;
-	public int thresholdProgress;
-	public int start_x=1340;
-	public int start_y=720;
+	public int start_x=1200;
+	public int start_y=620;
 	public int x_width=25;
 	public int y_height=30;
 
+	public int cropped_x =400;//1070
+	public int cropped_y = 300;
 
-	public int start_x_2=1360;
-	public int start_y_2=520;
-	public int cropped_x =820;//1070
-	public int cropped_y = 250;
-
-	public int cropped_w = 600;
+	public int cropped_w = 1000;
 	public int cropped_h =600;
 
 
-	public int detectzone_x =0;//1070
-	public int detectzone_y = 0;//710
+	public int detectzone_x =800;//1070
+	public int detectzone_y = 300;//710
 
-	public int detectzone_w = 0;//160
-	public int detectzone_h =0;//100
+	public int detectzone_w = 700;//160
+	public int detectzone_h =500;//100
 
 	public int thickness =0;
 
 
-	public int x_width_2=15;
-	public int y_height_2=15;
-
 	private int mViewMode;
-	private Mat mRgba,mask;
+	private Mat mRgba;
 	private Mat mIntermediateMat;
-	private Mat mGray, cropped_img,detection_zone;
-	private File mCascadeFile, mModelFile2, mModelFile3, mModelFile4,mModelFile5,mModelFile6,mModelFile7;
-	private CascadeClassifier	mJavaDetector,mJavaDetector2,mJavaDetector3,mJavaDetector4,mJavaDetector5,mJavaDetector6,mJavaDetector7;
+	private Mat mGray;
 
-	private MenuItem mItemPreviewRGBA;
-	private MenuItem mItemPreviewGray;
-	private MenuItem mItemPreviewCanny;
-	private MenuItem mItemPreviewFeatures;
+	private CascadeClassifier	mJavaDetector,mJavaDetector2,mJavaDetector3,mJavaDetector4,mJavaDetector5;
 
 	private TextView mTitle;
 	private TextView mText;
-	private Button mFlashButton;
 
 	private Tutorial3View mOpenCvCameraView;
 
-	private String text;
 	private String sendMsg="";
 
-	private FileOutputStream fos = null;
-	String path;
+
+
 	// Debugging
 	private static final boolean D = true;
 
@@ -193,7 +165,9 @@ public class Tutorial2Activity extends Activity implements
 	public int mN1,mN2,mN3,mN4,mN5,mN6,mN7;
 	public double sF =1.1;
 
-
+	double[] rgb_value=new double[3];
+	double hue_value;
+	CalculateHue calculateHue = new CalculateHue();
 
 	// Key names received from the BluetoothChatService Handler
 	public static final String DEVICE_NAME = "device_name";
@@ -203,11 +177,11 @@ public class Tutorial2Activity extends Activity implements
 	private static final int REQUEST_CONNECT_DEVICE = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
 	// Name of the connected device
-	private String mConnectedDeviceName = null;
+
 	// Array adapter for the conversation thread
-	private ArrayAdapter<String> mConversationArrayAdapter;
+
 	// String buffer for outgoing messages
-	private StringBuffer mOutStringBuffer;
+
 	// Local Bluetooth adapter
 	private BluetoothAdapter mBluetoothAdapter = null;
 
@@ -219,26 +193,23 @@ public class Tutorial2Activity extends Activity implements
 	Button InitBtn;
 	Button StartBtn;
 	Button StopBtn;
-	Button ReturnBtn,MeasureBtn;
-	Button thPlsBtn1,thPlsBtn2,thPlsBtn3,thPlsBtn4,thPlsBtn5,thPlsBtn6,thPlsBtn7;
-	Button thmnsBtn1,thmnsBtn2,thmnsBtn3,thmnsBtn4,thmnsBtn5,thmnsBtn6,thmnsBtn7;
+	Button ReturnBtn;
+	Button Btn_motorGo,Btn_motorStop,Btn_motorBack;
+	Button Btn_up,Btn_down,Btn_left,Btn_right;
+	Button Btn_up_roi,Btn_down_roi,Btn_left_roi,Btn_right_roi;
 
-    int count=0;
-    int enter_count=0,filled_count=0,leave_count=0,empty_count=0,insuff_count=0,bubble_count=0;
-    long fpsStratTime=0L;
-    int frameCnt=0;
-    double timeElapsed=0.0f;
+	int count=0;
+	int enter_count=0,filled_count=0,leave_count=0,empty_count=0,bubble_count=0;
+	long fpsStratTime=0L;
 
 //	TimerHandler timerHandler = new TimerHandler();
 
 	CheckBox flashCheckbox;
-	SeekBar seekBar,thresholdBar;
+	SeekBar seekBar;
+
 	TextView textView_for_th;
 
-	File file;
-	String Text_for_R="R: ";
-	String Text_for_G="G: ";
-	String Text_for_B="B: ";
+
 	Scalar colorSelect = new Scalar(0, 0, 0);
 
 	private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
@@ -254,17 +225,24 @@ public class Tutorial2Activity extends Activity implements
 
 					try {
 						// load cascade file from application resources
-						InputStream is = getResources().openRawResource(R.raw.circle); //cascade_filled_6f
-						InputStream is_enter=getResources().openRawResource(R.raw.enter20191226); //maniscus 13
-                        InputStream is_filled=getResources().openRawResource(R.raw.filled20200110);
-                        InputStream is_leave=getResources().openRawResource(R.raw.leave20191226); //cascade_empty_6
-                        InputStream is_empty=getResources().openRawResource(R.raw.empty20191226); //cempty_4 ok
+						InputStream is = getResources().openRawResource(R.raw.pillar3); //cascade_filled_6f
+						InputStream is_enter=getResources().openRawResource(R.raw.enter20200807_2); //maniscus 13
+						InputStream is_filled=getResources().openRawResource(R.raw.filled1080);//filled_20200915
+						InputStream is_leave=getResources().openRawResource(R.raw.leave_20200807); //cascade_empty_6
+						InputStream is_empty=getResources().openRawResource(R.raw.empty1080); //cempty_4 ok
 						InputStream is_insuff=getResources().openRawResource(R.raw.insuff20191226); //cascade_moved
 						InputStream is_bubble=getResources().openRawResource(R.raw.bubble20200108); //cascade_moved
 
+						seekBar.post(new Runnable() {
+							@Override
+							public void run() {
+								seekBar.setProgress(20);
+							}
+						});
 
 						scaleFactor=1.11;
 
+						 File mCascadeFile, mModelFile2, mModelFile3, mModelFile4,mModelFile5,mModelFile6,mModelFile7;
 
 						File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
 						File manisDir=getDir("cascade",Context.MODE_PRIVATE);
@@ -272,7 +250,7 @@ public class Tutorial2Activity extends Activity implements
 						File model4Dir=getDir("cascade",Context.MODE_PRIVATE);
 						File model5Dir=getDir("cascade",Context.MODE_PRIVATE);
 						File modelempDir=getDir("cascade",Context.MODE_PRIVATE);
-						File model6Dir=getDir("cascade",Context.MODE_PRIVATE);
+
 
 
 						Log.i(TAG,"directory_cascade :"+cascadeDir.getAbsolutePath());
@@ -345,8 +323,8 @@ public class Tutorial2Activity extends Activity implements
 						mJavaDetector3= new CascadeClassifier(mModelFile3.getAbsolutePath());
 						mJavaDetector4= new CascadeClassifier(mModelFile4.getAbsolutePath());
 						mJavaDetector5= new CascadeClassifier(mModelFile5.getAbsolutePath());
-						mJavaDetector6= new CascadeClassifier(mModelFile6.getAbsolutePath());
-						mJavaDetector7= new CascadeClassifier(mModelFile7.getAbsolutePath());
+//						mJavaDetector6= new CascadeClassifier(mModelFile6.getAbsolutePath());
+//						mJavaDetector7= new CascadeClassifier(mModelFile7.getAbsolutePath());
 
 
 						if (mJavaDetector.empty() || mJavaDetector2.empty()) {
@@ -357,7 +335,7 @@ public class Tutorial2Activity extends Activity implements
 
 //						mNativeDetector = new DetectionBasedTracker(mCascadeFile.getAbsolutePath(), 0);
 
-						cascadeDir.delete();
+
 
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -380,8 +358,12 @@ public class Tutorial2Activity extends Activity implements
 		Log.i(TAG, "Instantiated new " + this.getClass());
 	}
 
-	Rect sel=new Rect();
 
+
+	TimerTask tt=null;
+	public int START_TIME_SET =600;
+	public int ANTIGEN_TIME_SET =5;
+	public int TMB_TIME_SET=600;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -392,25 +374,54 @@ public class Tutorial2Activity extends Activity implements
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setContentView(R.layout.tutorial2_surface_view);
 
+
+
 		fpsStratTime=System.currentTimeMillis();
 
-		InitBtn = (Button) findViewById(R.id.button1);
-		StartBtn = (Button) findViewById(R.id.button2);
-		StopBtn = (Button) findViewById(R.id.button3);
-		ReturnBtn = (Button) findViewById(R.id.button6);
-		MeasureBtn=(Button)findViewById(R.id.button7);
-		seekBar=(SeekBar)findViewById(R.id.CameraZoomControls);
-
+		InitBtn = findViewById(R.id.button1);
+		StartBtn = findViewById(R.id.button2);
+		StopBtn = findViewById(R.id.button3);
+		ReturnBtn = findViewById(R.id.button6);
+		Btn_motorGo=findViewById(R.id.btn_motorGo);
+		Btn_motorStop=findViewById(R.id.btn_motorStop);
+		Btn_motorBack=findViewById(R.id.btn_motorBack);
+		seekBar=findViewById(R.id.CameraZoomControls);
+		Btn_up=findViewById(R.id.btn_up);
+		Btn_down=findViewById(R.id.btn_down);
+		Btn_left=findViewById(R.id.btn_left);
+		Btn_right=findViewById(R.id.btn_right);
+		Btn_up_roi=findViewById(R.id.btn_up_roi);
+		Btn_down_roi=findViewById(R.id.btn_down_roi);
+		Btn_left_roi=findViewById(R.id.btn_left_roi);
+		Btn_right_roi=findViewById(R.id.btn_right_roi);
 
 		seekBarProgress=seekBar.getProgress();
-		mOpenCvCameraView = (Tutorial3View) findViewById(R.id.tutorial2_activity_surface_view);
+		mOpenCvCameraView =  findViewById(R.id.tutorial2_activity_surface_view);
 		mOpenCvCameraView.setCvCameraViewListener(this);
 		mOpenCvCameraView.setEnabled(true);
 		mOpenCvCameraView.setVisibility(CameraBridgeViewBase.VISIBLE);
 		mOpenCvCameraView.setZoomControl((SeekBar) findViewById(R.id.CameraZoomControls));
 
-		mTitle = (TextView) findViewById(R.id.textView1);
-		mText = (TextView) findViewById(R.id.textView2);
+
+//        mOpenCvCameraView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+//                    focusOnTouch(event);
+//                }
+//
+//
+//
+//				Log.i(TAG,Integer.toString(event.getAction()));
+//
+//				return true;
+//            }
+//
+//
+//        });
+
+		mTitle =findViewById(R.id.textView1);
+		mText =  findViewById(R.id.textView2);
 		textView_for_th = findViewById(R.id.textView4);
 
 		// Get local Bluetooth adapter
@@ -438,9 +449,10 @@ public class Tutorial2Activity extends Activity implements
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(isChecked){
 					mOpenCvCameraView.setEffect(Camera.Parameters.FLASH_MODE_TORCH);
+					seekBar.setProgress(30);
 //					mOpenCvCameraView.setAWB(true);
 //					mViewMode=VIEW_MODE_THRESH;
-					flashCheckbox.setVisibility(View.INVISIBLE);
+//					flashCheckbox.setVisibility(View.INVISIBLE);
 				}else{
 					mOpenCvCameraView.setEffect(Camera.Parameters.FLASH_MODE_ON);
 //					mOpenCvCameraView.setAWB(false);
@@ -473,6 +485,8 @@ public class Tutorial2Activity extends Activity implements
 		super.onResume();
 //      OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0, this,
 //            mLoaderCallback);
+
+
 		if (!OpenCVLoader.initDebug()) {
 			Log.d(TAG, "Internal OpenCV library not found. Using OpenCV Manager for initialization");
 			OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_4_0, this, mLoaderCallback);
@@ -495,7 +509,7 @@ public class Tutorial2Activity extends Activity implements
 		mRgba = new Mat(height, width, CvType.CV_8UC4);
 		mIntermediateMat = new Mat(height, width, CvType.CV_8UC4);
 		mGray = new Mat(height, width, CvType.CV_8UC1);
-		seekBar.setProgress(35);
+		seekBar.setProgress(30);
 
 	}
 
@@ -511,43 +525,14 @@ public class Tutorial2Activity extends Activity implements
 
 	}
 
-	@Override
-	public boolean onTouch(View v, MotionEvent event) {
-		int cols = mRgba.cols();
-		int rows = mRgba.rows();
-
-		int xOffset = (mOpenCvCameraView.getWidth() - cols) / 2;
-		int yOffset = (mOpenCvCameraView.getHeight() - rows) / 2;
-
-		int x = (int)event.getX() - xOffset;
-		int y = (int)event.getY() - yOffset;
-		if (x<0||y<0||x>=cols||y>=cols) return false;
-		if ((sel.x==0 && sel.y==0) || (sel.width!=0 && sel.height!=0))
-		{
-			mask = null;
-			sel.x=x; sel.y=y;
-			sel.width = sel.height = 0;
-		} else {
-			sel.width = x - sel.x;
-			sel.height = y - sel.y;
-			if ( sel.width <= 0 || sel.height <= 0 ) { // invalid, clear it all
-				sel.x=sel.y=sel.width=sel.height = 0;
-				mask = null;
-				return false;
-			}
-			mask = Mat.zeros(mRgba.size(), mRgba.type());
-			mask.submat(sel).setTo(Scalar.all(255));
-		}
-		Log.w("touch",sel.toString());
-		return false;
-	}
 
 
 
 
 
 
-    //	CascadeClassifier cascadeClassifier;
+
+	//	CascadeClassifier cascadeClassifier;
 	long curTime=System.currentTimeMillis();
 	long prevTime=0;
 	long secTime=0;
@@ -559,21 +544,36 @@ public class Tutorial2Activity extends Activity implements
 		prevTime=curTime;
 
 		if(frame_num%10==0)
-			fps=1000/secTime;
+			fps=(float)1000/secTime;
 
+
+		for(int i=start_x+1;i<start_x+10;i++){
+			for (int j=start_y+1;j<start_y+10;j++){
+				rgb_value=mRgba.get(j,i);
+				int[] tmp=new int[3];
+				tmp[0]=(int)rgb_value[0];
+				tmp[1]=(int)rgb_value[1];
+				tmp[2]=(int)rgb_value[2];
+				hue_value=calculateHue.getH(tmp);
+			}
+		}
 
 
 		InitBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
+				seekBar.post(new Runnable() {
+					@Override
+					public void run() {
+						seekBar.setProgress(20);
+					}
+				});
 
 				mGray = inputFrame.gray();
 //				Point t1= new Point(700,200);
 //				Point t2= new Point(1700,800);
 //				cropped_img =new Mat(mGray,new Rect(t1,t2));
 				SystemClock.sleep(1000);
-				// TODO Auto-generated method stub
 				Intent serverIntent = new Intent(getApplicationContext(), DeviceListActivity.class);
 				startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
 				if (mChatService.getState() == BluetoothChatService.STATE_NONE) {
@@ -583,11 +583,10 @@ public class Tutorial2Activity extends Activity implements
 				mViewMode = VIEW_MODE_INIT;
 
 				if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
-					String con = new String("STOP" + "\n");
+					String con = ("STOP" + "\n");
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}if(!sendMsg.equals(con)){
 						sendMessage(con);
@@ -601,101 +600,101 @@ public class Tutorial2Activity extends Activity implements
 			}
 		});
 
-
-//		thresholdBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-//													int progressvalue=20;
-//													@Override
-//													public void onProgressChanged(SeekBar seekBar, int progress,
-//																				  boolean fromUser) {
-//														// TODO Auto-generated method stub
-//														thresholdProgress=thresholdBar.getProgress();
-//													}
-//													@Override
-//													public void onStartTrackingTouch(SeekBar seekBar) {
-//														// TODO Auto-generated method stub
-//
-//
-//													}
-//													@Override
-//													public void onStopTrackingTouch(SeekBar seekBar) {
-//														// TODO Auto-generated method stub
-//													}
-//												}
-//		);
-		StartBtn.setOnClickListener(new OnClickListener() {
+		Btn_motorGo.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-                minNeighbors=50;
-				mViewMode = VIEW_MODE_START;
-//				timerHandler.sendEmptyMessage(MESSAGE_TIMER_START);
-				mHandler.sendEmptyMessage(MESSAGE_TIMER_START);
-				Toast.makeText(getApplicationContext(),"Moving Forward",Toast.LENGTH_SHORT).show();
+				movingGo(10);
+				if(tt!=null) tt.cancel();
 			}
+		});
+		Btn_motorBack.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				movingBack(10);
+				if(tt!=null) tt.cancel();
+			}
+		});
+		Btn_motorStop.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				movingStop(10);
+				if(tt!=null) tt.cancel();
+			}
+		});
+
+		StartBtn.setOnClickListener(new OnClickListener() {
+
+			int elisaTimer=0;
+			@Override
+			public void onClick(View v) {
+
+
+
+				if (is_started) {
+					//ELISA 타이머 작동
+					is_started=false;
+
+					tt = new TimerTask() {
+						@Override
+						public void run() {
+							elisaTimer += 1;
+
+
+							runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									mTitle.setText(String.format(Locale.KOREA,"Time left to start\n %d s", START_TIME_SET -elisaTimer));
+								}
+							});
+
+
+							if (elisaTimer >= START_TIME_SET) {
+
+								Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+								Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
+								ringtone.play();
+								tt.cancel();
+								movingGo(10);
+								mViewMode = VIEW_MODE_START;
+
+
+
+								elisaTimer=0;
+
+
+							}
+
+						}
+					};
+					Timer timer = new Timer();
+					timer.schedule(tt, 0, 1000);
+
+				}
+				else{
+					is_started=true;
+					Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+					Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
+					ringtone.play();
+					tt.cancel();
+					movingGo(10);
+					mViewMode = VIEW_MODE_START;
+				}
+
+			}
+
 		});
 		StopBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				mViewMode = VIEW_MODE_STOP;
 
-				if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
-					String con = new String("STOP" + "\n");
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					if(!sendMsg.equals(con)){
-						sendMessage(con);
-						sendMsg = con;}
-				}
 
 				mText.setTextSize(20);
 
-				path = Environment.getExternalStorageDirectory()
-						+ "/android/data/org.opencv.samples.quix2/test";
-				file = new File(path);
-				Log.i(TAG,path);
-				if (!file.exists())
-					file.mkdirs();
-				try {
-					Date currentTime = Calendar.getInstance().getTime();
-					FileOutputStream fos = new FileOutputStream(path+"/"+currentTime+".txt", true);
-					BufferedWriter buf = new BufferedWriter(new OutputStreamWriter(fos));
-
-					buf.newLine(); // 개행
-					buf.write(Text_for_R);
-					buf.newLine(); // 개행
-					buf.write(Text_for_G);
-					buf.newLine();
-					buf.write(Text_for_B);
-					buf.newLine();
 //
-					Log.i(TAG,"saved");
-					buf.close();
-					fos.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-					Log.i(TAG,"not saved"+e.toString());
+			}
+		});
 
-				}
-			}
-		});
-		MeasureBtn.setOnClickListener(new View.OnClickListener(){
-			@Override
-			public void onClick(View v){
-				FLAG_BUBBLE=false;
-				FLAG_EMPTY=true;
-				FLAG_ENTER=false;
-				FLAG_FILLED=false;
-				FLAG_INSUFF=false;
-				FLAG_LEAVE=false;
-				minNeighbors=80;
-				Toast.makeText(getApplicationContext(),"Moving Backward",Toast.LENGTH_LONG).show();
-			}
-		});
 		ReturnBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -703,16 +702,14 @@ public class Tutorial2Activity extends Activity implements
 
 				FLAG_INI_VALUE=0;
 				ini_F = false;
+				movingReturn(10);
 
-
-				// TODO Auto-generated method stub
 				if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
-					String con = new String("RETURN" + "\n");
+					String con = "RETURN" + "\n";
 
 					try {
 						Thread.sleep(10);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
@@ -720,7 +717,6 @@ public class Tutorial2Activity extends Activity implements
 						try {
 							Thread.sleep(30);
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 
@@ -731,26 +727,71 @@ public class Tutorial2Activity extends Activity implements
 						onStop();
 						mViewMode = VIEW_MODE_INIT;
 					}
-					mText.setText("RETURN ");
+
 
 				}
 			}
 		});
 
-		final int viewMode = mViewMode;
-		Rect Roi_chamber = new Rect(start_x,start_y,x_width,y_height);
-		int avgR = 0, avgG = 0, avgB = 0;
-		int avgR2 = 0, avgG2 = 0, avgB2 = 0;
-		String Text_RGB;
-		String Text_RGB_2;
-		String Text_hue;
+		Btn_up.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				start_y-=10;
+			}
+		});
+		Btn_down.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				start_y+=10;
+			}
+		});
+		Btn_left.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				start_x-=10;
+			}
+		});
+		Btn_right.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				start_x+=10;
+			}
+		});
 
-		double hue_value;
-		CalculateHue calculateHue = new CalculateHue();
-		double hue_value_2f;
-		Point point_hue;
-		Point point_rgb;
-		Scalar fontColor;
+		Btn_up_roi.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				detectzone_y-=10;
+			}
+		});
+		Btn_down_roi.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				detectzone_y+=10;
+			}
+		});
+		Btn_left_roi.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				detectzone_x-=10;
+			}
+		});
+		Btn_right_roi.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				detectzone_x+=10;
+			}
+		});
+
+		final int viewMode = mViewMode;
+
+
+
+
+
+		Mat cropped_img,detection_zone;
+
+
 		switch (viewMode) {
 			case VIEW_MODE_RGBA:
 				mRgba = inputFrame.rgba();
@@ -759,13 +800,13 @@ public class Tutorial2Activity extends Activity implements
 			case VIEW_MODE_START:
 				mRgba = inputFrame.rgba();
 				mGray =inputFrame.gray();
-                MatOfRect circle_rect =new MatOfRect();
-                MatOfRect enter_rect = new MatOfRect();
-                MatOfRect filled_rect =new MatOfRect();
-                MatOfRect leave_rect =new MatOfRect();
-                MatOfRect empty_rect =new MatOfRect();
-                MatOfRect insuff_rect =new MatOfRect();
-                MatOfRect bubble_rect =new MatOfRect();
+				MatOfRect circle_rect =new MatOfRect();
+				MatOfRect enter_rect = new MatOfRect();
+				MatOfRect filled_rect =new MatOfRect();
+				MatOfRect leave_rect =new MatOfRect();
+				MatOfRect empty_rect =new MatOfRect();
+				MatOfRect insuff_rect =new MatOfRect();
+				MatOfRect bubble_rect =new MatOfRect();
 
 				Point t1= new Point(cropped_x,cropped_y);
 				Point t2= new Point(cropped_x+cropped_w,cropped_y+cropped_h);
@@ -776,17 +817,17 @@ public class Tutorial2Activity extends Activity implements
 				cropped_img =new Mat(mGray,new Rect(t1,t2));
 				detection_zone=new Mat(mGray,new Rect(tt1,tt2));
 
-                if(mJavaDetector!=null && mJavaDetector2!=null){
+				if(mJavaDetector!=null && mJavaDetector2!=null){
 
-                    mN1=17; mN2=40; mN3=10; mN4=10; mN5=2; mN6=2; mN7=5;
-                    minNeighborsfill=17;minNeighborsEmpty=35;
-                    mJavaDetector.detectMultiScale(cropped_img,circle_rect,1.02,0,0,new Size(250,250),new Size());
-					mJavaDetector2.detectMultiScale(detection_zone,enter_rect,1.1,minNeighbors,0,new Size(),new Size());
-					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,220,0,new Size(),new Size());
-					mJavaDetector4.detectMultiScale(detection_zone,leave_rect,1.1,80,0,new Size(),new Size());
-					mJavaDetector5.detectMultiScale(detection_zone,empty_rect,1.1,40,0,new Size(20,20),new Size());
-					mJavaDetector6.detectMultiScale(detection_zone,insuff_rect,1.1,40,0,new Size(14,14),new Size());
-					mJavaDetector7.detectMultiScale(detection_zone,bubble_rect,1.1,40,0,new Size(5,5),new Size(50,50));
+					mN1=17; mN2=40; mN3=10; mN4=10; mN5=2; mN6=2; mN7=5;
+					minNeighborsfill=17;minNeighborsEmpty=35;
+//					mJavaDetector.detectMultiScale(cropped_img,circle_rect,1.2,0,0,new Size(250,250),new Size());
+//					mJavaDetector2.detectMultiScale(detection_zone,enter_rect,1.1,0,0,new Size(),new Size());
+					mJavaDetector3.detectMultiScale(detection_zone,filled_rect,1.1,80,0,new Size(),new Size());
+//					mJavaDetector4.detectMultiScale(detection_zone,leave_rect,1.1,9999,0,new Size(),new Size());
+					mJavaDetector5.detectMultiScale(detection_zone,empty_rect,1.15,20,0,new Size(),new Size());
+//					mJavaDetector6.detectMultiScale(detection_zone,insuff_rect,1.1,40,0,new Size(14,14),new Size());
+//					mJavaDetector7.detectMultiScale(detection_zone,bubble_rect,1.1,40,0,new Size(5,5),new Size(50,50));
 
 //					mJavaDetector.detectMultiScale(cropped_img,circle_rect,1.02,0,0,new Size(250,250),new Size());
 //					mJavaDetector2.detectMultiScale(detection_zone,enter_rect,1.1,90,0,new Size(),new Size());
@@ -799,26 +840,25 @@ public class Tutorial2Activity extends Activity implements
 				}
 
 
-				DetectCircle_array =circle_rect.toArray();
-				DetectEnter_array =enter_rect.toArray();
+//				DetectCircle_array =circle_rect.toArray();
+//				DetectEnter_array =enter_rect.toArray();
 				DetectFilled_array =filled_rect.toArray();
-				DetectLeave_array =leave_rect.toArray();
+//				DetectLeave_array =leave_rect.toArray();
 				DetectEmpty_array =empty_rect.toArray();
-				DetectInsuff_array=insuff_rect.toArray();
-				DetectBubble_array=bubble_rect.toArray();
+//				DetectInsuff_array=insuff_rect.toArray();
+//				DetectBubble_array=bubble_rect.toArray();
 
 
 
-				if(true){
-					for (int k = 0; k < DetectCircle_array.length; k++) {
+				if(false){
+					if(DetectCircle_array.length==1){
 
-						double tmp_tl_x=0.0,tmp_tl_y=0.0,tmp_br_x=0.0,tmp_br_y=0.0;
+						double tmp_tl_x,tmp_tl_y;
 						updated_count+=1;
 
-						tmp_tl_x = DetectCircle_array[k].tl().x + cropped_x;
-						tmp_tl_y = DetectCircle_array[k].tl().y + cropped_y;
-						tmp_br_x = DetectCircle_array[k].br().x + cropped_x;
-						tmp_br_y = DetectCircle_array[k].br().y + cropped_y;
+						tmp_tl_x = DetectCircle_array[0].tl().x + cropped_x;
+						tmp_tl_y = DetectCircle_array[0].tl().y + cropped_y;
+
 
 
 
@@ -835,11 +875,12 @@ public class Tutorial2Activity extends Activity implements
 //						detectzone_y = (int) (tmp_tl_y+cropped_h/4);
 //						detectzone_w = 165;
 //						detectzone_h = 141;
-						detectzone_x = (int)((tmp_br_x+tmp_tl_x)/2 - 82);
-						detectzone_y = (int)((tmp_br_y+tmp_tl_y)/2 - 70);
-						detectzone_w = 165;
-						detectzone_h = 141;
-
+						detectzone_x = (int)((tmp_tl_x) +50);
+						detectzone_y = (int)((tmp_tl_y)+50);
+						detectzone_w = 300;
+						detectzone_h = 200;
+						start_x=detectzone_x+(detectzone_w)/2;
+						start_y=detectzone_y+(detectzone_h)/2;
 						is_in = false;
 						colorSelect=new Scalar(255,0,0);
 						break;
@@ -847,164 +888,172 @@ public class Tutorial2Activity extends Activity implements
 				}
 //
 
-                if(FLAG_ENTER) {
-                    for (int k = 0; k < DetectEnter_array.length; k++) {
+//				if(FLAG_ENTER) {
+//					if ( DetectEnter_array.length==1) {
+//
+//						enter_count+=1;
+//						empty_count=0;
+//						if(enter_count>1) {
+//							tl_x = DetectEnter_array[0].tl().x + detectzone_x;
+//							tl_y = DetectEnter_array[0].tl().y + detectzone_y;
+//							br_x = DetectEnter_array[0].br().x + detectzone_x;
+//							br_y = DetectEnter_array[0].br().y + detectzone_y;
+//							detectMessage = "Fluid Entering";
+//
+//
+//
+//							minNeighborsfill=25;
+////							FLAG_EMPTY = false;
+////							FLAG_FILLED = true;
+////							FLAG_INSUFF=true;
+//							is_in = false;
+//						}
+//						break;
+//					}
+//
+//
+//
+//				}
 
-						enter_count+=1;
-                        empty_count=0;
-                        if(enter_count>1) {
-							tl_x = DetectEnter_array[k].tl().x + detectzone_x;
-							tl_y = DetectEnter_array[k].tl().y + detectzone_y;
-							br_x = DetectEnter_array[k].br().x + detectzone_x;
-							br_y = DetectEnter_array[k].br().y + detectzone_y;
+				if(FLAG_FILLED) {
 
-							if(enter_count>40){ detectMessage = "Insufficient Filling"; }
-							detectMessage = "Fluid Entering";
-
-							minNeighborsfill=25;
-							FLAG_EMPTY = false;
-							FLAG_FILLED = true;
-							FLAG_INSUFF=true;
-							is_in = false;
-						}
-                        break;
-                    }
-
-
-
-                }
-
-                if(FLAG_FILLED) {
-
-                    for (int k = 0; k < DetectFilled_array.length; k++) {
+					for (int i=0;i<DetectFilled_array.length;i++) {
 //						frame_num=0;
 						minNeighbors=120;
-                        filled_count+=1;
-                        enter_count=0;
-						if(filled_count>0) {
+						filled_count+=1;
+						enter_count=0;
 
-                            tl_x = DetectFilled_array[k].tl().x + detectzone_x;
-                            tl_y = DetectFilled_array[k].tl().y + detectzone_y;
-                            br_x = DetectFilled_array[k].br().x + detectzone_x;
-                            br_y = DetectFilled_array[k].br().y + detectzone_y;
+
+							tl_x = DetectFilled_array[i].tl().x + detectzone_x;
+							tl_y = DetectFilled_array[i].tl().y + detectzone_y;
+							br_x = DetectFilled_array[i].br().x + detectzone_x;
+							br_y = DetectFilled_array[i].br().y + detectzone_y;
 
 							detectMessage = "Filled";
-							FLAG_ENTER = false;
 
 
+
+
+							//FILLED가 한번 나온경우,stop 카운터에 따라 STOP MESSAGE 보내고 타이머동작
+							if(!FLAG_LEAVE) {
+								
+									movingStop(10);
+									tt = new TimerTask() {
+										@Override
+										public void run() {
+											timer_counter++;
+
+											Log.i(TAG, String.format("TIMERTASK %d", timer_counter));
+
+											runOnUiThread(new Runnable() {
+												@Override
+												public void run() {
+													mTitle.setText(String.format(Locale.KOREA, "Time left to start\n %d s", ANTIGEN_TIME_SET - timer_counter));
+												}
+											});
+
+
+											if (timer_counter >= ANTIGEN_TIME_SET) {
+
+												movingGo(10);
+												timer_counter = 0;
+												stop_counter += 1; // stop카운터가 짝수면 멈추고, 홀수면 지나감.
+												this.cancel();
+
+
+												runOnUiThread(new Runnable() {
+													@Override
+													public void run() {
+														mTitle.setText(String.format(Locale.KOREA, "GO"));
+													}
+												});
+											}
+										}
+									};
+
+									Timer timer = new Timer();
+									timer.schedule(tt, 0, 1000);
+
+
+
+								}
+
+//
 							FLAG_LEAVE = true;
-							FLAG_BUBBLE=true;
+							FLAG_EMPTY=true;
+//							FLAG_BUBBLE=true;
+
+
+
+
+
+
+						break;
 						}
-                        break;
-
-                    }
-
-                }
-
-
-                if(FLAG_LEAVE) {
-                    for (int k = 0; k < DetectLeave_array.length; k++) {
-
-						leave_count+=1;
-						filled_count=0;
-						bubble_count=0;
-						if(leave_count>1) {
-
-							tl_x = DetectLeave_array[k].tl().x + detectzone_x;
-							tl_y = DetectLeave_array[k].tl().y + detectzone_y;
-							br_x = DetectLeave_array[k].br().x + detectzone_x;
-							br_y = DetectLeave_array[k].br().y + detectzone_y;
-							detectMessage = "Fluid Leaving";
-							is_in = false;
-                            minNeighbors=100;
-							FLAG_EMPTY = true;
-							FLAG_FILLED = false;
-
-						}
-                        break;
-
-
-                    }
-
-                }
-
-                if(FLAG_EMPTY) {
-                    for (int k = 0; k < DetectEmpty_array.length; k++) {
 
 
 
-						empty_count+=1;
-                        leave_count=0;
-                        if(empty_count>1) {
+
+				}
+
+
+//				if(FLAG_LEAVE) {
+//					for (int k = 0; k < DetectLeave_array.length; k++) {
+//
+//
+//
+//
+//						leave_count+=1;
+//						filled_count=0;
+//						bubble_count=0;
+//						if(leave_count>1) {
+//
+//							tl_x = DetectLeave_array[k].tl().x + detectzone_x;
+//							tl_y = DetectLeave_array[k].tl().y + detectzone_y;
+//							br_x = DetectLeave_array[k].br().x + detectzone_x;
+//							br_y = DetectLeave_array[k].br().y + detectzone_y;
+//							detectMessage = "Fluid Leaving";
+//							is_in = false;
+////                            minNeighbors=100;
+//							FLAG_EMPTY = true;
+//							FLAG_FILLED = false;
+//
+//						}
+//						break;
+//
+//
+//					}
+//
+//				}
+//
+
+					if (FLAG_EMPTY) {
+						for (int k = 0; k < DetectEmpty_array.length; k++) {
+
+
 							tl_x = DetectEmpty_array[k].tl().x + detectzone_x;
 							tl_y = DetectEmpty_array[k].tl().y + detectzone_y;
 							br_x = DetectEmpty_array[k].br().x + detectzone_x;
 							br_y = DetectEmpty_array[k].br().y + detectzone_y;
 
 							detectMessage = "Empty";
-
-
 							FLAG_LEAVE = false;
-							FLAG_BUBBLE = false;
-
-							FLAG_ENTER = true;
-						}
-
-                        break;
 
 
-                    }
-                }
-                if(FLAG_INSUFF){
-				for (int k = 0; k < DetectInsuff_array.length; k++) {
+//							FLAG_BUBBLE = false;
+//
+//							FLAG_ENTER = true;
 
+							if(tt!=null){
 
-
-					if(enter_count>3 ) {
-						tl_x = DetectInsuff_array[k].tl().x + detectzone_x;
-						tl_y = DetectInsuff_array[k].tl().y + detectzone_y;
-						br_x = DetectInsuff_array[k].br().x + detectzone_x;
-						br_y = DetectInsuff_array[k].br().y + detectzone_y;
-						detectMessage = "Insufficient Filling ";
-						minNeighborsfill = 15;
-
-
-						FLAG_ENTER = false;
-						FLAG_FILLED = true;
-
-
-						break;
-						}
-					}
-				}
-
-                if(FLAG_BUBBLE) {
-
-
-
-						for (int k = 0; k < DetectBubble_array.length; k++) {
-
-						    bubble_count+=1;
-							if(bubble_count>3) {
-								tl_x = DetectBubble_array[k].tl().x + detectzone_x;
-								tl_y = DetectBubble_array[k].tl().y + detectzone_y;
-								br_x = DetectBubble_array[k].br().x + detectzone_x;
-								br_y = DetectBubble_array[k].br().y + detectzone_y;
-
-								Imgproc.rectangle(detection_zone, new Point(tl_x, tl_y), new Point(br_x, br_y), new Scalar(0, 0, 0), 1);
-
-								detectMessage = "Bubble";
-
-								FLAG_FILLED = false;
-								FLAG_INSUFF=false;
-								FLAG_EMPTY = true;
-
-
-								break;
+								timer_counter=0;
+								tt.cancel();
 							}
-					}
-				}
+							break;
 
+						}
+
+					}
 
 				drawRect();
 
@@ -1021,7 +1070,7 @@ public class Tutorial2Activity extends Activity implements
 				mRgba = inputFrame.rgba();
 				colorSelect=new Scalar(0,0,0);
 				detectzone_x=0;detectzone_y=0;detectzone_h=0;detectzone_w=0;
-			break;
+				break;
 			case VIEW_MODE_CHECK:
 				mRgba = inputFrame.rgba();
 				drawRect() ;
@@ -1030,20 +1079,20 @@ public class Tutorial2Activity extends Activity implements
 
 		return mRgba;
 	}
-	String writingMessage="";
+
+
 	double writingx=0;
 
 	private void drawRect() {
-		// TODO Auto-generated method stub
 		Scalar red=new Scalar(255,0,0);
 
-		p.x=cropped_x+0;
+		p.x=cropped_x;
 		p.y=cropped_y+cropped_h+60;
 		p_to.x=cropped_x +40;
 		p_to.y=cropped_y + cropped_h+100;
 
 
-		Log.i(TAG,String.format("%d %d",(int)writingx,(int)tl_x));
+//		Log.i(TAG,String.format("%d %d",(int)writingx,(int)tl_x));
 
 		if((int)writingx==(int)tl_x){
 			writingx=tl_x;
@@ -1053,8 +1102,7 @@ public class Tutorial2Activity extends Activity implements
 			count=0;
 		}
 
-			Log.i(TAG,Integer.toString(count));
-			Log.i(TAG,Integer.toString(count));
+
 
 		if(count<3) {
 			Imgproc.rectangle(mRgba, new Point(tl_x, tl_y), new Point(br_x, br_y), new Scalar(255, 255, 255), 1);
@@ -1065,12 +1113,16 @@ public class Tutorial2Activity extends Activity implements
 
 
 
-		
-            Imgproc.rectangle(mRgba, new Point(cropped_x, cropped_y), new Point(cropped_x + cropped_w, cropped_y + cropped_h), colorSelect, thickness);
-            Imgproc.putText(mRgba, String.format(Locale.KOREA, "FPS: %.1f", fps), new Point(cropped_x, cropped_y - 20), 1, 2, new Scalar(0, 0, 0), 2);
 
-            Imgproc.rectangle(mRgba,new Point(detectzone_x,detectzone_y),new Point(detectzone_x+detectzone_w,detectzone_y+detectzone_h),new Scalar(255,255,255),1);
-}
+		//Imgproc.rectangle(mRgba, new Point(cropped_x, cropped_y), new Point(cropped_x + cropped_w, cropped_y + cropped_h), colorSelect, thickness);
+		Imgproc.putText(mRgba, String.format(Locale.KOREA, "FPS: %.1f", fps), new Point(cropped_x, cropped_y - 20), 1, 2, new Scalar(0, 0, 0), 2);
+
+		Imgproc.rectangle(mRgba,new Point(detectzone_x,detectzone_y),new Point(detectzone_x+detectzone_w,detectzone_y+detectzone_h),new Scalar(255,255,255),1);
+
+		Imgproc.rectangle(mRgba,new Point(start_x,start_y),new Point(start_x+10,start_y+10),new Scalar(255,255,255),1);
+		Imgproc.putText(mRgba, String.format(Locale.KOREA, "Hue: %.2f R:%.2f G:%.2f B:%.2f", hue_value,rgb_value[0],rgb_value[1],rgb_value[2]), new Point(cropped_x, cropped_y - 40), 1, 2, new Scalar(0, 0, 0), 2);
+
+	}
 
 	private final  Handler mHandler = new Handler() {
 		@Override
@@ -1105,6 +1157,7 @@ public class Tutorial2Activity extends Activity implements
 //                  + readMessage);
 					break;
 				case MESSAGE_DEVICE_NAME:
+					String mConnectedDeviceName = null;
 					// save the connected device's name
 					mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
 					Toast.makeText(getApplicationContext(),
@@ -1158,7 +1211,7 @@ public class Tutorial2Activity extends Activity implements
 		// Initialize the BluetoothChatService to perform bluetooth connections
 		mChatService = new BluetoothChatService(this, mHandler);
 		// Initialize the buffer for outgoing messages
-		mOutStringBuffer = new StringBuffer("");
+
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -1191,7 +1244,7 @@ public class Tutorial2Activity extends Activity implements
 	Runnable mRunnable = new Runnable() {
 		@Override
 		public void run() {
-			textView_for_th.setText(Integer.toString(RGB_data_array[0]));
+
 
 			mTitle.setText(Integer.toString(frame_num));
 
@@ -1223,64 +1276,30 @@ public class Tutorial2Activity extends Activity implements
 		}
 
 	};
-//
-//	public void onClick0(View v){
-//		switch (v.getId()){
-//			case R.id.btn_up:
-//				start_y-=10;
-//
-//
-//				seekBarProgress=seekBar.getProgress();
-//
-//				Log.i("start_up",Integer.toString(start_y));
-//
-//				Log.i("start_z",Integer.toString(seekBarProgress));
-//
-//
-//		}
-//	}
-//
-//
-//	public void onClick1(View v){
-//		switch (v.getId()){
-//
-//			case R.id.btn_down:
-//				start_y+=10;
-//
-//
-//		}
-//	}   public void onClick3(View v){
-//		switch (v.getId()){
-//
-//			case R.id.btn_left:
-//				start_x-=10;
-//				Log.i("start_left",Integer.toString(start_x));
-//				Toast.makeText(getApplicationContext(),Integer.toString(minNeighbors),Toast.LENGTH_SHORT).show();
-//
-//				if(minNeighbors>2) minNeighbors-=1;
-//		}
-//	}   public void onClick2(View v){
-//		switch (v.getId()){
-//
-//			case R.id.btn_right:
-//				start_x+=10;
-//				if(minNeighbors<30)minNeighbors+=1;
-//				Toast.makeText(getApplicationContext(),Integer.toString(minNeighbors),Toast.LENGTH_SHORT).show();
-//				Log.i("start_right",Integer.toString(start_x));
-//
-//
-//
-//		}
-//	}
-	public int checking_r_changed =0;
-	public int checking_g_changed=0;
-	public int checking_b_changed=0;
+	//
+	public void onClick0(View v){
+		switch (v.getId()){
+			case R.id.btn_up:
+				start_y-=10;
+
+
+				seekBarProgress=seekBar.getProgress();
+
+				Log.i("start_up",Integer.toString(start_y));
+
+				Log.i("start_z",Integer.toString(seekBarProgress));
+
+
+		}
+	}
+
+
+
 
 
 	protected void onStart(){
 		super.onStart();
 		mhandler= new Handler();
-//		mhandler.postDelayed(mRunnable,10);
 
 	}
 
@@ -1289,32 +1308,25 @@ public class Tutorial2Activity extends Activity implements
 		mhandler.removeCallbacks(mRunnable);
 	}
 
-	Runnable delayStart = new Runnable() {
-		@Override
-		public void run() {
-			StartBtn.performClick();
-			frame_num=0;
-
-			Toast.makeText(getApplicationContext(),
-					"Fluid Flowing",
-					Toast.LENGTH_SHORT).show();
-
-		}
-	};
 
 
 
-	public void delayState(){
-		mhandler.postDelayed(delayStart,10000);
-	}
-	public void movingStop(){
+
+	public void movingStop(int milliseconds){
 
 		if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
-			String con = new String("STOP" + "\n");
+			BTMessage="STOP";
+			Log.i(TAG,BTMessage);
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					mTitle.setText(BTMessage);
+				}
+			});
+			String con =BTMessage + "\n";
 			try {
-				Thread.sleep(10);
+				Thread.sleep(milliseconds);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -1322,36 +1334,74 @@ public class Tutorial2Activity extends Activity implements
 				Log.i("con_message",con);
 
 				sendMessage(con);
-				mViewMode=VIEW_MODE_STOP;
 
 				try {
 					Thread.sleep(50);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 				sendMsg = con;
-				onStop();
-
-
-
 			}
 
-			delayState();
+
 
 		}
 	}
 
 
-	public void movingGo(){
-
+	public void movingGo(int milliseconds){
 		if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
-			String con = new String("GO" + "\n");
+			BTMessage="GO";
+
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					mTitle.setText(BTMessage);
+				}
+			});
+			String con = BTMessage + "\n";
 			try {
-				Thread.sleep(10);
+				Thread.sleep(milliseconds);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+
+			Log.i("con_message",con);
+
+			sendMessage(con);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			sendMsg = con;
+
+		}else{
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					mTitle.setText("블루투스 연결불량");
+				}
+			});
+
+		}
+	}
+	public void movingReturn(int milliseconds){
+		if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
+			BTMessage="RETURN";
+			Log.i(TAG,BTMessage);
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					mTitle.setText(BTMessage);
+				}
+			});
+			String con = BTMessage + "\n";
+			try {
+				Thread.sleep(milliseconds);
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 
@@ -1362,13 +1412,10 @@ public class Tutorial2Activity extends Activity implements
 				try {
 					Thread.sleep(50);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
 				sendMsg = con;
-
-				mViewMode=VIEW_MODE_START;
 
 
 			}
@@ -1376,6 +1423,42 @@ public class Tutorial2Activity extends Activity implements
 
 		}
 	}
+	public void movingBack(int milliseconds){
+		if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
+			BTMessage="BACK";
+			Log.i(TAG,BTMessage);
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					mTitle.setText(BTMessage);
+				}
+			});
+			String con = BTMessage + "\n";
+			try {
+				Thread.sleep(milliseconds);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			if(!sendMsg.equals(con)){
+				Log.i("con_message",con);
+
+				sendMessage(con);
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+				sendMsg = con;
+
+
+			}
+
+
+		}
+	}
+
 
 
 
