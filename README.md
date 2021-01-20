@@ -40,7 +40,7 @@
    - Dust, Shadow 같은 Noise가 필터링되기 때문에 오차 감소, 시스템 동작속도(FPS) 증가
     
   
-  
+   **동영상**
   [![클릭시  ](https://img.youtube.com/vi/HG8uFNL7eg0/0.jpg)](https://youtu.be/HG8uFNL7eg0?t=0s)
   
   ![image](https://user-images.githubusercontent.com/34786411/105135263-193fbf80-5b33-11eb-89ce-7ce165ab4783.png)
@@ -92,7 +92,8 @@
   
   ![image](https://user-images.githubusercontent.com/34786411/105136372-e0084f00-5b34-11eb-8b3a-ddf2e5ec4909.png)
 
-
+    
+  **동영상**
   [![클릭시 자동재생](https://img.youtube.com/vi/VxlukVH63bI/0.jpg)](https://youtu.be/VxlukVH63bI?t=0s)
 
 
