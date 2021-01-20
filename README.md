@@ -39,8 +39,9 @@
    - 관심영역을 화면전체-> 반응챔버로 점차적으로 줄여나가면서 연산량을 줄여나가는 방식
    - Dust, Shadow 같은 Noise가 필터링되기 때문에 오차 감소, 시스템 동작속도(FPS) 증가
     
-    
-  [![예시]](https://youtu.be/HG8uFNL7eg0?t=0s)
+  
+  
+  [![예시](https://img.youtube.com/vi/HG8uFNL7eg0/0.jpg)](https://youtu.be/HG8uFNL7eg0?t=0s)
   
   ![image](https://user-images.githubusercontent.com/34786411/105135263-193fbf80-5b33-11eb-89ce-7ce165ab4783.png)
  
