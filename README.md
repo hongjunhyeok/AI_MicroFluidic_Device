@@ -110,8 +110,7 @@
   1. ROI-cascading 알고리즘을 통해 노이즈가 감소하여 에러가 낮아졌고 연산량이 약 90% 감소.
   2. Conditional-Activation 알고리즘을 통해 연산량이 66% 감소
   
- ![image](https://user-images.githubusercontent.com/34786411/105137368-83a62f00-5b36-11eb-9438-deffd056c24c.png)
- 
+
   
   
   
